@@ -25,50 +25,37 @@ export default function FeedbackForm() {
     if (ok) setForm({ name: '', email: '', message: '' });
   };
 
-  const inputCls =
-    'w-full bg-white border border-outline-variant/25 rounded-xl px-4 py-3 text-sm text-primary placeholder:text-on-surface-variant focus:outline-none focus:ring-2 focus:ring-secondary focus:border-secondary transition-all';
-
   return (
-    <div className="bg-surface-container-lowest rounded-[2rem] border border-outline-variant/15 shadow-editorial p-7 md:p-8 font-body">
-      <div className="flex items-start gap-4 mb-6">
-        <div className="w-12 h-12 rounded-2xl bg-secondary-fixed flex items-center justify-center shrink-0">
-          <span className="material-symbols-outlined text-on-secondary-fixed-variant text-2xl">chat_bubble</span>
-        </div>
+    <div className="fs-card">
+      <div className="fs-card-header">
+        <span className="fs-icon">💬</span>
         <div>
-          <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-secondary font-headline">Feedback</span>
-          <h3 className="text-xl md:text-2xl font-extrabold font-headline text-primary tracking-tight">문의 · 피드백</h3>
-          <p className="text-sm text-on-surface-variant mt-1">검사에 대한 의견이나 문의사항을 남겨주세요.</p>
+          <h3 className="fs-title">문의 / 피드백</h3>
+          <p className="fs-sub">검사에 대한 의견이나 문의사항을 남겨주세요</p>
         </div>
       </div>
 
       {status === 'success' ? (
-        <div className="rounded-2xl bg-green-50 border border-green-200 text-green-900 px-5 py-4 flex items-center gap-3">
-          <span className="material-symbols-outlined filled text-green-600">check_circle</span>
-          <p className="text-sm font-medium">소중한 의견 감사합니다! 빠르게 답변드리겠습니다.</p>
-        </div>
+        <div className="fs-success">✅ &nbsp;소중한 의견 감사합니다! 빠르게 답변드리겠습니다.</div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-3">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <input name="name"  type="text"  placeholder="이름 (선택)" value={form.name}  onChange={change} className={inputCls} />
-            <input name="email" type="email" placeholder="이메일"       value={form.email} onChange={change} required className={inputCls} />
+        <form onSubmit={handleSubmit} className="fs-form">
+          <div className="fs-row">
+            <input type="text"  name="name"  className="fs-input" placeholder="이름 (선택)" value={form.name}    onChange={change} />
+            <input type="email" name="email" className="fs-input" placeholder="이메일"       value={form.email}   onChange={change} required />
           </div>
           <textarea
-            name="message" rows={4}
+            name="message"
+            className="fs-textarea"
             placeholder="문의 내용이나 피드백을 입력해 주세요"
-            value={form.message} onChange={change} required
-            className={`${inputCls} resize-none`}
+            rows={4}
+            value={form.message}
+            onChange={change}
+            required
           />
-          <button
-            type="submit"
-            disabled={status === 'loading'}
-            className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-container transition-colors text-white rounded-xl px-7 py-3 font-bold font-headline text-sm shadow-editorial-lg disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
-          >
-            <span>{status === 'loading' ? '전송 중…' : '보내기'}</span>
-            {status !== 'loading' && <span className="material-symbols-outlined text-base">send</span>}
+          <button type="submit" className="fs-btn" disabled={status === 'loading'}>
+            {status === 'loading' ? '전송 중…' : '보내기'}
           </button>
-          {status === 'error' && (
-            <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl px-4 py-3">전송에 실패했습니다. 다시 시도해 주세요.</p>
-          )}
+          {status === 'error' && <p className="fs-error">전송에 실패했습니다. 다시 시도해 주세요.</p>}
         </form>
       )}
     </div>

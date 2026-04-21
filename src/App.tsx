@@ -7,56 +7,39 @@ import SiteFooter from './components/SiteFooter';
 import Welcome from './pages/Welcome';
 import Test from './pages/Test';
 import Results from './pages/Results';
-import StepDetail from './pages/StepDetail';
-import type { StepVariant } from './components/StepDetailModal';
 import {
-  startCheckout,
-  generateOrderId,
   readPaymentCallback,
   clearPaymentCallback,
   loadPendingSession,
   clearPendingSession,
-  savePendingSession,
   confirmPayment,
   confirmPolarCheckout,
   saveAccess,
-  hasAccess as hasStoredAccess,
-  clearAllAccess,
-  ACTIVE_PROVIDER,
 } from './lib/payment';
 import './App.css';
 
-type Page = 'welcome' | 'test' | 'results' | 'detail';
+type Page = 'welcome' | 'test' | 'results';
 
 function App() {
   const [page, setPage]         = useState<Page>('welcome');
-  const [detailVariant, setDetailVariant] = useState<StepVariant>('profile');
   const [scores, setScores]     = useState<FIROBScores | null>(null);
   const [userName, setUserName] = useState('');
   const [testDate, setTestDate] = useState('');
-  const [hasAccess, setHasAccess] = useState(false);
-  const [unlocking, setUnlocking] = useState(false);
 
-  // ── Handle return from payment redirect (Toss / Polar) ──────────────────
+  // Payment redirect handler kept wired for Toss / Polar returns.
+  // Access persistence stays so re-adding paywall later is a drop-in change.
   useEffect(() => {
-    // Restore previously purchased access on mount (survives refresh)
-    if (hasStoredAccess('individual_report')) {
-      setHasAccess(true);
-    }
-
     const cb = readPaymentCallback();
     if (cb.status === 'none') return;
-
     clearPaymentCallback();
 
     if (cb.status === 'fail') {
-      alert(`결제에 실패했습니다. 다시 시도해 주세요.\n(${cb.errorCode}: ${cb.errorMessage})`);
+      alert(`결제에 실패했습니다.\n(${cb.errorCode}: ${cb.errorMessage})`);
       clearPendingSession();
       return;
     }
 
     if (cb.status !== 'success') return;
-
     const session = loadPendingSession();
 
     (async () => {
@@ -65,107 +48,45 @@ function App() {
       let unlockedAmount: number | undefined;
 
       if (cb.provider === 'toss' && cb.paymentKey && cb.orderId && cb.amount) {
-        // Toss requires a server-side confirm call to finalize the payment
         const r = await confirmPayment(cb.paymentKey, cb.orderId, cb.amount);
         if (r.success) {
           ok = true;
           unlockedOrderId = cb.orderId;
           unlockedAmount  = cb.amount;
         } else {
-          alert(`결제 승인에 실패했습니다.\n${r.error ?? ''}`);
+          alert(`결제 승인 실패: ${r.error ?? ''}`);
         }
       } else if (cb.provider === 'polar' && cb.checkoutId) {
-        // Polar finalizes itself — we just verify the checkout succeeded
         const r = await confirmPolarCheckout(cb.checkoutId);
         if (r.success) {
           ok = true;
           unlockedOrderId = r.internalOrderId ?? cb.checkoutId;
           unlockedAmount  = r.amount;
         } else {
-          alert(`결제 확인에 실패했습니다.\n${r.error ?? ''}`);
+          alert(`결제 확인 실패: ${r.error ?? ''}`);
         }
       }
 
       clearPendingSession();
-
       if (!ok) return;
 
       saveAccess('individual_report', {
-        orderId:    unlockedOrderId,
+        orderId: unlockedOrderId,
         unlockedAt: Date.now(),
-        amount:     unlockedAmount,
+        amount: unlockedAmount,
       });
 
       if (session) {
         setScores(session.scores);
         setUserName(session.userName);
         setTestDate(session.testDate);
-        setHasAccess(true);
         setPage('results');
-      } else {
-        setHasAccess(true);
       }
     })();
-  }, []); // runs once on mount
+  }, []);
 
-  // ── Request unlock (called by PaywallCTA / LockedSection) ───────────────
-  const handleRequestUnlock = async (): Promise<void> => {
-    if (unlocking) return;
-    setUnlocking(true);
-
-    try {
-      // Save scores to sessionStorage so they survive a page redirect
-      if (scores) {
-        savePendingSession({ scores, userName, testDate, product: 'individual_report' });
-      }
-
-      const result = await startCheckout({
-        product:      'individual_report',
-        orderId:      generateOrderId(),
-        customerName: userName || undefined,
-      });
-
-      if (result.success) {
-        // Mock provider resolves here; redirect providers never reach this line
-        saveAccess('individual_report', {
-          orderId:    result.orderId ?? 'mock',
-          unlockedAt: Date.now(),
-        });
-        setHasAccess(true);
-        clearPendingSession();
-      } else if (result.error && result.error !== 'redirecting') {
-        alert(`결제를 시작할 수 없습니다: ${result.error}`);
-        clearPendingSession();
-      }
-      // If redirecting: browser navigates away — no further code runs
-    } catch (err) {
-      console.error('[Payment] Checkout error:', err);
-      alert('결제 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
-      clearPendingSession();
-    } finally {
-      setUnlocking(false);
-    }
-  };
-
-  // ── Detail page navigation ────────────────────────────────────────────────
-  const handleShowDetail = (variant: StepVariant) => {
-    setDetailVariant(variant);
-    setPage('detail');
-  };
-  const handleCloseDetail = () => setPage('welcome');
-  const handleStartFromDetail = () => {
-    document.getElementById('wl-start')?.scrollIntoView({ behavior: 'auto' });
-    setPage('welcome');
-    // scroll after navigation completes
-    setTimeout(() => {
-      document.getElementById('wl-start')?.scrollIntoView({ behavior: 'smooth' });
-    }, 30);
-  };
-
-  // ── Test lifecycle ────────────────────────────────────────────────────────
   const handleStart = (name: string) => {
     setUserName(name);
-    setHasAccess(false);
     setPage('test');
   };
 
@@ -196,42 +117,19 @@ function App() {
 
   const handleRetake = () => {
     setScores(null);
-    setHasAccess(false);
-    clearAllAccess();
     setPage('welcome');
   };
 
-  // Dev-only mock-mode indicator (does not render in production builds)
-  const showDevBanner = import.meta.env.DEV && ACTIVE_PROVIDER === 'mock';
-
   return (
     <>
-      {showDevBanner && (
-        <div style={{
-          background: '#FEF9C3', borderBottom: '1px solid #FCD34D',
-          textAlign: 'center', padding: '6px 12px', fontSize: '12px', color: '#92400E',
-        }}>
-          개발 모드 · mock 결제
-        </div>
-      )}
       <SiteHeader />
-      {page === 'welcome' && <Welcome onStart={handleStart} onShowDetail={handleShowDetail} />}
+      {page === 'welcome' && <Welcome onStart={handleStart} />}
       {page === 'test'    && <Test onComplete={handleComplete} />}
-      {page === 'detail'  && (
-        <StepDetail
-          variant={detailVariant}
-          onBack={handleCloseDetail}
-          onStart={handleStartFromDetail}
-        />
-      )}
       {page === 'results' && scores && (
         <Results
           scores={scores}
           userName={userName}
           testDate={testDate}
-          hasAccess={hasAccess}
-          unlocking={unlocking}
-          onRequestUnlock={handleRequestUnlock}
           onRetake={handleRetake}
         />
       )}
