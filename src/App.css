@@ -2525,20 +2525,16 @@
    Welcome step cards — clickable variant
 ═══════════════════════════════════════════════════════════════ */
 .wl-step-card--btn {
+  /* reset browser button defaults without clobbering .wl-step-card */
   appearance: none;
-  background: inherit;
-  border: inherit;
+  -webkit-appearance: none;
+  border: 0;
   text-align: left;
   font: inherit;
+  color: inherit;
   cursor: pointer;
   width: 100%;
-  padding: inherit;
-  transition: transform 0.22s ease, box-shadow 0.22s ease;
-  position: relative;
-}
-.wl-step-card--btn:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 40px rgba(5, 17, 37, 0.08);
+  display: block;
 }
 .wl-step-card--btn:focus-visible {
   outline: 2px solid #7C6FFF;
