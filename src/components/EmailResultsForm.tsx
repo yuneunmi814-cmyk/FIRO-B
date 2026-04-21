@@ -1,49 +1,66 @@
 import { useState } from 'react';
+import emailjs from '@emailjs/browser';
 import type { FIROBScores } from '../types';
-import { postToFormspree } from '../utils/formspree';
 import { getDimTotals, getGrandTotalLabel, getScoreLevel } from '../utils/analysis';
 import { SCALE_LABELS } from '../data/questions';
+
+const SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID  as string;
+const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string;
+const PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY  as string;
 
 interface Props {
   scores: FIROBScores;
   userName: string;
+  testDate: string;
   inclusionType: string;
   controlType: string;
   affectionType: string;
   conflictStyle: string;
 }
 
-export default function EmailResultsForm({ scores, userName, inclusionType, controlType, affectionType, conflictStyle }: Props) {
-  const [email, setEmail] = useState('');
+function buildScoreRows(scores: FIROBScores): string {
+  return (Object.keys(SCALE_LABELS) as (keyof FIROBScores)[])
+    .map(k => `${SCALE_LABELS[k]}(${k}): ${scores[k].toFixed(1)}점 — ${getScoreLevel(scores[k]).ko}`)
+    .join('\n');
+}
+
+export default function EmailResultsForm({
+  scores, userName, testDate,
+  inclusionType, controlType, affectionType, conflictStyle,
+}: Props) {
+  const [email, setEmail]   = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  const totals = getDimTotals(scores);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('loading');
 
-    const totals = getDimTotals(scores);
-    const scoreLines = (Object.keys(SCALE_LABELS) as (keyof FIROBScores)[])
-      .map(k => `${k}: ${scores[k].toFixed(1)} (${getScoreLevel(scores[k]).ko})`)
-      .join(' | ');
+    const templateParams = {
+      to_email:     email,
+      to_name:      userName || '익명',
+      test_date:    testDate,
+      score_rows:   buildScoreRows(scores),
+      inclusion_total: `${totals.inclusion.toFixed(1)} / 18`,
+      control_total:   `${totals.control.toFixed(1)} / 18`,
+      affection_total: `${totals.affection.toFixed(1)} / 18`,
+      grand_total:     `${totals.grand.toFixed(1)} (${getGrandTotalLabel(totals.grand)})`,
+      expressed_total: totals.expressed.toFixed(1),
+      wanted_total:    totals.wanted.toFixed(1),
+      inclusion_type:  inclusionType,
+      control_type:    controlType,
+      affection_type:  affectionType,
+      conflict_style:  conflictStyle,
+      site_url:        'https://firob.vercel.app/',
+    };
 
-    const ok = await postToFormspree({
-      _subject: `[FIRO-B] 결과 이메일 요청 — ${userName || '익명'}`,
-      _replyto: email,
-      유형: '결과_이메일_요청',
-      이름: userName || '익명',
-      이메일: email,
-      검사_점수: scoreLines,
-      소속_총합: `${totals.inclusion.toFixed(1)} / 18`,
-      통제_총합: `${totals.control.toFixed(1)} / 18`,
-      정서_총합: `${totals.affection.toFixed(1)} / 18`,
-      욕구_총합: `${totals.grand.toFixed(1)} (${getGrandTotalLabel(totals.grand)})`,
-      소속_유형: inclusionType,
-      통제_유형: controlType,
-      정서_유형: affectionType,
-      갈등_해결_방식: conflictStyle,
-    });
-
-    setStatus(ok ? 'success' : 'error');
+    try {
+      await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY);
+      setStatus('success');
+    } catch {
+      setStatus('error');
+    }
   };
 
   return (
@@ -52,18 +69,18 @@ export default function EmailResultsForm({ scores, userName, inclusionType, cont
         <span className="fs-icon">📧</span>
         <div>
           <h3 className="fs-title">결과를 이메일로 받으세요</h3>
-          <p className="fs-sub">FIRO-B 결과 요약을 이메일로 보내드립니다</p>
+          <p className="fs-sub">FIRO-B 결과 리포트 요약을 이메일로 보내드립니다</p>
         </div>
       </div>
 
       {status === 'success' ? (
-        <div className="fs-success">✅ &nbsp;전송 완료! 곧 이메일로 결과가 전달됩니다.</div>
+        <div className="fs-success">✅ &nbsp;전송 완료! 입력하신 이메일로 결과가 발송되었습니다.</div>
       ) : (
         <form onSubmit={handleSubmit} className="fs-form">
           <input
             type="email"
             className="fs-input"
-            placeholder="이메일 주소를 입력하세요"
+            placeholder="결과를 받을 이메일 주소"
             value={email}
             onChange={e => setEmail(e.target.value)}
             required
@@ -71,7 +88,9 @@ export default function EmailResultsForm({ scores, userName, inclusionType, cont
           <button type="submit" className="fs-btn" disabled={status === 'loading'}>
             {status === 'loading' ? '전송 중…' : '결과 받기'}
           </button>
-          {status === 'error' && <p className="fs-error">전송에 실패했습니다. 다시 시도해 주세요.</p>}
+          {status === 'error' && (
+            <p className="fs-error">전송에 실패했습니다. EmailJS 설정을 확인하거나 다시 시도해 주세요.</p>
+          )}
         </form>
       )}
     </div>

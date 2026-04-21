@@ -339,6 +339,7 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
         <EmailResultsForm
           scores={scores}
           userName={userName}
+          testDate={testDate}
           inclusionType={inclusion.type}
           controlType={control.type}
           affectionType={affection.type}
