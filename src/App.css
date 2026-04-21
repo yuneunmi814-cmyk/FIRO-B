@@ -1274,6 +1274,45 @@
 .disqus-title { font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
 .disqus-sub { font-size: 13px; color: var(--text-muted); }
 
+.disqus-loading {
+  text-align: center;
+  padding: 32px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.disqus-dev-placeholder {
+  background: #FFFBEB;
+  border: 1px solid #FCD34D;
+  border-radius: 12px;
+  padding: 20px 24px;
+}
+.disqus-dev-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #92400E;
+}
+.disqus-dev-placeholder p {
+  font-size: 14px;
+  color: #78350F;
+  margin-bottom: 12px;
+}
+.disqus-steps {
+  padding-left: 20px;
+  font-size: 13px;
+  color: #78350F;
+  line-height: 1.9;
+}
+.disqus-steps a { color: #7C6FFF; font-weight: 600; }
+.disqus-steps code {
+  background: rgba(0,0,0,0.06);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-family: monospace;
+  font-size: 12px;
+}
+
 /* ── Report Responsive ── */
 @media (max-width: 640px) {
   .rpt-meta { grid-template-columns: 1fr 1fr; }
