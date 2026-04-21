@@ -3,6 +3,8 @@ import RadarChart from '../components/RadarChart';
 import EmailResultsForm from '../components/EmailResultsForm';
 import FeedbackForm from '../components/FeedbackForm';
 import DisqusSection from '../components/DisqusSection';
+import AdBanner from '../components/AdBanner';
+import DownloadReport from '../components/DownloadReport';
 import {
   getScoreLevel,
   getDimLevel,
@@ -60,7 +62,7 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
   const expWantNote = totals.expressed < totals.wanted ? '타인 주도 기대 경향' : totals.expressed > totals.wanted ? '자기 주도 표출 경향' : '균형 유지';
 
   return (
-    <div className="rpt-page">
+    <div className="rpt-page" id="report-capture">
 
       {/* ── Hero ── */}
       <div className="rpt-hero">
@@ -84,6 +86,9 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
               <span className="rpt-meta-label">수준</span>
               <span className="rpt-meta-val">{grandLabel}</span>
             </div>
+          </div>
+          <div className="rpt-hero-actions no-capture">
+            <DownloadReport />
           </div>
         </div>
       </div>
@@ -134,6 +139,9 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
             })}
           </div>
         </section>
+
+        {/* ── 광고 #1 ── */}
+        <AdBanner slot="1111111111" />
 
         {/* ── 3개 욕구 총합 ── */}
         <section className="rpt-section">
@@ -208,6 +216,9 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
             ))}
           </div>
         </section>
+
+        {/* ── 광고 #2 ── */}
+        <AdBanner slot="2222222222" />
 
         {/* ── 이상적인 배우자 ── */}
         <section className="rpt-section partner-sec">
@@ -336,6 +347,9 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
 
         {/* ── Formspree: 피드백 ── */}
         <FeedbackForm />
+
+        {/* ── 광고 #3 ── */}
+        <AdBanner slot="3333333333" />
 
         {/* ── Disqus ── */}
         <DisqusSection />

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import AdBanner from '../components/AdBanner';
 
 interface Props {
   onStart: (name: string) => void;
@@ -65,6 +66,8 @@ export default function Welcome({ onStart }: Props) {
         <button className="start-btn" onClick={() => onStart(name)}>
           검사 시작하기
         </button>
+
+        <AdBanner slot="4444444444" format="horizontal" />
 
         <p className="welcome-note">
           각 문항은 1~6점으로 답변합니다.<br />
