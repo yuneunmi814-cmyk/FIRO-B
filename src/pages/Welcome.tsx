@@ -2,15 +2,15 @@ import { useState } from 'react';
 import AdBanner from '../components/AdBanner';
 import PartnershipForm from '../components/PartnershipForm';
 import DisqusSection from '../components/DisqusSection';
-import StepDetailModal, { type StepVariant } from '../components/StepDetailModal';
+import type { StepVariant } from '../components/StepDetailModal';
 
 interface Props {
   onStart: (name: string) => void;
+  onShowDetail: (variant: StepVariant) => void;
 }
 
-export default function Welcome({ onStart }: Props) {
+export default function Welcome({ onStart, onShowDetail }: Props) {
   const [name, setName] = useState('');
-  const [openModal, setOpenModal] = useState<StepVariant | null>(null);
 
   const scrollToStart = () => {
     document.getElementById('wl-start')?.scrollIntoView({ behavior: 'smooth' });
@@ -119,7 +119,7 @@ export default function Welcome({ onStart }: Props) {
               <button
                 key={num}
                 type="button"
-                onClick={() => setOpenModal(variant)}
+                onClick={() => onShowDetail(variant)}
                 className={`wl-step-card wl-step-card--btn${offset ? ' wl-step-card--offset' : ''}`}
               >
                 <div className="wl-step-icon" style={{ background: bg, color }}>
@@ -275,7 +275,6 @@ export default function Welcome({ onStart }: Props) {
         />
       </div>
 
-      <StepDetailModal variant={openModal} onClose={() => setOpenModal(null)} />
     </div>
   );
 }

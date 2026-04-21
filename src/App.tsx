@@ -7,6 +7,8 @@ import SiteFooter from './components/SiteFooter';
 import Welcome from './pages/Welcome';
 import Test from './pages/Test';
 import Results from './pages/Results';
+import StepDetail from './pages/StepDetail';
+import type { StepVariant } from './components/StepDetailModal';
 import {
   startCheckout,
   generateOrderId,
@@ -24,10 +26,11 @@ import {
 } from './lib/payment';
 import './App.css';
 
-type Page = 'welcome' | 'test' | 'results';
+type Page = 'welcome' | 'test' | 'results' | 'detail';
 
 function App() {
   const [page, setPage]         = useState<Page>('welcome');
+  const [detailVariant, setDetailVariant] = useState<StepVariant>('profile');
   const [scores, setScores]     = useState<FIROBScores | null>(null);
   const [userName, setUserName] = useState('');
   const [testDate, setTestDate] = useState('');
@@ -144,6 +147,21 @@ function App() {
     }
   };
 
+  // ── Detail page navigation ────────────────────────────────────────────────
+  const handleShowDetail = (variant: StepVariant) => {
+    setDetailVariant(variant);
+    setPage('detail');
+  };
+  const handleCloseDetail = () => setPage('welcome');
+  const handleStartFromDetail = () => {
+    document.getElementById('wl-start')?.scrollIntoView({ behavior: 'auto' });
+    setPage('welcome');
+    // scroll after navigation completes
+    setTimeout(() => {
+      document.getElementById('wl-start')?.scrollIntoView({ behavior: 'smooth' });
+    }, 30);
+  };
+
   // ── Test lifecycle ────────────────────────────────────────────────────────
   const handleStart = (name: string) => {
     setUserName(name);
@@ -197,8 +215,15 @@ function App() {
         </div>
       )}
       <SiteHeader />
-      {page === 'welcome' && <Welcome onStart={handleStart} />}
+      {page === 'welcome' && <Welcome onStart={handleStart} onShowDetail={handleShowDetail} />}
       {page === 'test'    && <Test onComplete={handleComplete} />}
+      {page === 'detail'  && (
+        <StepDetail
+          variant={detailVariant}
+          onBack={handleCloseDetail}
+          onStart={handleStartFromDetail}
+        />
+      )}
       {page === 'results' && scores && (
         <Results
           scores={scores}

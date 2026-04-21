@@ -51,7 +51,7 @@ export default function StepDetailModal({ variant, onClose }: Props) {
 /* ═════════════════════════════════════════════════════════════════
    1. 심리 프로파일 — What the assessment measures
 ═════════════════════════════════════════════════════════════════ */
-function ProfileContent() {
+export function ProfileContent() {
   return (
     <article className="text-on-surface">
       {/* Editorial header */}
@@ -198,7 +198,7 @@ function ProfileContent() {
 /* ═════════════════════════════════════════════════════════════════
    2. 패턴 심층 분석 — How the analysis works
 ═════════════════════════════════════════════════════════════════ */
-function PatternContent() {
+export function PatternContent() {
   return (
     <article className="text-on-surface">
       <header className="bg-gradient-to-br from-secondary to-on-secondary-container text-white p-8 md:p-12">
@@ -390,7 +390,7 @@ function PatternContent() {
 /* ═════════════════════════════════════════════════════════════════
    3. 종합 리포트 — Sample report example
 ═════════════════════════════════════════════════════════════════ */
-function SampleContent() {
+export function SampleContent() {
   // 샘플 프로필: 홍길동 (PDF 예시 참고 + 아키타입 재구성)
   const sample = {
     name: '홍길동',
