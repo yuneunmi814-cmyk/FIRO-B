@@ -1,5 +1,7 @@
 import type { FIROBScores } from '../types';
 import RadarChart from '../components/RadarChart';
+import EmailResultsForm from '../components/EmailResultsForm';
+import FeedbackForm from '../components/FeedbackForm';
 import {
   getScoreLevel,
   getDimLevel,
@@ -320,6 +322,19 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
             ))}
           </ul>
         </section>
+
+        {/* ── Formspree: 이메일 받기 ── */}
+        <EmailResultsForm
+          scores={scores}
+          userName={userName}
+          inclusionType={inclusion.type}
+          controlType={control.type}
+          affectionType={affection.type}
+          conflictStyle={conflict.style}
+        />
+
+        {/* ── Formspree: 피드백 ── */}
+        <FeedbackForm />
 
         {/* ── Retake ── */}
         <div className="rpt-retake">

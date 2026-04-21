@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Answers, FIROBScores } from './types';
-import { calculateScores } from './utils/analysis';
+import { calculateScores, getDimTotals, getGrandTotalLabel } from './utils/analysis';
+import { postToFormspree } from './utils/formspree';
 import Welcome from './pages/Welcome';
 import Test from './pages/Test';
 import Results from './pages/Results';
@@ -20,9 +21,30 @@ function App() {
   };
 
   const handleComplete = (answers: Answers) => {
-    setScores(calculateScores(answers));
-    setTestDate(new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }));
+    const computed = calculateScores(answers);
+    const date = new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
+    setScores(computed);
+    setTestDate(date);
     setPage('results');
+
+    // 자동 알림 (fire & forget)
+    const totals = getDimTotals(computed);
+    postToFormspree({
+      _subject: `[FIRO-B] 검사 완료 알림 — ${userName || '익명'}`,
+      유형: '검사_완료_자동_알림',
+      이름: userName || '익명',
+      검사일: date,
+      eI: computed.eI.toFixed(1),
+      wI: computed.wI.toFixed(1),
+      eC: computed.eC.toFixed(1),
+      wC: computed.wC.toFixed(1),
+      eA: computed.eA.toFixed(1),
+      wA: computed.wA.toFixed(1),
+      소속_총합: `${totals.inclusion.toFixed(1)} / 18`,
+      통제_총합: `${totals.control.toFixed(1)} / 18`,
+      정서_총합: `${totals.affection.toFixed(1)} / 18`,
+      욕구_총합: `${totals.grand.toFixed(1)} (${getGrandTotalLabel(totals.grand)})`,
+    });
   };
 
   const handleRetake = () => {
