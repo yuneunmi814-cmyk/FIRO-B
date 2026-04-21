@@ -1,13 +1,13 @@
 import { useState } from 'react'
-import { Heart, ChevronRight, Loader2 } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 import { startCheckout, generateOrderId, PRODUCTS } from '@/lib/payment'
 
 interface Props {
   userName?: string
 }
 
-const product  = PRODUCTS.couple_addon
-const priceLabel = `${product.amount.toLocaleString()}원 추가`
+const product = PRODUCTS.couple_addon
+const priceLabel = `${product.amount.toLocaleString()}원`
 
 export default function CoupleUpsell({ userName }: Props) {
   const [loading, setLoading] = useState(false)
@@ -22,7 +22,6 @@ export default function CoupleUpsell({ userName }: Props) {
         customerName: userName,
       })
       if (result.success) {
-        // TODO: set coupleAccess=true in App.tsx via a prop callback
         alert('커플 분석이 추가됐습니다! (연동 후 자동으로 활성화됩니다)')
       } else if (result.error && result.error !== 'redirecting') {
         alert(`결제를 시작할 수 없습니다: ${result.error}`)
@@ -36,28 +35,47 @@ export default function CoupleUpsell({ userName }: Props) {
   }
 
   return (
-    <div className="upsell-card">
-      <div className="upsell-icon-wrap">
-        <Heart size={24} fill="currentColor" />
-      </div>
-      <div className="upsell-body">
-        <h3 className="upsell-title">파트너와 함께라면 더 정확해집니다</h3>
-        <p className="upsell-desc">
-          파트너의 FIRO-B 결과를 추가하면 욕구 궁합, 갈등 지점,
-          서로에게 필요한 대화 방식까지 자동으로 분석해 드립니다.
+    <div className="relative rounded-[2rem] bg-gradient-to-br from-tertiary-fixed to-tertiary-fixed-dim p-8 md:p-9 overflow-hidden font-body text-on-tertiary-fixed-variant">
+      <div className="absolute -right-16 -top-16 w-52 h-52 bg-tertiary-container/20 rounded-full blur-[60px]" />
+      <div className="relative">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-12 h-12 rounded-2xl bg-tertiary-container flex items-center justify-center">
+            <span className="material-symbols-outlined filled text-white text-2xl">favorite</span>
+          </div>
+          <span className="text-[11px] font-bold uppercase tracking-[0.2em] opacity-80 font-headline">Couple Add-on</span>
+        </div>
+        <h3 className="text-2xl font-extrabold font-headline leading-tight mb-3">파트너와 함께라면<br />더 정확해집니다</h3>
+        <p className="text-[14px] leading-relaxed mb-5 opacity-90">
+          파트너의 FIRO-B 결과를 추가하면 욕구 궁합, 갈등 지점, 서로에게 필요한
+          대화 방식까지 자동으로 분석해 드립니다.
         </p>
-        <ul className="upsell-bullets">
-          <li>소속·통제·애정 욕구 3개 영역 비교</li>
-          <li>서로의 기대 vs 표현 갭 시각화</li>
-          <li>커플 맞춤 대화 스크립트 제공</li>
+        <ul className="space-y-2 mb-7 text-sm">
+          {[
+            '소속·통제·애정 욕구 3개 영역 비교',
+            '서로의 기대 vs 표현 갭 시각화',
+            '커플 맞춤 대화 스크립트 제공',
+          ].map(t => (
+            <li key={t} className="flex gap-2 items-center">
+              <span className="material-symbols-outlined filled text-tertiary-container text-lg shrink-0">check_circle</span>
+              <span>{t}</span>
+            </li>
+          ))}
         </ul>
+        <button
+          onClick={handleClick}
+          disabled={loading}
+          className="w-full inline-flex items-center justify-center gap-2 bg-tertiary-container text-white rounded-xl px-6 py-3.5 font-bold font-headline text-sm shadow-editorial-lg hover:opacity-90 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
+        >
+          {loading ? (
+            <><Loader2 size={15} className="animate-spin" /> 처리 중…</>
+          ) : (
+            <>
+              <span>커플 분석 추가하기 · {priceLabel}</span>
+              <span className="material-symbols-outlined text-base">arrow_forward</span>
+            </>
+          )}
+        </button>
       </div>
-      <button className="upsell-btn" onClick={handleClick} disabled={loading}>
-        {loading
-          ? <><Loader2 size={15} className="paywall-btn-spin" /> 처리 중…</>
-          : <>커플 분석 추가하기 · {priceLabel} <ChevronRight size={16} /></>
-        }
-      </button>
     </div>
   )
 }

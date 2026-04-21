@@ -57,30 +57,31 @@ export default function DisqusSection({
   }, []);
 
   return (
-    <div className="disqus-wrap">
-      <div className="disqus-header">
-        <span className="disqus-icon">💬</span>
+    <div className="bg-surface-container-lowest rounded-[2rem] border border-outline-variant/15 shadow-editorial p-7 md:p-8 font-body">
+      <div className="flex items-start gap-4 mb-6">
+        <div className="w-12 h-12 rounded-2xl bg-secondary-fixed flex items-center justify-center shrink-0">
+          <span className="material-symbols-outlined text-on-secondary-fixed-variant text-2xl">forum</span>
+        </div>
         <div>
-          <h3 className="disqus-title">{title}</h3>
-          <p className="disqus-sub">{subtitle}</p>
+          <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-secondary font-headline">Community</span>
+          <h3 className="text-xl md:text-2xl font-extrabold font-headline text-primary tracking-tight">{title}</h3>
+          <p className="text-sm text-on-surface-variant mt-1">{subtitle}</p>
         </div>
       </div>
 
       {isDev ? (
-        <div className="disqus-dev-placeholder">
-          <p className="disqus-dev-title">🛠️ 개발 환경 안내</p>
+        <div className="rounded-2xl bg-amber-50 border border-amber-200 px-5 py-4 text-[13px] text-amber-900 leading-relaxed">
+          <p className="font-bold mb-1 font-headline">🛠️ 개발 환경 안내</p>
           <p>Disqus는 배포된 도메인에서만 작동합니다. 배포 후 자동 활성화됩니다.</p>
-          <p style={{ marginTop: 8, fontSize: 13, color: '#92400E' }}>
-            shortname: <code>firo-b-simrigeomsa</code>
-          </p>
+          <p className="mt-1 text-xs">shortname: <code className="bg-amber-100 px-1.5 py-0.5 rounded font-mono">firo-b-simrigeomsa</code></p>
         </div>
       ) : (
         <>
-          {!ready && <div className="disqus-loading">댓글을 불러오는 중…</div>}
+          {!ready && <div className="text-center text-sm text-on-surface-variant py-8">댓글을 불러오는 중…</div>}
           <div id="disqus_thread" />
           <noscript>
             댓글을 보려면 JavaScript를 활성화해 주세요.{' '}
-            <a href="https://disqus.com/?ref_noscript">Disqus 댓글 보기</a>
+            <a href="https://disqus.com/?ref_noscript" className="text-secondary underline">Disqus 댓글 보기</a>
           </noscript>
         </>
       )}

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { CalendarDays, ChevronRight, Loader2 } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 import { startCheckout, generateOrderId, PRODUCTS } from '@/lib/payment'
 
 interface Props {
@@ -16,8 +16,6 @@ export default function ConsultationCTA({ userName }: Props) {
     if (loading) return
     setLoading(true)
     try {
-      // TODO: once a booking system (Calendly / KakaoTalk channel) is connected,
-      // call startCheckout for the deposit, then redirect to the scheduler on success.
       const result = await startCheckout({
         product:      'consultation_deposit',
         orderId:      generateOrderId('consult'),
@@ -37,30 +35,45 @@ export default function ConsultationCTA({ userName }: Props) {
   }
 
   return (
-    <div className="consult-card">
-      <div className="consult-inner">
-        <div className="consult-text">
-          <div className="consult-icon-wrap">
-            <CalendarDays size={22} />
+    <div className="relative rounded-[2rem] firo-gradient text-white p-8 md:p-9 overflow-hidden font-body">
+      <div className="absolute -right-20 -bottom-20 w-56 h-56 bg-secondary/20 rounded-full blur-[70px]" />
+      <div className="relative">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-12 h-12 rounded-2xl bg-secondary flex items-center justify-center">
+            <span className="material-symbols-outlined filled text-white text-2xl">calendar_month</span>
           </div>
-          <div>
-            <h3 className="consult-title">전문가와 함께 더 깊이 이해하고 싶으신가요?</h3>
-            <p className="consult-desc">
-              FIRO-B 전문 해석사와 1:1 상담으로, 리포트에서 놓친 맥락과
-              실제 관계에서 어떻게 적용할지 구체적인 가이드를 받아보세요.
-            </p>
-            <ul className="consult-bullets">
-              <li>50분 개인 맞춤 해석 세션</li>
-              <li>관계 패턴 심층 코칭</li>
-              <li>커플 세션 옵션 제공</li>
-            </ul>
-          </div>
+          <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-secondary-fixed-dim font-headline">1:1 Consultation</span>
         </div>
-        <button className="consult-btn" onClick={handleBook} disabled={loading}>
-          {loading
-            ? <><Loader2 size={15} className="paywall-btn-spin" /> 처리 중…</>
-            : <>전문가 해석 상담 예약 · {priceLabel} <ChevronRight size={16} /></>
-          }
+        <h3 className="text-2xl font-extrabold font-headline leading-tight mb-3">전문가와 함께<br />더 깊이 이해하기</h3>
+        <p className="text-[14px] leading-relaxed text-primary-fixed-dim mb-5">
+          FIRO-B 전문 해석사와 1:1 상담으로 리포트에서 놓친 맥락과 실제
+          관계에서 어떻게 적용할지 구체적인 가이드를 받아보세요.
+        </p>
+        <ul className="space-y-2 mb-7 text-sm">
+          {[
+            '50분 개인 맞춤 해석 세션',
+            '관계 패턴 심층 코칭',
+            '커플 세션 옵션 제공',
+          ].map(t => (
+            <li key={t} className="flex gap-2 items-center">
+              <span className="material-symbols-outlined filled text-secondary-container text-lg shrink-0">check_circle</span>
+              <span className="text-primary-fixed-dim">{t}</span>
+            </li>
+          ))}
+        </ul>
+        <button
+          onClick={handleBook}
+          disabled={loading}
+          className="w-full inline-flex items-center justify-center gap-2 bg-secondary text-white rounded-xl px-6 py-3.5 font-bold font-headline text-sm shadow-editorial-lg hover:opacity-90 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
+        >
+          {loading ? (
+            <><Loader2 size={15} className="animate-spin" /> 처리 중…</>
+          ) : (
+            <>
+              <span>전문가 해석 상담 예약 · {priceLabel}</span>
+              <span className="material-symbols-outlined text-base">arrow_forward</span>
+            </>
+          )}
         </button>
       </div>
     </div>
