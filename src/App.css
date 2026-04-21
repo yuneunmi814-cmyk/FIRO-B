@@ -1128,6 +1128,28 @@
   margin: 0;
 }
 
+/* ══════════════════════════════
+   DISQUS
+══════════════════════════════ */
+.disqus-wrap {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  padding: 26px 28px;
+  margin-top: 20px;
+}
+.disqus-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+  padding-bottom: 18px;
+  border-bottom: 2px solid var(--border);
+}
+.disqus-icon { font-size: 32px; }
+.disqus-title { font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+.disqus-sub { font-size: 13px; color: var(--text-muted); }
+
 /* ── Report Responsive ── */
 @media (max-width: 640px) {
   .rpt-meta { grid-template-columns: 1fr 1fr; }

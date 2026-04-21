@@ -2,6 +2,7 @@ import type { FIROBScores } from '../types';
 import RadarChart from '../components/RadarChart';
 import EmailResultsForm from '../components/EmailResultsForm';
 import FeedbackForm from '../components/FeedbackForm';
+import DisqusSection from '../components/DisqusSection';
 import {
   getScoreLevel,
   getDimLevel,
@@ -335,6 +336,9 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
 
         {/* ── Formspree: 피드백 ── */}
         <FeedbackForm />
+
+        {/* ── Disqus ── */}
+        <DisqusSection />
 
         {/* ── Retake ── */}
         <div className="rpt-retake">
