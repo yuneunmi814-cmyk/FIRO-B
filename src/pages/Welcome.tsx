@@ -24,15 +24,15 @@ export default function Welcome({ onStart }: Props) {
 
         <div className="wl-hero-inner">
           <div className="wl-hero-text">
-            <span className="wl-badge">FIRO-B 심리검사</span>
+            <span className="wl-badge">FIRO-B 대인관계 진단</span>
             <h1 className="wl-hero-title">
-              나를 가장 잘<br />
-              <em className="wl-em">보완</em>해 주는<br />
-              배우자를 찾으세요
+              나의 소통 방식,<br />
+              <em className="wl-em">과학적으로</em><br />
+              이해하세요
             </h1>
             <p className="wl-hero-desc">
-              54문항의 FIRO-B 심리분석으로 소속·통제·정서 욕구를
-              진단하고, 깊은 궁합과 갈등 해결 유형을 알아보세요.
+              70년간 글로벌 기업·연구기관에서 검증된 FIRO-B 검사로
+              소속·통제·정서 욕구를 진단하고, 대인관계 패턴을 정확하게 파악하세요.
             </p>
             <div className="wl-hero-btns">
               <button className="wl-btn-primary" onClick={scrollToStart}>
@@ -48,7 +48,7 @@ export default function Welcome({ onStart }: Props) {
             <div className="wl-hero-card">
               <div className="wl-hero-card-label">
                 <span className="wl-card-dot" />
-                실시간 궁합 분석
+                대인관계 욕구 분석
               </div>
               <div className="wl-compat-bars">
                 {[
@@ -68,8 +68,8 @@ export default function Welcome({ onStart }: Props) {
                 ))}
               </div>
               <div className="wl-card-footer">
-                <span className="wl-card-match-label">종합 매칭 점수</span>
-                <span className="wl-card-match-val">94%</span>
+                <span className="wl-card-match-label">욕구 충족 지수</span>
+                <span className="wl-card-match-val">분석 완료</span>
               </div>
             </div>
           </div>
@@ -81,10 +81,10 @@ export default function Welcome({ onStart }: Props) {
         <div className="wl-section-inner">
           <div className="wl-method-head">
             <div>
-              <h2 className="wl-section-title">연결의 방법론</h2>
+              <h2 className="wl-section-title">어떻게 작동하나요</h2>
               <p className="wl-section-sub">
-                스와이프를 과학으로 대체합니다. 3단계 분석 과정이
-                행동 데이터를 기반으로 진정한 관계를 안내합니다.
+                3단계 분석으로 행동 데이터에 기반한 대인관계 패턴을
+                체계적으로 진단하고 실질적인 인사이트를 제공합니다.
               </p>
             </div>
             <span className="wl-method-num">01—03</span>
@@ -106,8 +106,8 @@ export default function Welcome({ onStart }: Props) {
                 icon: '🔗',
                 color: '#43D39E',
                 bg: '#E8FBF3',
-                title: '깊은 매칭 분석',
-                desc: '표출행동과 기대행동의 균형을 분석해 나와 심리적으로 보완되는 파트너 유형을 도출합니다.',
+                title: '패턴 심층 분석',
+                desc: '표출행동과 기대행동의 균형을 분석해 대인관계에서 반복되는 나만의 패턴을 도출합니다.',
                 offset: true,
               },
               {
@@ -116,7 +116,7 @@ export default function Welcome({ onStart }: Props) {
                 color: '#FF9F43',
                 bg: '#FFF4E6',
                 title: '종합 리포트',
-                desc: '이상적인 배우자 프로필, 갈등 해결 방식, 조직 내 역할까지 상세한 리포트를 제공합니다.',
+                desc: '갈등 해결 방식, 소통 전략, 조직 내 역할까지 개인 맞춤형 상세 리포트를 제공합니다.',
                 offset: false,
               },
             ].map(({ num, icon, color, bg, title, desc, offset }) => (
@@ -151,8 +151,8 @@ export default function Welcome({ onStart }: Props) {
             <div className="wl-orbit-glow wl-orbit-glow--a" />
             <div className="wl-orbit-glow wl-orbit-glow--b" />
             <div className="wl-orbit-center">
-              <span className="wl-orbit-pct">98%</span>
-              <span className="wl-orbit-lbl">정확도</span>
+              <span className="wl-orbit-pct">70+</span>
+              <span className="wl-orbit-lbl">년 검증</span>
             </div>
           </div>
 
@@ -196,7 +196,7 @@ export default function Welcome({ onStart }: Props) {
         <div className="wl-start-inner">
           <span className="wl-badge">지금 시작하세요</span>
           <h2 className="wl-start-title">
-            나와 맞는 배우자,<br />여기서 찾으세요.
+            나의 대인관계 유형,<br />무료로 진단하세요.
           </h2>
           <p className="wl-start-desc">
             약 5~10분 · 54문항 · 무료 제공
@@ -217,10 +217,41 @@ export default function Welcome({ onStart }: Props) {
           </div>
 
           <div className="wl-info-chips">
-            {['📝 총 54문항', '⏱️ 5~10분 소요', '💌 배우자 궁합 + 갈등 리포트', '🔒 개인정보 수집 없음'].map(t => (
+            {['📝 총 54문항', '⏱️ 5~10분 소요', '💌 소통 패턴 + 갈등 해결 리포트', '🔒 개인정보 수집 없음'].map(t => (
               <span key={t} className="wl-chip">{t}</span>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── 학술 근거 & 신뢰성 ── */}
+      <section className="wl-trust">
+        <div className="wl-section-inner">
+          <div className="wl-trust-head">
+            <h2 className="wl-section-title">학술적으로 검증된 도구</h2>
+            <p className="wl-section-sub">
+              FIRO-B는 심리학자 William Schutz 박사가 1958년 개발한 대인관계 욕구 측정 도구입니다.<br />
+              60년 이상 Fortune 500 기업, 대학 연구기관, 팀 빌딩 전문가들이 활용해 왔습니다.
+            </p>
+          </div>
+          <div className="wl-trust-grid">
+            {[
+              { icon: '🎓', title: '학술 출판', desc: 'SCHUTZ, W. (1958). FIRO: A Three-Dimensional Theory of Interpersonal Behavior. 이후 수십 편의 동료 심사 논문으로 검증.' },
+              { icon: '🏢', title: '기업 HR 활용', desc: 'Google, NASA, 글로벌 컨설팅 펌 등에서 리더십 개발, 팀 빌딩, 채용 도구로 표준 활용.' },
+              { icon: '📊', title: '자기보고식 진단', desc: '임상 진단이 아닌 개인 성장·자기 이해를 목적으로 하는 자기보고식 심리 검사 소프트웨어입니다.' },
+            ].map(({ icon, title, desc }) => (
+              <div key={title} className="wl-trust-card">
+                <span className="wl-trust-icon">{icon}</span>
+                <h4 className="wl-trust-title">{title}</h4>
+                <p className="wl-trust-desc">{desc}</p>
+              </div>
+            ))}
+          </div>
+          <p className="wl-disclaimer">
+            ⚠️ 본 서비스는 개인 성장 및 자기 이해를 목적으로 하는 자기보고식 심리 진단 소프트웨어입니다.
+            임상 진단, 의료 상담, 또는 정신건강 치료를 대체하지 않습니다.
+            결과는 참고용이며, 전문 상담이 필요한 경우 자격을 갖춘 심리 전문가에게 문의하시기 바랍니다.
+          </p>
         </div>
       </section>
 

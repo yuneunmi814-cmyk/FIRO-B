@@ -127,12 +127,12 @@ export default function Results({ scores, userName, testDate, hasAccess, onUnloc
       <div className="rpt2-hero">
         <div className="rpt2-hero-inner">
           <motion.div {...fade(0)}>
-            <span className="rpt2-product-badge">관계 리듬 리포트</span>
+            <span className="rpt2-product-badge">FIRO-B 대인관계 분석 리포트</span>
             <h1 className="rpt2-hero-headline">
-              우리 관계,<br />왜 이렇게 느껴질까?
+              나의 대인관계<br />패턴 리포트
             </h1>
             <p className="rpt2-hero-sub">
-              당신의 관계 욕구와 행동 패턴, 그리고 반복되는 오해의 이유를 분석합니다
+              소속·통제·정서 욕구 분석을 통해 당신의 소통 방식과 대인관계 패턴을 진단합니다
             </p>
           </motion.div>
 
