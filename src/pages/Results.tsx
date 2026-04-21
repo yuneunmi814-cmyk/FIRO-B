@@ -112,6 +112,95 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
         {/* ── 핵심 결과 ── */}
         <section className="rpt-section">
           <h2 className="rpt-sec-title">핵심 결과</h2>
+
+          {/* ── 척도 읽는 법 ── */}
+          <div className="rpt-scale-legend">
+            <h3 className="rpt-legend-title">📖 점수 읽는 법</h3>
+            <p className="rpt-legend-hint">
+              영문 2자리 = <strong>앞: 행동 방향</strong> + <strong>뒤: 욕구 영역</strong>
+            </p>
+
+            {/* 행동 축 (e / w) */}
+            <div className="rpt-legend-axes">
+              <div className="rpt-legend-axis expressed">
+                <span className="rpt-legend-axis-letter">e</span>
+                <div className="rpt-legend-axis-body">
+                  <strong>표출 (expressed)</strong>
+                  <span>내가 먼저 하는 행동</span>
+                </div>
+              </div>
+              <div className="rpt-legend-axis wanted">
+                <span className="rpt-legend-axis-letter">w</span>
+                <div className="rpt-legend-axis-body">
+                  <strong>기대 (wanted)</strong>
+                  <span>상대가 해주길 바라는 정도</span>
+                </div>
+              </div>
+            </div>
+
+            {/* 3 욕구 × 표출/기대 매트릭스 */}
+            <div className="rpt-legend-scales">
+              <div className="rpt-legend-scale inclusion">
+                <div className="rpt-legend-head">
+                  <span className="rpt-legend-letter">I</span>
+                  <span className="rpt-legend-ko">포용 (Inclusion)</span>
+                  <span className="rpt-legend-tag">사람들과의 어울림</span>
+                </div>
+                <div className="rpt-legend-rows">
+                  <div className="rpt-legend-row">
+                    <code className="rpt-legend-code">eI</code>
+                    <span>내가 먼저 어울리려 하는 정도</span>
+                  </div>
+                  <div className="rpt-legend-row">
+                    <code className="rpt-legend-code">wI</code>
+                    <span>상대가 날 포함시켜 주길 원하는 정도</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="rpt-legend-scale control">
+                <div className="rpt-legend-head">
+                  <span className="rpt-legend-letter">C</span>
+                  <span className="rpt-legend-ko">통제 (Control)</span>
+                  <span className="rpt-legend-tag">관계 주도권</span>
+                </div>
+                <div className="rpt-legend-rows">
+                  <div className="rpt-legend-row">
+                    <code className="rpt-legend-code">eC</code>
+                    <span>내가 관계를 주도·리드하려는 정도</span>
+                  </div>
+                  <div className="rpt-legend-row">
+                    <code className="rpt-legend-code">wC</code>
+                    <span>상대가 주도해 주길 바라는 정도</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="rpt-legend-scale affection">
+                <div className="rpt-legend-head">
+                  <span className="rpt-legend-letter">A</span>
+                  <span className="rpt-legend-ko">애정 (Affection)</span>
+                  <span className="rpt-legend-tag">친밀감·따뜻함</span>
+                </div>
+                <div className="rpt-legend-rows">
+                  <div className="rpt-legend-row">
+                    <code className="rpt-legend-code">eA</code>
+                    <span>내가 먼저 친밀함·애정을 표현하는 정도</span>
+                  </div>
+                  <div className="rpt-legend-row">
+                    <code className="rpt-legend-code">wA</code>
+                    <span>상대가 친밀감·애정을 보여주길 원하는 정도</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p className="rpt-legend-foot">
+              예: <code className="rpt-legend-code">eA</code> 점수가 낮다면,
+              <strong> 내가 먼저 애정을 표현하는 편은 아니라는 뜻</strong>입니다.
+            </p>
+          </div>
+
           <div className="rpt-core-grid">
             <div className="rpt-radar-wrap">
               <RadarChart scores={scores} size={260} />

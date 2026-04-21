@@ -1359,3 +1359,181 @@
   .welcome-subtitle { font-size: 16px; }
   .hero-cta-btn { padding: 16px 28px; font-size: 16px; width: 100%; max-width: 320px; }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESULTS — 척도 설명 카드 (eI · wI · eC · wC · eA · wA)
+═══════════════════════════════════════════════════════════════ */
+.rpt-scale-legend {
+  background: #fff;
+  border-radius: 16px;
+  padding: 22px 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 12px rgba(124, 111, 255, 0.08);
+  border: 1px solid var(--border);
+}
+.rpt-legend-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 6px;
+}
+.rpt-legend-hint {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0 0 16px;
+  line-height: 1.6;
+}
+.rpt-legend-hint strong {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+/* ── 행동 축 (e / w) ── */
+.rpt-legend-axes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.rpt-legend-axis {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #F8F7FF;
+  border: 1px solid rgba(124, 111, 255, 0.15);
+}
+.rpt-legend-axis-letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 900;
+  color: #fff;
+  background: linear-gradient(135deg, #7C6FFF, #A855F7);
+  flex-shrink: 0;
+}
+.rpt-legend-axis.wanted .rpt-legend-axis-letter {
+  background: linear-gradient(135deg, #A855F7, #EC4899);
+}
+.rpt-legend-axis-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1.3;
+}
+.rpt-legend-axis-body strong {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text);
+}
+.rpt-legend-axis-body span {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ── 욕구 축 (I / C / A) × 표출/기대 ── */
+.rpt-legend-scales {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.rpt-legend-scale {
+  border-radius: 12px;
+  padding: 12px 14px;
+  border-left: 4px solid var(--border);
+  background: #FAFAFA;
+}
+.rpt-legend-scale.inclusion { border-left-color: #43D39E; background: #F0FBF7; }
+.rpt-legend-scale.control   { border-left-color: #FF9F43; background: #FFF7EE; }
+.rpt-legend-scale.affection { border-left-color: #FF6B9D; background: #FFF1F6; }
+
+.rpt-legend-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.rpt-legend-letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  font-size: 16px;
+  font-weight: 900;
+  color: #fff;
+  flex-shrink: 0;
+}
+.rpt-legend-scale.inclusion .rpt-legend-letter { background: #43D39E; }
+.rpt-legend-scale.control   .rpt-legend-letter { background: #FF9F43; }
+.rpt-legend-scale.affection .rpt-legend-letter { background: #FF6B9D; }
+
+.rpt-legend-ko {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text);
+}
+.rpt-legend-tag {
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 2px 8px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 999px;
+}
+
+.rpt-legend-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-left: 4px;
+}
+.rpt-legend-row {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 10px;
+  align-items: start;
+  font-size: 12.5px;
+  color: var(--text);
+  line-height: 1.5;
+}
+.rpt-legend-code {
+  font-family: ui-monospace, 'SF Mono', 'Menlo', 'Courier New', monospace;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--primary);
+  background: #fff;
+  padding: 2px 6px;
+  border-radius: 5px;
+  text-align: center;
+  border: 1px solid rgba(124, 111, 255, 0.2);
+}
+
+.rpt-legend-foot {
+  margin: 14px 0 0;
+  padding: 10px 12px;
+  background: #FFFBEB;
+  border: 1px solid #FCD34D;
+  border-radius: 10px;
+  font-size: 12.5px;
+  color: #78350F;
+  line-height: 1.6;
+}
+.rpt-legend-foot .rpt-legend-code {
+  background: #FEF3C7;
+  border-color: #F59E0B;
+  color: #78350F;
+}
+.rpt-legend-foot strong { font-weight: 700; }
+
+@media (max-width: 520px) {
+  .rpt-legend-axes { grid-template-columns: 1fr; }
+  .rpt-legend-head { gap: 8px; }
+  .rpt-legend-tag { font-size: 10px; }
+}
