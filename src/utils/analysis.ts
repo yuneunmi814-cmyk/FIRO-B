@@ -212,3 +212,134 @@ export function getIdealPartner(scores: FIROBScores): IdealPartnerResult {
 
   return { profile, narrative: parts.join('. ') + '.', traits, cautions };
 }
+
+// ── Score level helpers ──
+
+export function getScoreLevel(score: number): { en: string; ko: string; color: string } {
+  if (score <= 2) return { en: 'Low',          ko: '낮음', color: '#6B7280' };
+  if (score <= 5) return { en: 'Medium',        ko: '중간', color: '#3B82F6' };
+  if (score <= 7) return { en: 'Medium-High',   ko: '중상', color: '#8B5CF6' };
+  return              { en: 'High',          ko: '높음', color: '#EF4444' };
+}
+
+export function getDimLevel(total: number): { en: string; ko: string } {
+  if (total <= 5)  return { en: 'Low',         ko: '낮음' };
+  if (total <= 10) return { en: 'Medium',       ko: '중간' };
+  if (total <= 14) return { en: 'Medium-High',  ko: '중상' };
+  return                  { en: 'High',         ko: '높음' };
+}
+
+export function getGrandTotalLabel(total: number): string {
+  if (total <= 17) return 'Low';
+  if (total <= 31) return 'Medium';
+  if (total <= 44) return 'Medium-High (M-H)';
+  return 'High';
+}
+
+// ── Dimension totals ──
+
+export interface DimTotals {
+  inclusion: number;
+  control: number;
+  affection: number;
+  expressed: number;
+  wanted: number;
+  grand: number;
+}
+
+export function getDimTotals(s: FIROBScores): DimTotals {
+  return {
+    inclusion:  Math.round((s.eI + s.wI) * 10) / 10,
+    control:    Math.round((s.eC + s.wC) * 10) / 10,
+    affection:  Math.round((s.eA + s.wA) * 10) / 10,
+    expressed:  Math.round((s.eI + s.eC + s.eA) * 10) / 10,
+    wanted:     Math.round((s.wI + s.wC + s.wA) * 10) / 10,
+    grand:      Math.round((s.eI + s.wI + s.eC + s.wC + s.eA + s.wA) * 10) / 10,
+  };
+}
+
+// ── Organizational roles ──
+
+export interface OrgRole {
+  role: string;
+  description: string;
+}
+
+export function getOrgRoles(s: FIROBScores): OrgRole[] {
+  const { eI, wI, eC, wC, eA, wA } = s;
+  const roles: OrgRole[] = [];
+
+  if (eC >= 6)              roles.push({ role: 'Director',         description: '행동과 결정을 촉진하고 명확한 방향을 제시' });
+  if (eC >= 5 && wC <= 5)   roles.push({ role: 'Clarifier',        description: '이슈와 해결책을 명확히 정리하고 요약' });
+  if (eI >= 6 && eC >= 4)   roles.push({ role: 'Initiator',        description: '새로운 아이디어와 활동을 먼저 제안' });
+  if (eA >= 6)              roles.push({ role: 'Encourager',       description: '친절하고 수용적인 분위기 형성' });
+  if (eA >= 5 && eI >= 5)   roles.push({ role: 'Harmonizer',       description: '갈등을 완화하고 팀 화합 도모' });
+  if (eA >= 5)              roles.push({ role: 'Tension-Reducer',  description: '긴장 완화와 분위기 전환' });
+  if (wC >= 6)              roles.push({ role: 'Questioner',       description: '설명과 명확성을 요구하여 이해를 높임' });
+  if (wI >= 6)              roles.push({ role: 'Gatekeeper',       description: '다른 사람들의 참여를 권장하고 의견을 구함' });
+  if (wA >= 6 && eA >= 3)   roles.push({ role: 'Supporter',        description: '팀원들을 지지하고 공감' });
+  if (eI <= 3)              roles.push({ role: 'Listener',         description: '조용히 참여하며 목표에 관여' });
+
+  // Ensure at least 3
+  if (!roles.find(r => r.role === 'Clarifier'))  roles.push({ role: 'Clarifier',       description: '이슈와 해결책을 명확히 정리하고 요약' });
+  if (!roles.find(r => r.role === 'Listener'))   roles.push({ role: 'Listener',        description: '조용히 참여하며 목표에 관여' });
+  if (!roles.find(r => r.role === 'Questioner')) roles.push({ role: 'Questioner',      description: '설명과 명확성을 요구하여 이해를 높임' });
+
+  // Deduplicate and limit to 6
+  const seen = new Set<string>();
+  return roles.filter(r => seen.has(r.role) ? false : (seen.add(r.role), true)).slice(0, 6);
+}
+
+// ── Detailed interpretation ──
+
+export function getDetailedInterpretation(s: FIROBScores): string[] {
+  const t = getDimTotals(s);
+  const paras: string[] = [];
+
+  // Overall
+  if (t.grand <= 31) {
+    paras.push('대인관계 욕구 총합이 중간 수준이며, 상황에 따라 사람들과 상호작용하고자 하는 편입니다. 가까운 관계는 중요하지만 때로는 개인적 공간과 혼자만의 시간도 필요합니다.');
+  } else if (t.grand <= 44) {
+    paras.push('대인관계 욕구 총합이 중상 수준으로, 다양한 사람들과 교류하는 것을 즐기며 사회적 연결을 중요하게 여깁니다. 활발한 대인관계 속에서 에너지를 얻는 경향이 있습니다.');
+  } else {
+    paras.push('대인관계 욕구 총합이 높은 수준으로, 사람들과 함께하는 것을 매우 선호합니다. 넓은 사회적 네트워크를 유지하며 혼자 있는 것이 다소 불편할 수 있습니다.');
+  }
+
+  // Inclusion
+  if (t.inclusion <= 5) {
+    paras.push('소속 욕구가 낮아 혼자 일하는 것을 선호하며, 대규모 집단 활동보다 소수 인원과의 깊은 관계를 선호합니다. 독립적인 환경에서 높은 성과를 발휘합니다.');
+  } else if (t.inclusion <= 10) {
+    paras.push('소속 욕구가 중간 수준으로, 집단 활동에 선택적으로 참여하며 개인 공간과 사회적 교류를 균형 있게 유지합니다. 필요에 따라 그룹에 기여하고 물러서는 유연함을 보입니다.');
+  } else {
+    paras.push('소속 욕구가 높아 다양한 사람들과 함께하는 것을 즐기며, 그룹 활동과 커뮤니티에 적극적으로 참여합니다. 사람들 속에 있을 때 활력을 느낍니다.');
+  }
+
+  // Control
+  if (t.control >= 12) {
+    paras.push('통제 욕구가 높아 과업 달성을 위해 명확한 권한과 책임이 부여되는 상황을 선호합니다. 구조화된 환경과 명확한 역할 분담 속에서 높은 성과를 발휘하며, 권위에 민감한 편입니다.');
+  } else if (t.control >= 6) {
+    paras.push('통제 욕구가 중간 수준으로, 상황에 따라 이끌거나 따르는 역할을 유연하게 수행합니다. 구조와 자율성 사이에서 적절한 균형을 추구합니다.');
+  } else {
+    paras.push('통제 욕구가 낮아 민주적이고 자율적인 환경을 선호합니다. 권위적 구조보다 수평적인 관계에서 편안함을 느끼며, 지시보다는 협력을 통한 문제 해결을 선호합니다.');
+  }
+
+  // Affection
+  if (t.affection <= 4) {
+    paras.push('정서 욕구가 낮아 보다 공식적이고 사무적인 관계를 선호하는 경향이 있습니다. 전문적 관계에서 감정보다 역할과 업무에 집중하며, 친밀감 형성에 신중한 편입니다.');
+  } else if (t.affection <= 9) {
+    paras.push('정서 욕구가 중간 수준으로, 신뢰하는 소수와 깊은 감정적 교류를 나눕니다. 공식적 관계와 친밀한 관계를 상황에 맞게 구분하여 유지합니다.');
+  } else {
+    paras.push('정서 욕구가 높아 따뜻한 인간관계를 매우 중시합니다. 감정을 나누고 상대방의 애정 표현을 중요하게 여기며, 깊은 친밀감 속에서 관계의 의미를 찾습니다.');
+  }
+
+  // Expressed vs Wanted
+  if (t.expressed < t.wanted - 1) {
+    paras.push('표출행동보다 기대행동이 높아 타인이 먼저 관계를 이끌어 주기를 기대하는 경향이 있습니다. 자신의 욕구를 보다 적극적으로 표현하는 연습이 관계 만족도를 높이는 데 도움이 될 수 있습니다.');
+  } else if (t.expressed > t.wanted + 1) {
+    paras.push('표출행동이 기대행동보다 높아 자신이 먼저 행동에 나서는 주도적인 경향이 있습니다. 타인에게 많은 것을 제공하면서도 그에 상응하는 기대가 낮아 관계에서 여유로운 편입니다.');
+  } else {
+    paras.push('표출행동과 기대행동이 균형을 이루고 있어 자신이 주는 만큼 받기를 원하는 상호적인 관계를 추구합니다. 공정하고 균형 잡힌 대인관계 방식을 보입니다.');
+  }
+
+  return paras;
+}

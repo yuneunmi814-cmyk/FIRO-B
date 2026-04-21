@@ -9,9 +9,10 @@ import './App.css';
 type Page = 'welcome' | 'test' | 'results';
 
 function App() {
-  const [page, setPage] = useState<Page>('welcome');
-  const [scores, setScores] = useState<FIROBScores | null>(null);
+  const [page, setPage]         = useState<Page>('welcome');
+  const [scores, setScores]     = useState<FIROBScores | null>(null);
   const [userName, setUserName] = useState('');
+  const [testDate, setTestDate] = useState('');
 
   const handleStart = (name: string) => {
     setUserName(name);
@@ -20,6 +21,7 @@ function App() {
 
   const handleComplete = (answers: Answers) => {
     setScores(calculateScores(answers));
+    setTestDate(new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }));
     setPage('results');
   };
 
@@ -29,8 +31,9 @@ function App() {
   };
 
   if (page === 'welcome') return <Welcome onStart={handleStart} />;
-  if (page === 'test') return <Test onComplete={handleComplete} />;
-  if (page === 'results' && scores) return <Results scores={scores} userName={userName} onRetake={handleRetake} />;
+  if (page === 'test')    return <Test onComplete={handleComplete} />;
+  if (page === 'results' && scores)
+    return <Results scores={scores} userName={userName} testDate={testDate} onRetake={handleRetake} />;
   return null;
 }
 
