@@ -1537,3 +1537,122 @@
   .rpt-legend-head { gap: 8px; }
   .rpt-legend-tag { font-size: 10px; }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESULTS — 히어로 공유 버튼 row (3버튼 responsive)
+═══════════════════════════════════════════════════════════════ */
+.rpt-hero-actions {
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+@media (max-width: 520px) {
+  .rpt-hero-actions {
+    justify-content: center;
+  }
+  .rpt-hero-actions .download-btn {
+    flex: 1 1 auto;
+    min-width: 120px;
+    justify-content: center;
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESULTS — SNS 공유 큰 카드
+═══════════════════════════════════════════════════════════════ */
+.rpt-share-section {
+  background: linear-gradient(135deg, #7C6FFF 0%, #A855F7 100%);
+  border-radius: 20px;
+  padding: 28px 26px;
+  margin: 28px 0;
+  color: #fff;
+  box-shadow: 0 12px 32px rgba(124, 111, 255, 0.28);
+  position: relative;
+  overflow: hidden;
+}
+.rpt-share-section::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 180px;
+  height: 180px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.rpt-share-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+.rpt-share-emoji {
+  font-size: 36px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.rpt-share-title {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  margin: 0 0 6px;
+}
+.rpt-share-sub {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+  margin: 0;
+}
+.rpt-share-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+}
+.rpt-share-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 11px 16px;
+  border-radius: 10px;
+  border: none;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, filter 0.15s;
+  font-family: inherit;
+}
+.rpt-share-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+.rpt-share-btn:active { transform: translateY(0); }
+
+.rpt-share-btn--kakao  { background: #FEE500; color: #391B1B; }
+.rpt-share-btn--x      { background: #000;    color: #fff;    }
+.rpt-share-btn--fb     { background: #1877F2; color: #fff;    }
+.rpt-share-btn--native { background: rgba(255,255,255,0.18); color: #fff; border: 1px solid rgba(255,255,255,0.35); }
+.rpt-share-btn--copy   { background: #fff;    color: #7C6FFF; }
+
+.rpt-share-btn--kakao:hover { filter: brightness(0.95); }
+.rpt-share-btn--x:hover     { background: #1e1e1e; }
+.rpt-share-btn--fb:hover    { filter: brightness(1.08); }
+.rpt-share-btn--native:hover{ background: rgba(255,255,255,0.28); }
+
+@media (max-width: 520px) {
+  .rpt-share-section { padding: 24px 20px; }
+  .rpt-share-title { font-size: 19px; }
+  .rpt-share-btn {
+    flex: 1 1 calc(50% - 4px);
+    padding: 11px 10px;
+    font-size: 13px;
+    min-width: 0;
+  }
+}

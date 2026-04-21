@@ -5,6 +5,9 @@ import FeedbackForm from '../components/FeedbackForm';
 import DisqusSection from '../components/DisqusSection';
 import AdBanner from '../components/AdBanner';
 import DownloadReport from '../components/DownloadReport';
+import ShareImageButton from '../components/ShareImageButton';
+import ShareLinkButton from '../components/ShareLinkButton';
+import ShareReportSection from '../components/ShareReportSection';
 import {
   getScoreLevel,
   getDimLevel,
@@ -89,6 +92,8 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
           </div>
           <div className="rpt-hero-actions no-capture">
             <DownloadReport userName={userName} />
+            <ShareImageButton userName={userName} />
+            <ShareLinkButton />
           </div>
         </div>
       </div>
@@ -305,6 +310,9 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
             ))}
           </div>
         </section>
+
+        {/* ── SNS 공유 카드 ── */}
+        <ShareReportSection userName={userName} />
 
         {/* ── 광고 #2 ── */}
         <AdBanner slot="2222222222" />
