@@ -1,17 +1,40 @@
-import { CalendarDays, ChevronRight } from 'lucide-react'
+import { useState } from 'react'
+import { CalendarDays, ChevronRight, Loader2 } from 'lucide-react'
+import { startCheckout, generateOrderId, PRODUCTS, ACTIVE_PROVIDER } from '@/lib/payment'
 
 interface Props {
-  onBook?: () => void
+  userName?: string
 }
 
-export default function ConsultationCTA({ onBook }: Props) {
-  const handleBook = () => {
-    if (onBook) {
-      onBook()
-    } else {
-      // TODO: connect to booking system (Calendly / custom booking page / kakao channel)
-      // e.g. window.open('https://calendly.com/your-link', '_blank')
-      alert('상담 예약 시스템을 준비 중입니다. 곧 연결됩니다!')
+const product = PRODUCTS.consultation_deposit
+const priceLabel = ACTIVE_PROVIDER === 'mock'
+  ? '체험 모드 · 무료 예약'
+  : `예약금 ${product.amount.toLocaleString()}원`
+
+export default function ConsultationCTA({ userName }: Props) {
+  const [loading, setLoading] = useState(false)
+
+  const handleBook = async () => {
+    if (loading) return
+    setLoading(true)
+    try {
+      // TODO: once a booking system (Calendly / KakaoTalk channel) is connected,
+      // call startCheckout for the deposit, then redirect to the scheduler on success.
+      const result = await startCheckout({
+        product:      'consultation_deposit',
+        orderId:      generateOrderId('consult'),
+        customerName: userName,
+      })
+      if (result.success) {
+        alert('상담 예약금이 접수됐습니다. 담당자가 곧 연락드립니다!')
+      } else if (result.error && result.error !== 'redirecting') {
+        alert(`결제를 시작할 수 없습니다: ${result.error}`)
+      }
+    } catch (err) {
+      console.error('[ConsultationCTA] Checkout error:', err)
+      alert('결제 처리 중 오류가 발생했습니다.')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -35,9 +58,11 @@ export default function ConsultationCTA({ onBook }: Props) {
             </ul>
           </div>
         </div>
-        <button className="consult-btn" onClick={handleBook}>
-          전문가 해석 상담 예약
-          <ChevronRight size={16} />
+        <button className="consult-btn" onClick={handleBook} disabled={loading}>
+          {loading
+            ? <><Loader2 size={15} className="paywall-btn-spin" /> 처리 중…</>
+            : <>전문가 해석 상담 예약 · {priceLabel} <ChevronRight size={16} /></>
+          }
         </button>
       </div>
     </div>

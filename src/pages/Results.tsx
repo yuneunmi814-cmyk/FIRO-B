@@ -40,7 +40,8 @@ interface Props {
   userName: string
   testDate: string
   hasAccess: boolean
-  onUnlock: () => void
+  unlocking?: boolean
+  onRequestUnlock: () => void
   onRetake: () => void
 }
 
@@ -105,7 +106,7 @@ function DomainDetailCard({
 }
 
 /* ── Main component ───────────────────────────────── */
-export default function Results({ scores, userName, testDate, hasAccess, onUnlock, onRetake }: Props) {
+export default function Results({ scores, userName, testDate, hasAccess, unlocking, onRequestUnlock, onRetake }: Props) {
   const [activeTab, setActiveTab] = useState('individual')
 
   const totals    = getDimTotals(scores)
@@ -259,7 +260,8 @@ export default function Results({ scores, userName, testDate, hasAccess, onUnloc
               scores={scores}
               inclusion={inclusion}
               conflict={conflict}
-              onUnlock={onUnlock}
+              unlocking={unlocking}
+              onUnlock={onRequestUnlock}
             />
           </motion.div>
         )}
@@ -310,7 +312,8 @@ export default function Results({ scores, userName, testDate, hasAccess, onUnloc
             {/* LOCKED: control + affection + interpretations */}
             <LockedSection
               hasAccess={hasAccess}
-              onUnlock={onUnlock}
+              unlocking={unlocking}
+              onUnlock={onRequestUnlock}
               label="통제·애정 영역 상세 분석"
               hint="표현 방식과 기대 사이의 간극, 그리고 관계 패턴을 자세히 분석합니다"
             >
@@ -374,7 +377,8 @@ export default function Results({ scores, userName, testDate, hasAccess, onUnloc
           <TabsContent value="couple" className="space-y-6">
             <LockedSection
               hasAccess={hasAccess}
-              onUnlock={onUnlock}
+              unlocking={unlocking}
+              onUnlock={onRequestUnlock}
               label="이상적인 파트너 프로필 & 커플 궁합"
               hint="나와 가장 잘 맞는 파트너 유형과 주의해야 할 유형을 분석합니다"
             >
@@ -468,7 +472,8 @@ export default function Results({ scores, userName, testDate, hasAccess, onUnloc
             {/* LOCKED: full analysis */}
             <LockedSection
               hasAccess={hasAccess}
-              onUnlock={onUnlock}
+              unlocking={unlocking}
+              onUnlock={onRequestUnlock}
               label="갈등 패턴 상세 분석"
               hint="강점과 약점, 파트너와의 대화 전략까지 상세히 분석합니다"
             >
@@ -533,7 +538,8 @@ export default function Results({ scores, userName, testDate, hasAccess, onUnloc
           <TabsContent value="action" className="space-y-6">
             <LockedSection
               hasAccess={hasAccess}
-              onUnlock={onUnlock}
+              unlocking={unlocking}
+              onUnlock={onRequestUnlock}
               label="관계를 바꾸는 행동 가이드"
               hint="점수에서 행동으로 — 오늘 당장 쓸 수 있는 대화 스크립트와 실천 플랜"
             >
@@ -601,8 +607,8 @@ export default function Results({ scores, userName, testDate, hasAccess, onUnloc
             transition={{ duration: 0.5 }}
             className="space-y-4 mt-8"
           >
-            <CoupleUpsell />
-            <ConsultationCTA />
+            <CoupleUpsell userName={userName} />
+            <ConsultationCTA userName={userName} />
           </motion.div>
         )}
 

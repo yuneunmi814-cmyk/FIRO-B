@@ -2480,3 +2480,18 @@
   max-width: 680px;
   margin: 0 auto;
 }
+
+/* Spinner animation used by paywall/upsell/consult buttons */
+.paywall-btn-spin {
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+.paywall-btn:disabled,
+.upsell-btn:disabled,
+.consult-btn:disabled,
+.locked-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}

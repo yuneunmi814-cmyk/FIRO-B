@@ -1,11 +1,13 @@
-import { Lock, Sparkles, ChevronRight } from 'lucide-react'
+import { Lock, Sparkles, ChevronRight, Loader2 } from 'lucide-react'
 import type { FIROBScores } from '@/types'
 import type { DimensionResult, ConflictStyleResult } from '@/types'
+import { PRODUCTS, ACTIVE_PROVIDER } from '@/lib/payment'
 
 interface Props {
   scores: FIROBScores
   inclusion: DimensionResult
   conflict: ConflictStyleResult
+  unlocking?: boolean
   onUnlock: () => void
 }
 
@@ -44,17 +46,21 @@ function buildTeasers(
 
 const LOCKED_FEATURES = [
   { icon: '🔍', text: '갈등 패턴 상세 분석 & 반복되는 이유' },
-  { icon: '💑', text: '이상적인 파트너 프로필 & 궁합 예측' },
+  { icon: '💑', text: '이상적인 파트너 프로필 & 주의 유형' },
   { icon: '💬', text: '관계를 바꾸는 대화 스크립트' },
   { icon: '🗺️', text: '4단계 행동 가이드 & 실천 플랜' },
 ]
 
-export default function PaywallCTA({ scores, inclusion, conflict, onUnlock }: Props) {
+const product = PRODUCTS.individual_report
+const priceLabel = ACTIVE_PROVIDER === 'mock'
+  ? '지금은 무료 체험 모드입니다 · 결제 연동 후 가격 표시 예정'
+  : `${product.amount.toLocaleString()}원 · 1회 결제 · 평생 열람`
+
+export default function PaywallCTA({ scores, inclusion, conflict, unlocking, onUnlock }: Props) {
   const teasers = buildTeasers(scores, inclusion, conflict)
 
   return (
     <div className="paywall-card">
-      {/* Header */}
       <div className="paywall-header">
         <div className="paywall-sparkle-wrap">
           <Sparkles size={18} />
@@ -69,7 +75,6 @@ export default function PaywallCTA({ scores, inclusion, conflict, onUnlock }: Pr
         </div>
       </div>
 
-      {/* Personalized teasers */}
       <div className="paywall-teasers">
         {teasers.map((t, i) => (
           <div key={i} className="paywall-teaser-row">
@@ -79,12 +84,10 @@ export default function PaywallCTA({ scores, inclusion, conflict, onUnlock }: Pr
         ))}
       </div>
 
-      {/* Divider */}
       <div className="paywall-divider">
         <span className="paywall-divider-text">전체 리포트에서 확인할 수 있는 내용</span>
       </div>
 
-      {/* Locked feature list */}
       <div className="paywall-features">
         {LOCKED_FEATURES.map(({ icon, text }) => (
           <div key={text} className="paywall-feature-row">
@@ -95,17 +98,19 @@ export default function PaywallCTA({ scores, inclusion, conflict, onUnlock }: Pr
         ))}
       </div>
 
-      {/* CTA */}
       <div className="paywall-cta-wrap">
-        {/* TODO: replace onUnlock with real payment flow (Toss Payments or Stripe) */}
-        <button className="paywall-btn" onClick={onUnlock}>
-          전체 리포트 보기
-          <ChevronRight size={18} strokeWidth={2.5} />
+        <button
+          className="paywall-btn"
+          onClick={onUnlock}
+          disabled={unlocking}
+        >
+          {unlocking ? (
+            <><Loader2 size={18} className="paywall-btn-spin" /> 결제 준비 중…</>
+          ) : (
+            <>지금 결과 확인하기 <ChevronRight size={18} strokeWidth={2.5} /></>
+          )}
         </button>
-        {/* TODO: set real price from environment / product config */}
-        <p className="paywall-price-note">
-          지금은 무료 체험 모드입니다 · 결제 연동 후 가격 표시 예정
-        </p>
+        <p className="paywall-price-note">{priceLabel}</p>
       </div>
     </div>
   )

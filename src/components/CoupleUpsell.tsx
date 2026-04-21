@@ -1,16 +1,39 @@
-import { Heart, ChevronRight } from 'lucide-react'
+import { useState } from 'react'
+import { Heart, ChevronRight, Loader2 } from 'lucide-react'
+import { startCheckout, generateOrderId, PRODUCTS, ACTIVE_PROVIDER } from '@/lib/payment'
 
 interface Props {
-  onAddCouple?: () => void
+  userName?: string
 }
 
-export default function CoupleUpsell({ onAddCouple }: Props) {
-  const handleClick = () => {
-    if (onAddCouple) {
-      onAddCouple()
-    } else {
-      // TODO: route to couple comparison flow or open partner-score input modal
-      alert('커플 분석 기능은 곧 출시됩니다! 파트너도 검사를 완료하면 자동으로 비교 분석됩니다.')
+const product  = PRODUCTS.couple_addon
+const priceLabel = ACTIVE_PROVIDER === 'mock'
+  ? '체험 모드 · 무료'
+  : `${product.amount.toLocaleString()}원 추가`
+
+export default function CoupleUpsell({ userName }: Props) {
+  const [loading, setLoading] = useState(false)
+
+  const handleClick = async () => {
+    if (loading) return
+    setLoading(true)
+    try {
+      const result = await startCheckout({
+        product:      'couple_addon',
+        orderId:      generateOrderId('couple'),
+        customerName: userName,
+      })
+      if (result.success) {
+        // TODO: set coupleAccess=true in App.tsx via a prop callback
+        alert('커플 분석이 추가됐습니다! (연동 후 자동으로 활성화됩니다)')
+      } else if (result.error && result.error !== 'redirecting') {
+        alert(`결제를 시작할 수 없습니다: ${result.error}`)
+      }
+    } catch (err) {
+      console.error('[CoupleUpsell] Checkout error:', err)
+      alert('결제 처리 중 오류가 발생했습니다.')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -31,9 +54,11 @@ export default function CoupleUpsell({ onAddCouple }: Props) {
           <li>커플 맞춤 대화 스크립트 제공</li>
         </ul>
       </div>
-      <button className="upsell-btn" onClick={handleClick}>
-        커플 분석 추가하기
-        <ChevronRight size={16} />
+      <button className="upsell-btn" onClick={handleClick} disabled={loading}>
+        {loading
+          ? <><Loader2 size={15} className="paywall-btn-spin" /> 처리 중…</>
+          : <>커플 분석 추가하기 · {priceLabel} <ChevronRight size={16} /></>
+        }
       </button>
     </div>
   )
