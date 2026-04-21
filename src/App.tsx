@@ -12,19 +12,40 @@ import './App.css';
 type Page = 'welcome' | 'test' | 'results';
 
 function App() {
-  const [page, setPage]         = useState<Page>('welcome');
-  const [scores, setScores]     = useState<FIROBScores | null>(null);
-  const [userName, setUserName] = useState('');
-  const [testDate, setTestDate] = useState('');
+  const [page, setPage]           = useState<Page>('welcome');
+  const [scores, setScores]       = useState<FIROBScores | null>(null);
+  const [userName, setUserName]   = useState('');
+  const [testDate, setTestDate]   = useState('');
+
+  // ── Access / payment state ──────────────────────────────────────────────
+  // hasAccess: false → paywall shown, true → full report visible
+  // TODO: persist via localStorage or Firebase Auth when real payment is wired
+  const [hasAccess, setHasAccess] = useState(false);
+
+  /**
+   * Mock unlock for development.
+   * Replace this body with a real payment flow:
+   *   - Toss Payments: call tossPayments.requestPayment(...) then verify on backend
+   *   - Stripe: redirect to Stripe Checkout or open Elements modal
+   * On successful payment confirmation → setHasAccess(true)
+   */
+  const handleUnlock = () => {
+    // TODO: replace with real payment integration
+    setHasAccess(true);
+  };
+  // ────────────────────────────────────────────────────────────────────────
 
   const handleStart = (name: string) => {
     setUserName(name);
+    setHasAccess(false);   // reset access on new test
     setPage('test');
   };
 
   const handleComplete = (answers: Answers) => {
     const computed = calculateScores(answers);
-    const date = new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
+    const date = new Date().toLocaleDateString('ko-KR', {
+      year: 'numeric', month: '2-digit', day: '2-digit',
+    });
     setScores(computed);
     setTestDate(date);
     setPage('results');
@@ -48,6 +69,7 @@ function App() {
 
   const handleRetake = () => {
     setScores(null);
+    setHasAccess(false);
     setPage('welcome');
   };
 
@@ -56,8 +78,16 @@ function App() {
       <SiteHeader />
       {page === 'welcome' && <Welcome onStart={handleStart} />}
       {page === 'test'    && <Test onComplete={handleComplete} />}
-      {page === 'results' && scores &&
-        <Results scores={scores} userName={userName} testDate={testDate} onRetake={handleRetake} />}
+      {page === 'results' && scores && (
+        <Results
+          scores={scores}
+          userName={userName}
+          testDate={testDate}
+          hasAccess={hasAccess}
+          onUnlock={handleUnlock}
+          onRetake={handleRetake}
+        />
+      )}
       <SiteFooter />
     </>
   );
