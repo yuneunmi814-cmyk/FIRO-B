@@ -8,49 +8,76 @@ interface Props {
 export default function Welcome({ onStart }: Props) {
   const [name, setName] = useState('');
 
+  const scrollToStart = () => {
+    const target = document.getElementById('welcome-start-section');
+    if (!target) return;
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Let the scroll settle, then focus the input so users can just type their name
+    setTimeout(() => document.getElementById('name-input')?.focus(), 500);
+  };
+
   return (
     <div className="welcome-page">
+      {/* ── HERO : 문제 공감 + 강력한 CTA ── */}
       <div className="welcome-hero">
-        <div className="welcome-badge">심리검사</div>
-        <h1 className="welcome-title">FIRO-B</h1>
-        <p className="welcome-subtitle">나에게 가장 잘 맞는 배우자를 찾고<br />갈등 해결 방식을 알아보세요</p>
+        <div className="welcome-badge">FIRO-B 관계 심리 진단</div>
+
+        <h1 className="welcome-title">
+          왜 우리는<br />같은 문제로<br />계속 부딪힐까?
+        </h1>
+
+        <p className="welcome-subtitle">
+          당신의 관계 욕구와 반복되는 갈등의 <strong>‘이유’</strong>를 분석합니다
+        </p>
+
+        <button className="hero-cta-btn" onClick={scrollToStart}>
+          내 관계 분석 시작하기
+          <span className="hero-cta-arrow" aria-hidden>→</span>
+        </button>
+
+        <p className="welcome-hero-meta">
+          5분 · 54문항 · 가입 불필요
+        </p>
       </div>
 
       <div className="welcome-content">
+        {/* ── 3개 영역 ── */}
         <div className="dimension-cards">
           <div className="dimension-card inclusion">
             <span className="dim-icon">🤝</span>
-            <h3>포용 (Inclusion)</h3>
-            <p>사람들과 어울리고 싶은 욕구와 포함되고 싶은 욕구</p>
+            <h3>포용 <span className="dim-en">(Inclusion)</span></h3>
+            <p>사람들과 얼마나 함께하고 싶은지</p>
           </div>
           <div className="dimension-card control">
             <span className="dim-icon">⚡</span>
-            <h3>통제 (Control)</h3>
-            <p>상황을 주도하거나 안내받고 싶은 욕구</p>
+            <h3>통제 <span className="dim-en">(Control)</span></h3>
+            <p>누가 관계를 주도해야 편한지</p>
           </div>
           <div className="dimension-card affection">
             <span className="dim-icon">❤️</span>
-            <h3>애정 (Affection)</h3>
-            <p>친밀감을 나누고 사랑받고 싶은 욕구</p>
+            <h3>애정 <span className="dim-en">(Affection)</span></h3>
+            <p>얼마나 사랑을 주고받고 싶은지</p>
           </div>
         </div>
 
+        {/* ── 가치 뱃지 ── */}
         <div className="welcome-info">
           <div className="info-item">
-            <span className="info-icon">📝</span>
-            <span>총 54문항</span>
+            <span className="info-icon">⏱</span>
+            <span>5분이면 결과 확인 가능</span>
           </div>
           <div className="info-item">
-            <span className="info-icon">⏱️</span>
-            <span>약 5~10분 소요</span>
+            <span className="info-icon">📊</span>
+            <span>당신의 관계 패턴 바로 분석</span>
           </div>
           <div className="info-item">
-            <span className="info-icon">💌</span>
-            <span>배우자 궁합 + 갈등 해결 리포트</span>
+            <span className="info-icon">💡</span>
+            <span>갈등 원인 + 해결 방법 제공</span>
           </div>
         </div>
 
-        <div className="name-input-section">
+        {/* ── 이름 입력 + 본 CTA ── */}
+        <div className="name-input-section" id="welcome-start-section">
           <label htmlFor="name-input" className="name-label">이름 (선택)</label>
           <input
             id="name-input"
