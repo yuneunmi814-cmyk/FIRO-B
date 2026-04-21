@@ -16,6 +16,7 @@ import {
   clearPendingSession,
   savePendingSession,
   confirmPayment,
+  confirmPolarCheckout,
   saveAccess,
   hasAccess as hasStoredAccess,
   clearAllAccess,
@@ -51,38 +52,57 @@ function App() {
       return;
     }
 
-    if (cb.status === 'success' && cb.paymentKey && cb.orderId && cb.amount) {
-      const session = loadPendingSession();
+    if (cb.status !== 'success') return;
 
-      (async () => {
-        // Call our Vercel Function → Toss /v1/payments/confirm
-        const confirmed = await confirmPayment(cb.paymentKey!, cb.orderId!, cb.amount!);
+    const session = loadPendingSession();
 
-        if (!confirmed.success) {
-          alert(`결제 승인에 실패했습니다.\n${confirmed.error ?? ''}`);
-          clearPendingSession();
-          return;
-        }
+    (async () => {
+      let ok = false;
+      let unlockedOrderId = '';
+      let unlockedAmount: number | undefined;
 
-        // Persist access so refreshing doesn't lock the report again
-        saveAccess('individual_report', {
-          orderId:    cb.orderId!,
-          unlockedAt: Date.now(),
-          amount:     cb.amount,
-        });
-        clearPendingSession();
-
-        if (session) {
-          setScores(session.scores);
-          setUserName(session.userName);
-          setTestDate(session.testDate);
-          setHasAccess(true);
-          setPage('results');
+      if (cb.provider === 'toss' && cb.paymentKey && cb.orderId && cb.amount) {
+        // Toss requires a server-side confirm call to finalize the payment
+        const r = await confirmPayment(cb.paymentKey, cb.orderId, cb.amount);
+        if (r.success) {
+          ok = true;
+          unlockedOrderId = cb.orderId;
+          unlockedAmount  = cb.amount;
         } else {
-          setHasAccess(true);
+          alert(`결제 승인에 실패했습니다.\n${r.error ?? ''}`);
         }
-      })();
-    }
+      } else if (cb.provider === 'polar' && cb.checkoutId) {
+        // Polar finalizes itself — we just verify the checkout succeeded
+        const r = await confirmPolarCheckout(cb.checkoutId);
+        if (r.success) {
+          ok = true;
+          unlockedOrderId = r.internalOrderId ?? cb.checkoutId;
+          unlockedAmount  = r.amount;
+        } else {
+          alert(`결제 확인에 실패했습니다.\n${r.error ?? ''}`);
+        }
+      }
+
+      clearPendingSession();
+
+      if (!ok) return;
+
+      saveAccess('individual_report', {
+        orderId:    unlockedOrderId,
+        unlockedAt: Date.now(),
+        amount:     unlockedAmount,
+      });
+
+      if (session) {
+        setScores(session.scores);
+        setUserName(session.userName);
+        setTestDate(session.testDate);
+        setHasAccess(true);
+        setPage('results');
+      } else {
+        setHasAccess(true);
+      }
+    })();
   }, []); // runs once on mount
 
   // ── Request unlock (called by PaywallCTA / LockedSection) ───────────────
