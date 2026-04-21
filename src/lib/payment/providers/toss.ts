@@ -46,30 +46,22 @@ export const tossAdapter: PaymentAdapter = {
     const successUrl = req.successUrl ?? `${origin}?paymentKey={PAYMENT_KEY}&orderId={ORDER_ID}&amount={AMOUNT}`
     const failUrl    = req.failUrl    ?? `${origin}?code={ERROR_CODE}&message={MESSAGE}&orderId={ORDER_ID}`
 
-    // TODO: uncomment once @tosspayments/tosspayments-sdk is installed
-    //
-    // const { TossPayments } = await import('@tosspayments/tosspayments-sdk')
-    // const toss    = await TossPayments(CLIENT_KEY)
-    // const payment = toss.payment({ customerKey: req.orderId })
-    //
-    // await payment.requestPayment({
-    //   method:       'CARD',
-    //   amount:       { currency: product.currency, value: product.amount },
-    //   orderId:      req.orderId,
-    //   orderName:    product.name,
-    //   customerName: req.customerName,
-    //   successUrl,
-    //   failUrl,
-    // })
-    //
+    const { loadTossPayments, ANONYMOUS } = await import('@tosspayments/tosspayments-sdk')
+    const toss    = await loadTossPayments(CLIENT_KEY)
+    const payment = toss.payment({ customerKey: req.customerName ? `user_${req.orderId}` : ANONYMOUS })
+
+    await payment.requestPayment({
+      method:    'CARD',
+      amount:    { currency: product.currency, value: product.amount },
+      orderId:   req.orderId,
+      orderName: product.name,
+      customerName: req.customerName,
+      successUrl,
+      failUrl,
+    })
+
     // requestPayment() navigates the browser away.
-    // This return is never reached in the normal flow.
     // Access unlock is handled in App.tsx via readPaymentCallback() on next mount.
-
-    void product; void successUrl; void failUrl  // suppress unused warnings until TODO is resolved
-
-    throw new Error(
-      '[TossPayments] SDK not installed. Run: npm install @tosspayments/tosspayments-sdk'
-    )
+    return { success: false, error: 'redirecting' }
   },
 }
