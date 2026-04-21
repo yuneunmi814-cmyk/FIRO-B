@@ -1,6 +1,7 @@
 import type { FIROBScores } from '../types';
 import RadarChart from '../components/RadarChart';
 import EmailResultsForm from '../components/EmailResultsForm';
+import ShareButtons from '../components/ShareButtons';
 import FeedbackForm from '../components/FeedbackForm';
 import DisqusSection from '../components/DisqusSection';
 import AdBanner from '../components/AdBanner';
@@ -334,6 +335,15 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
             ))}
           </ul>
         </section>
+
+        {/* ── 공유하기 ── */}
+        <ShareButtons
+          userName={userName}
+          inclusionType={inclusion.type}
+          controlType={control.type}
+          affectionType={affection.type}
+          conflictStyle={conflict.style}
+        />
 
         {/* ── Formspree: 이메일 받기 ── */}
         <EmailResultsForm
