@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import AdBanner from '../components/AdBanner';
+import PartnershipForm from '../components/PartnershipForm';
+import DisqusSection from '../components/DisqusSection';
 
 interface Props {
   onStart: (name: string) => void;
@@ -73,6 +75,15 @@ export default function Welcome({ onStart }: Props) {
           각 문항은 1~6점으로 답변합니다.<br />
           솔직하게 답할수록 정확한 결과를 얻을 수 있어요.
         </p>
+
+        <PartnershipForm />
+
+        <DisqusSection
+          pageUrl="https://firob.vercel.app/"
+          pageIdentifier="firob-welcome"
+          title="자유 게시판"
+          subtitle="FIRO-B 검사 결과나 궁금한 점을 자유롭게 나눠보세요"
+        />
       </div>
     </div>
   );

@@ -1,12 +1,24 @@
 import { useEffect, useRef, useState } from 'react';
 
-const PROD_URL = 'https://firob.vercel.app/';
+const BASE_URL = 'https://firob.vercel.app/';
 
 const isDev =
   typeof window !== 'undefined' &&
   (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
 
-export default function DisqusSection() {
+interface Props {
+  pageUrl?: string;
+  pageIdentifier?: string;
+  title?: string;
+  subtitle?: string;
+}
+
+export default function DisqusSection({
+  pageUrl = BASE_URL,
+  pageIdentifier = 'firob-results-main',
+  title = '커뮤니티 토론',
+  subtitle = '다른 사람들의 결과와 비교하거나 느낀 점을 나눠보세요',
+}: Props) {
   const loaded = useRef(false);
   const [ready, setReady] = useState(false);
 
@@ -20,8 +32,8 @@ export default function DisqusSection() {
       disqus.reset({
         reload: true,
         config: function (this: { page: { url: string; identifier: string } }) {
-          this.page.url        = PROD_URL;
-          this.page.identifier = 'firob-results-main';
+          this.page.url        = pageUrl;
+          this.page.identifier = pageIdentifier;
         },
       });
       setReady(true);
@@ -32,8 +44,8 @@ export default function DisqusSection() {
     (window as unknown as Record<string, unknown>).disqus_config = function (
       this: { page: { url: string; identifier: string } }
     ) {
-      this.page.url        = PROD_URL;
-      this.page.identifier = 'firob-results-main';
+      this.page.url        = pageUrl;
+      this.page.identifier = pageIdentifier;
     };
 
     const d = document;
@@ -49,8 +61,8 @@ export default function DisqusSection() {
       <div className="disqus-header">
         <span className="disqus-icon">💬</span>
         <div>
-          <h3 className="disqus-title">커뮤니티 토론</h3>
-          <p className="disqus-sub">다른 사람들의 결과와 비교하거나 느낀 점을 나눠보세요</p>
+          <h3 className="disqus-title">{title}</h3>
+          <p className="disqus-sub">{subtitle}</p>
         </div>
       </div>
 
