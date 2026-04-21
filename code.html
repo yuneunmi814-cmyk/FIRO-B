@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Affinita Collective | Premium FIRO-B Matchmaking</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary": "#ffffff",
+                    "on-background": "#191c1d",
+                    "on-secondary-fixed-variant": "#543589",
+                    "background": "#f8f9fa",
+                    "tertiary": "#2c0011",
+                    "tertiary-container": "#520025",
+                    "primary-fixed-dim": "#bbc6e2",
+                    "secondary": "#6d4ea2",
+                    "primary-container": "#1b263b",
+                    "surface-container-highest": "#e1e3e4",
+                    "secondary-fixed": "#ebdcff",
+                    "on-secondary-container": "#533487",
+                    "error": "#ba1a1a",
+                    "on-primary-container": "#828da7",
+                    "on-error-container": "#93000a",
+                    "secondary-container": "#c5a3ff",
+                    "surface-variant": "#e1e3e4",
+                    "inverse-surface": "#2e3132",
+                    "tertiary-fixed-dim": "#ffb1c5",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed": "#101b30",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed": "#d7e2ff",
+                    "secondary-fixed-dim": "#d4bbff",
+                    "inverse-primary": "#bbc6e2",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-fixed": "#3f001b",
+                    "on-primary-fixed-variant": "#3c475d",
+                    "surface-container-low": "#f3f4f5",
+                    "outline": "#75777d",
+                    "surface": "#f8f9fa",
+                    "outline-variant": "#c5c6cd",
+                    "surface-container": "#edeeef",
+                    "on-tertiary-fixed-variant": "#8b0e45",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface-variant": "#45474d",
+                    "on-secondary-fixed": "#270058",
+                    "primary": "#051125",
+                    "surface-bright": "#f8f9fa",
+                    "error-container": "#ffdad6",
+                    "tertiary-fixed": "#ffd9e1",
+                    "inverse-on-surface": "#f0f1f2",
+                    "surface-dim": "#d9dadb",
+                    "on-surface": "#191c1d",
+                    "surface-container-high": "#e7e8e9",
+                    "surface-tint": "#545e76",
+                    "on-tertiary-container": "#e85c8c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-header {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body text-on-surface">
+<!-- TopAppBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/80 dark:bg-[#051125]/80 backdrop-blur-xl shadow-[0px_12px_32px_rgba(5,17,37,0.06)] flex justify-between items-center px-6 py-4 w-full">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#6d4ea2] dark:text-[#6d4ea2] hover:opacity-80 transition-opacity" data-icon="menu">menu</span>
+<span class="text-xl font-bold tracking-tighter font-manrope text-[#051125] dark:text-white">The Curator</span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-[#6d4ea2] font-semibold font-manrope tracking-tight hover:opacity-80 transition-opacity" href="#">Discover</a>
+<a class="text-slate-500 dark:text-slate-400 font-manrope tracking-tight hover:opacity-80 transition-opacity" href="#">Analysis</a>
+<a class="text-slate-500 dark:text-slate-400 font-manrope tracking-tight hover:opacity-80 transition-opacity" href="#">Matches</a>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-secondary-container">
+<img alt="User profile photo" class="w-full h-full object-cover" data-alt="Close-up professional portrait of a woman with a confident expression, soft studio lighting, high-end editorial aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuASPxsls8Wap3n9OgLcDjRk18dAflpPMh-O0i20YrzelC56Xmnq_evxqlzdjSW3UzVBs0ce27gWLyLLRubMuAr-vJ2OXSEri8PzbzFTDNVVghXZTnJtBXdLw1m1LrBraN1ywjJ-q5KGNYHvoXHS9u9sh8s-m-mdUdzdIUB44ueTMk8Ird1TYo-YKTZcIQetluYFtMO5HvYHmI-5GluohSAIueFGHsA25AxhX4Uk0nQZkvqiZbicre_PdOgZe_LtgUXvdX5o0AstwHfO"/>
+</div>
+</div>
+</nav>
+<main class="pt-24 pb-32">
+<!-- Hero Section -->
+<section class="relative px-6 md:px-12 lg:px-24 py-16 md:py-28 overflow-hidden">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12">
+<div class="flex-1 text-left z-10">
+<span class="inline-block px-4 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant text-xs font-bold tracking-widest uppercase mb-6">Affinita Collective</span>
+<h1 class="font-headline font-extrabold text-5xl md:text-7xl text-primary leading-[1.1] tracking-tighter mb-8 max-w-2xl">
+                        Find the Partner Who <span class="text-secondary italic">Truly</span> Complements You
+                    </h1>
+<p class="font-body text-lg text-on-surface-variant max-w-lg mb-10 leading-relaxed">
+                        Go beyond the surface with FIRO-B psychological analysis to discover deep compatibility. We curate connections based on fundamental interpersonal orientation.
+                    </p>
+<div class="flex flex-wrap gap-4">
+<button class="bg-primary text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl hover:scale-[1.02] transition-transform duration-300">
+                            Start My Analysis
+                        </button>
+<button class="px-8 py-4 rounded-xl font-semibold text-lg text-primary border border-outline-variant hover:bg-surface-container-low transition-colors">
+                            How it works
+                        </button>
+</div>
+</div>
+<div class="flex-1 relative w-full h-[500px] md:h-[600px]">
+<!-- Asymmetric Image Layout -->
+<div class="absolute top-0 right-0 w-4/5 h-4/5 rounded-[2rem] overflow-hidden shadow-2xl z-0 transform rotate-3">
+<img alt="Couple in intimate conversation" class="w-full h-full object-cover" data-alt="Minimalist artistic photography of a couple sitting in a sunlit loft, soft shadows, warm highlights, premium lifestyle aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyxUBjx7WpKoLqXE1sHlSNgHc4WU03-PaKaMfGgeh7mrG8Iwv_ZPcO-PNhMIm6Nbpw9zQqWG5p2ieHfOxxZUAVde8Y-Zu2Tdbvc0SgTMZ-syu_swZtsUXA23-GBm4_o0A7o1dwq02jH57qxtM_bTuat7d01Bh_d36TTXnGuqQK5nh2SyRU2xh0pWGdA_vhvA83Xph9hu_KhB0RXshifLSjiSseQYhAAUMd38TQJqDn7m6_XSTZl3Z6PBi4VoJemYjEs89jVTFSlvtq"/>
+</div>
+<div class="absolute bottom-4 left-0 w-3/5 h-1/2 bg-white/40 glass-header p-6 rounded-3xl shadow-xl z-20 border border-white/20">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-3 h-3 rounded-full bg-secondary"></div>
+<span class="text-xs font-bold uppercase tracking-widest text-primary">Live Compatibility Analysis</span>
+</div>
+<div class="space-y-3">
+<div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-4/5"></div>
+</div>
+<div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-3/4"></div>
+</div>
+<div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary-fixed-dim w-1/2"></div>
+</div>
+</div>
+<div class="mt-4 flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant">Inclusion Match</span>
+<span class="text-sm font-bold text-primary">94%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Abstract background element -->
+<div class="absolute top-1/2 -right-64 w-[600px] h-[600px] bg-secondary-fixed/30 rounded-full blur-[120px] -z-10"></div>
+<div class="absolute -bottom-32 -left-32 w-[400px] h-[400px] bg-primary-fixed/20 rounded-full blur-[100px] -z-10"></div>
+</section>
+<!-- Bento Grid Section: How It Works -->
+<section class="px-6 md:px-12 lg:px-24 py-24 bg-surface-container-low">
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-col md:flex-row items-end justify-between mb-16 gap-6">
+<div class="max-w-2xl">
+<h2 class="font-headline font-extrabold text-4xl md:text-5xl text-primary tracking-tight mb-4">The Methodology of Connection</h2>
+<p class="text-on-surface-variant text-lg leading-relaxed">We replace the swipe with science. Our three-step curation process ensures every introduction is backed by behavioral data.</p>
+</div>
+<div class="hidden md:block">
+<span class="text-6xl font-headline font-extrabold text-outline-variant/20 tracking-tighter">01—03</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Step 1 -->
+<div class="group bg-surface-container-lowest p-10 rounded-[2rem] shadow-sm hover:shadow-[0px_12px_32px_rgba(5,17,37,0.06)] transition-all duration-500">
+<div class="w-16 h-16 rounded-2xl bg-secondary-container flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-secondary text-3xl" data-icon="psychology">psychology</span>
+</div>
+<h3 class="font-headline font-bold text-2xl text-primary mb-4">1. Psychological Profile</h3>
+<p class="text-on-surface-variant leading-relaxed mb-6">Complete our proprietary assessment based on the Fundamental Interpersonal Relations Orientation theory to map your needs for inclusion, control, and affection.</p>
+<div class="h-1 w-12 bg-secondary rounded-full"></div>
+</div>
+<!-- Step 2 -->
+<div class="group bg-surface-container-lowest p-10 rounded-[2rem] shadow-sm hover:shadow-[0px_12px_32px_rgba(5,17,37,0.06)] transition-all duration-500 md:translate-y-8">
+<div class="w-16 h-16 rounded-2xl bg-primary-fixed flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="diversity_3">diversity_3</span>
+</div>
+<h3 class="font-headline font-bold text-2xl text-primary mb-4">2. Deep Matching</h3>
+<p class="text-on-surface-variant leading-relaxed mb-6">Our algorithm analyzes billions of data points to find individuals whose interpersonal behaviors complement your own, creating a natural psychological equilibrium.</p>
+<div class="h-1 w-12 bg-primary rounded-full"></div>
+</div>
+<!-- Step 3 -->
+<div class="group bg-surface-container-lowest p-10 rounded-[2rem] shadow-sm hover:shadow-[0px_12px_32px_rgba(5,17,37,0.06)] transition-all duration-500">
+<div class="w-16 h-16 rounded-2xl bg-tertiary-fixed flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-tertiary text-3xl" data-icon="calendar_month">calendar_month</span>
+</div>
+<h3 class="font-headline font-bold text-2xl text-primary mb-4">3. Curated Meetings</h3>
+<p class="text-on-surface-variant leading-relaxed mb-6">No endless chatting. Once a match is confirmed, we curate a bespoke first meeting in a setting designed to facilitate authentic human connection.</p>
+<div class="h-1 w-12 bg-tertiary rounded-full"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Signature Visualization Section -->
+<section class="px-6 md:px-12 lg:px-24 py-24 bg-primary text-white overflow-hidden relative">
+<div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
+<div class="flex-1 order-2 lg:order-1">
+<div class="relative w-full aspect-square max-w-md mx-auto">
+<!-- Orbit Graphic -->
+<div class="absolute inset-0 border-2 border-white/10 rounded-full animate-spin-slow"></div>
+<div class="absolute inset-8 border border-white/10 rounded-full"></div>
+<div class="absolute inset-16 border border-white/10 rounded-full"></div>
+<!-- Floating Data Points -->
+<div class="absolute top-1/4 left-1/4 w-32 h-32 bg-secondary-container/20 rounded-full blur-2xl"></div>
+<div class="absolute bottom-1/4 right-1/4 w-32 h-32 bg-tertiary-container/20 rounded-full blur-2xl"></div>
+<!-- Center Element -->
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="text-center">
+<span class="block text-5xl font-headline font-extrabold mb-2">98%</span>
+<span class="text-xs font-label uppercase tracking-[0.3em] opacity-60">Accuracy</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex-1 order-1 lg:order-2">
+<h2 class="font-headline font-extrabold text-4xl md:text-5xl mb-8 leading-tight">The FIRO-B Difference.</h2>
+<div class="space-y-8">
+<div class="flex gap-6">
+<div class="text-secondary text-4xl font-headline font-bold opacity-30">01</div>
+<div>
+<h4 class="text-xl font-bold mb-2 font-headline">Inclusion Orientation</h4>
+<p class="text-on-primary-container leading-relaxed">Understanding the degree to which you desire social interaction and belonging.</p>
+</div>
+</div>
+<div class="flex gap-6">
+<div class="text-secondary text-4xl font-headline font-bold opacity-30">02</div>
+<div>
+<h4 class="text-xl font-bold mb-2 font-headline">Control Dynamics</h4>
+<p class="text-on-primary-container leading-relaxed">Identifying your comfort with leadership, responsibility, and decision-making in a partnership.</p>
+</div>
+</div>
+<div class="flex gap-6">
+<div class="text-secondary text-4xl font-headline font-bold opacity-30">03</div>
+<div>
+<h4 class="text-xl font-bold mb-2 font-headline">Affection Levels</h4>
+<p class="text-on-primary-container leading-relaxed">Mapping your need for warmth, intimacy, and emotional vulnerability.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="absolute top-0 right-0 w-full h-full opacity-10 pointer-events-none">
+<svg height="100%" preserveaspectratio="none" viewbox="0 0 100 100" width="100%">
+<path d="M0,100 C20,80 50,110 80,90 S100,50 100,0" fill="none" stroke="white" stroke-width="0.1"></path>
+<path d="M0,80 C30,60 40,90 70,70 S100,30 100,-20" fill="none" stroke="white" stroke-width="0.1"></path>
+</svg>
+</div>
+</section>
+<!-- Trust Section -->
+<section class="px-6 md:px-12 lg:px-24 py-24">
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-col items-center text-center mb-16">
+<h2 class="font-headline font-extrabold text-4xl text-primary mb-4">Crafted for the Discerning.</h2>
+<div class="w-24 h-1 bg-secondary-container mb-8"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+<div class="p-12 rounded-[3rem] bg-surface-container-high relative overflow-hidden">
+<p class="font-headline text-2xl italic text-primary leading-relaxed mb-8">
+                            "Affinita didn't just find me someone I liked—they found the person I fit with. It was the first time a dating experience felt like it was grounded in reality rather than hope."
+                        </p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full overflow-hidden">
+<img alt="Julian M." class="w-full h-full object-cover" data-alt="Close-up portrait of a handsome man in a tailored suit, soft evening light, high-end lifestyle aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoXIOFJ0Ear6g0tTcHmzqqMDHE6W3DxU9N-zkNfWQOVvZD59ZdBH8cPK7p96o7vzlygXAJOTP4yJYjXM2hd7VgAC4_viyhak6sFJkRBJuyz2y9I9Up1UN30jM5-W4jATr0UToY1-rNjb6CTsxMHu431hNLF-VKoX1XH-Q5AMpWbAyfX_yywhcU9oAMtyZQdb8ozuCYOKvc2m7xKFlVJzB-esnIKmlGrIzLxLKMX6wbF_ZRBEpOmPKhCSy9UpJoIn_VMsCHADVpSKSh"/>
+</div>
+<div>
+<p class="font-bold text-primary">Julian M.</p>
+<p class="text-xs text-on-surface-variant uppercase tracking-widest">Architect, London</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-6">
+<div class="aspect-square rounded-[2rem] overflow-hidden">
+<img alt="Matchmaking session" class="w-full h-full object-cover" data-alt="Two people sitting across from each other in a luxurious, dark-paneled library, soft ambient lighting, sophisticated mood" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxVDOWRDet1bFv9hWSklZ0Y_I0Am52RQrIktSZyAIVubZ43yiIim8j-7Wdq6qZLAM10ynoWQc-YYzEIiJl4P7S-TaAs4iEkjXNdy8T5AOVLSb1C6Zz4sxRyc1vYHv3K_7Pw0P8LfWv8AC87Xq7spSw7fUoS-gJ1vRIGGfV8PYkOYaqBTXxkP_ztEMma482gFCl-e6tYPjWrGG8hVcPKYpRXmh-cNH7j9aJQ_4knLs0MZg4YAIw8YXgIPSQDHVPdT5Mn-zif-a2Wh7-"/>
+</div>
+<div class="aspect-square rounded-[2rem] overflow-hidden translate-y-12">
+<img alt="Curation" class="w-full h-full object-cover" data-alt="A beautifully set table for two in a high-end restaurant with candles and elegant glassware, warm romantic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAS9KnWOS309Cc5Qnn8vdGPewN3znIHFLuazPh9oB7A5kfbtxbuPe5_joFNH0NpM-Bwjr-mAyl_R2A3pmCM6fwOLAWUuLq1AdbVWwcxCdWPHxiQCf5zDx7RdrSBz127YfE9ykfAHAR00p7iz82p8m_z07SLVzjwi-v5O1wCWl7oT1UtBjztljt_aclmLmO2A0F2PN6A7DHB80agfRcqyIrPr9_W_v_bYdxrObEFnrC0vAJXZMem5B0APQJbVVbPdz72NIs4pqVrBLOz"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="px-6 md:px-12 lg:px-24 py-16">
+<div class="max-w-5xl mx-auto bg-[#6d4ea2] rounded-[3rem] p-12 md:p-24 text-center text-white relative overflow-hidden">
+<div class="relative z-10">
+<h2 class="font-headline font-extrabold text-4xl md:text-6xl mb-8 tracking-tighter">Your compatible life starts here.</h2>
+<p class="text-xl text-secondary-fixed opacity-90 mb-12 max-w-xl mx-auto leading-relaxed">Join the waitlist for our next cohort of curated matches. Secure, private, and profoundly personal.</p>
+<button class="bg-primary text-white px-12 py-5 rounded-full font-bold text-lg hover:scale-105 transition-transform">
+                        Request Invitation
+                    </button>
+</div>
+<!-- Texture element -->
+<div class="absolute inset-0 opacity-20 pointer-events-none">
+<div class="absolute top-0 right-0 w-96 h-96 bg-tertiary rounded-full blur-[100px]"></div>
+<div class="absolute bottom-0 left-0 w-96 h-96 bg-primary rounded-full blur-[100px]"></div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile only) -->
+<nav class="md:hidden fixed bottom-0 w-full rounded-t-[2rem] z-50 bg-white dark:bg-[#051125] shadow-[0px_-12px_32px_rgba(5,17,37,0.04)] flex justify-around items-center h-20 px-8 pb-4 w-full">
+<div class="flex flex-col items-center justify-center text-[#6d4ea2] dark:text-[#6d4ea2] scale-110 transition-all duration-500 ease-standard">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+<span class="font-inter text-[10px] uppercase tracking-widest font-medium">Discover</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-600 transition-all duration-500 ease-standard">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+<span class="font-inter text-[10px] uppercase tracking-widest font-medium">Analysis</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-600 transition-all duration-500 ease-standard">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+<span class="font-inter text-[10px] uppercase tracking-widest font-medium">Matches</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-600 transition-all duration-500 ease-standard">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-inter text-[10px] uppercase tracking-widest font-medium">Profile</span>
+</div>
+</nav>
+</body></html>
