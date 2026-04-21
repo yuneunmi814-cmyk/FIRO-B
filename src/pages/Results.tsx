@@ -88,7 +88,7 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
             </div>
           </div>
           <div className="rpt-hero-actions no-capture">
-            <DownloadReport />
+            <DownloadReport userName={userName} />
           </div>
         </div>
       </div>
