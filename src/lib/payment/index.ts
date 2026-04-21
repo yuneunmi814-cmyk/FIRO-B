@@ -47,3 +47,5 @@ export type { ProductKey, CheckoutRequest, CheckoutResult }
 export { readPaymentCallback, clearPaymentCallback } from './callback'
 export { savePendingSession, loadPendingSession, clearPendingSession } from './session'
 export type { PendingSession } from './session'
+export { confirmPayment } from './confirmPayment'
+export { saveAccess, hasAccess, readAccess, clearAccess, clearAllAccess } from './accessStorage'
