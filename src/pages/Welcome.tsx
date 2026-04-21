@@ -264,7 +264,7 @@ export default function Welcome({ onStart }: Props) {
         </p>
         <PartnershipForm />
         <DisqusSection
-          pageUrl="https://firob.vercel.app/"
+          pageUrl="https://projectyoon.com/"
           pageIdentifier="firob-welcome"
           title="자유 게시판"
           subtitle="FIRO-B 검사 결과나 궁금한 점을 자유롭게 나눠보세요"

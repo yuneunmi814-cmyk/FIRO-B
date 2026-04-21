@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /dist/
 
-Sitemap: https://firob.vercel.app/sitemap.xml
+Sitemap: https://projectyoon.com/sitemap.xml

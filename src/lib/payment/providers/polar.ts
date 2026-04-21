@@ -8,7 +8,7 @@ import type { PaymentAdapter, CheckoutRequest, CheckoutResult } from '../types'
 //    (e.g. https://buy.polar.sh/polar_cl_xxx)
 //
 // 2. In each product's checkout settings set the Success URL to:
-//      https://firob.vercel.app/?polar_checkout_id={CHECKOUT_ID}
+//      https://projectyoon.com/?polar_checkout_id={CHECKOUT_ID}
 //    Polar substitutes {CHECKOUT_ID} at redirect time.
 //
 // 3. .env (local) and Vercel → Settings → Environment Variables:

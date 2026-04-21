@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const SITE_URL   = 'https://firob.vercel.app/';
+const SITE_URL   = 'https://projectyoon.com/';
 const KAKAO_KEY  = import.meta.env.VITE_KAKAO_APP_KEY as string | undefined;
 
 interface Props {
@@ -47,7 +47,7 @@ export default function ShareButtons({ userName, inclusionType, controlType, aff
         title: `${userName ? `${userName}님의 ` : '나의 '}FIRO-B 결과`,
         description:
           `소속: ${inclusionType} / 통제: ${controlType} / 정서: ${affectionType}\n갈등 해결: ${conflictStyle}`,
-        imageUrl: 'https://firob.vercel.app/og-image.png',
+        imageUrl: 'https://projectyoon.com/og-image.png',
         link: { mobileWebUrl: SITE_URL, webUrl: SITE_URL },
       },
       buttons: [{ title: '나도 검사하기', link: { mobileWebUrl: SITE_URL, webUrl: SITE_URL } }],

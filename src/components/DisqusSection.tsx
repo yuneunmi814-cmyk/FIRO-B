@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-const BASE_URL = 'https://firob.vercel.app/';
+const BASE_URL = 'https://projectyoon.com/';
 
 const isDev =
   typeof window !== 'undefined' &&

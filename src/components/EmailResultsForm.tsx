@@ -52,7 +52,7 @@ export default function EmailResultsForm({
       control_type:    controlType,
       affection_type:  affectionType,
       conflict_style:  conflictStyle,
-      site_url:        'https://firob.vercel.app/',
+      site_url:        'https://projectyoon.com/',
     };
 
     try {
