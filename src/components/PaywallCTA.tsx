@@ -49,6 +49,7 @@ const LOCKED_FEATURES = [
   { icon: '💑', text: '이상적인 파트너 프로필 & 주의 유형' },
   { icon: '💬', text: '관계를 바꾸는 대화 스크립트' },
   { icon: '🗺️', text: '4단계 행동 가이드 & 실천 플랜' },
+  { icon: '📄', text: '전체 리포트 PDF 다운로드 (A4 멀티페이지)' },
 ]
 
 const product = PRODUCTS.individual_report

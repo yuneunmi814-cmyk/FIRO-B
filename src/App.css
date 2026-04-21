@@ -2380,34 +2380,8 @@
 /* ═══════════════════════════════════════════════════════════════
    PDF DOWNLOAD BUTTON
 ═══════════════════════════════════════════════════════════════ */
-.pdf-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(255,255,255,0.15);
-  border: 1px solid rgba(255,255,255,0.3);
-  color: #fff;
-  border-radius: 10px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s, transform 0.15s;
-  backdrop-filter: blur(8px);
-}
-.pdf-btn:hover {
-  background: rgba(255,255,255,0.22);
-  transform: translateY(-1px);
-}
-.pdf-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-}
-.pdf-btn-spin {
-  display: inline-block;
-  animation: spin 1s linear infinite;
-}
+/* .pdf-btn* rules removed — PdfDownloadButton is now prop-styled via Tailwind.
+   Keep the spin keyframe for other loading indicators. */
 @keyframes spin {
   to { transform: rotate(360deg); }
 }

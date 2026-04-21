@@ -294,6 +294,32 @@ export default function Results({
         </div>
       </section>
 
+      {/* Dedicated PDF download card (shown only when unlocked) */}
+      {hasAccess && (
+        <section className="px-6 max-w-7xl mx-auto my-10 no-capture">
+          <div className="rounded-[2rem] firo-gradient text-white p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
+            <div className="flex items-start gap-5 relative z-10">
+              <div className="w-14 h-14 rounded-2xl bg-secondary flex items-center justify-center shrink-0">
+                <span className="material-symbols-outlined filled text-white text-3xl">picture_as_pdf</span>
+              </div>
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-secondary-fixed-dim mb-1 font-headline">Save Your Report</p>
+                <h3 className="text-2xl md:text-3xl font-bold font-headline leading-tight mb-2">리포트를 PDF로 저장하기</h3>
+                <p className="text-sm md:text-[15px] text-primary-fixed-dim leading-relaxed max-w-lg">
+                  전체 리포트를 A4 멀티페이지 PDF로 다운로드하세요. 언제든 다시 열람하거나
+                  파트너·상담 전문가와 공유할 수 있습니다.
+                </p>
+              </div>
+            </div>
+            <PdfDownloadButton
+              userName={userName}
+              className="bg-white text-primary rounded-xl px-6 py-4 font-bold text-sm md:text-base font-headline shadow-editorial-lg hover:bg-surface-container-high transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed shrink-0"
+            />
+            <div className="absolute -right-20 -bottom-20 w-60 h-60 bg-secondary/20 rounded-full blur-[80px]" />
+          </div>
+        </section>
+      )}
+
       <div className="px-6 max-w-7xl mx-auto"><AdBanner slot="1111111111" /></div>
 
       {/* ════════════════════════════════════════════════════════
