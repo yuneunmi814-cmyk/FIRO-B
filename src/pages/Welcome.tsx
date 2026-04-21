@@ -2,6 +2,7 @@ import { useState } from 'react';
 import AdBanner from '../components/AdBanner';
 import PartnershipForm from '../components/PartnershipForm';
 import DisqusSection from '../components/DisqusSection';
+import StepDetailModal, { type StepVariant } from '../components/StepDetailModal';
 
 interface Props {
   onStart: (name: string) => void;
@@ -9,6 +10,7 @@ interface Props {
 
 export default function Welcome({ onStart }: Props) {
   const [name, setName] = useState('');
+  const [openModal, setOpenModal] = useState<StepVariant | null>(null);
 
   const scrollToStart = () => {
     document.getElementById('wl-start')?.scrollIntoView({ behavior: 'smooth' });
@@ -91,44 +93,46 @@ export default function Welcome({ onStart }: Props) {
           </div>
 
           <div className="wl-step-grid">
-            {[
+            {([
               {
-                num: '01',
-                icon: '🧠',
-                color: '#7C6FFF',
-                bg: '#EAE7FF',
+                num: '01', variant: 'profile' as StepVariant,
+                icon: '🧠', color: '#7C6FFF', bg: '#EAE7FF',
                 title: '심리 프로파일',
-                desc: 'FIRO-B 이론에 기반한 54문항으로 소속·통제·정서 욕구를 정밀하게 측정합니다.',
+                desc: 'William Schutz 박사(1958)의 FIRO-B 이론에 기반한 54문항으로 소속·통제·정서 욕구를 정밀하게 측정합니다.',
                 offset: false,
               },
               {
-                num: '02',
-                icon: '🔗',
-                color: '#43D39E',
-                bg: '#E8FBF3',
+                num: '02', variant: 'pattern' as StepVariant,
+                icon: '🔗', color: '#43D39E', bg: '#E8FBF3',
                 title: '패턴 심층 분석',
-                desc: '표출행동과 기대행동의 균형을 분석해 대인관계에서 반복되는 나만의 패턴을 도출합니다.',
+                desc: '표출과 기대의 간극, 9가지 조합 매트릭스, 총합 층위까지 — 단순 점수가 아닌 다층 분석으로 당신의 패턴을 읽습니다.',
                 offset: true,
               },
               {
-                num: '03',
-                icon: '📋',
-                color: '#FF9F43',
-                bg: '#FFF4E6',
+                num: '03', variant: 'sample' as StepVariant,
+                icon: '📋', color: '#FF9F43', bg: '#FFF4E6',
                 title: '종합 리포트',
-                desc: '갈등 해결 방식, 소통 전략, 조직 내 역할까지 개인 맞춤형 상세 리포트를 제공합니다.',
+                desc: '아키타입 · 6영역 상세 해석 · 이상적 파트너 · 갈등 해결 스타일 · 2주 행동 가이드까지 담긴 맞춤 리포트. 예시를 확인해 보세요.',
                 offset: false,
               },
-            ].map(({ num, icon, color, bg, title, desc, offset }) => (
-              <div key={num} className={`wl-step-card${offset ? ' wl-step-card--offset' : ''}`}>
+            ]).map(({ num, variant, icon, color, bg, title, desc, offset }) => (
+              <button
+                key={num}
+                type="button"
+                onClick={() => setOpenModal(variant)}
+                className={`wl-step-card wl-step-card--btn${offset ? ' wl-step-card--offset' : ''}`}
+              >
                 <div className="wl-step-icon" style={{ background: bg, color }}>
                   {icon}
                 </div>
                 <span className="wl-step-num" style={{ color: color + '55' }}>{num}</span>
                 <h3 className="wl-step-title">{title}</h3>
                 <p className="wl-step-desc">{desc}</p>
+                <span className="wl-step-cta" style={{ color }}>
+                  자세히 보기 →
+                </span>
                 <div className="wl-step-bar" style={{ background: color }} />
-              </div>
+              </button>
             ))}
           </div>
         </div>
@@ -270,6 +274,8 @@ export default function Welcome({ onStart }: Props) {
           subtitle="FIRO-B 검사 결과나 궁금한 점을 자유롭게 나눠보세요"
         />
       </div>
+
+      <StepDetailModal variant={openModal} onClose={() => setOpenModal(null)} />
     </div>
   );
 }

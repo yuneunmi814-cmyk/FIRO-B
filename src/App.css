@@ -2520,3 +2520,34 @@
   from { stroke-dashoffset: 364.4; }
 }
 .ring-animated { animation: ring-fill 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
+/* ═══════════════════════════════════════════════════════════════
+   Welcome step cards — clickable variant
+═══════════════════════════════════════════════════════════════ */
+.wl-step-card--btn {
+  appearance: none;
+  background: inherit;
+  border: inherit;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  width: 100%;
+  padding: inherit;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  position: relative;
+}
+.wl-step-card--btn:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(5, 17, 37, 0.08);
+}
+.wl-step-card--btn:focus-visible {
+  outline: 2px solid #7C6FFF;
+  outline-offset: 4px;
+}
+.wl-step-cta {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
