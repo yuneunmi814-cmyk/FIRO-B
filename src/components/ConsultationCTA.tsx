@@ -1,15 +1,13 @@
 import { useState } from 'react'
 import { CalendarDays, ChevronRight, Loader2 } from 'lucide-react'
-import { startCheckout, generateOrderId, PRODUCTS, ACTIVE_PROVIDER } from '@/lib/payment'
+import { startCheckout, generateOrderId, PRODUCTS } from '@/lib/payment'
 
 interface Props {
   userName?: string
 }
 
 const product = PRODUCTS.consultation_deposit
-const priceLabel = ACTIVE_PROVIDER === 'mock'
-  ? '체험 모드 · 무료 예약'
-  : `예약금 ${product.amount.toLocaleString()}원`
+const priceLabel = `예약금 ${product.amount.toLocaleString()}원`
 
 export default function ConsultationCTA({ userName }: Props) {
   const [loading, setLoading] = useState(false)

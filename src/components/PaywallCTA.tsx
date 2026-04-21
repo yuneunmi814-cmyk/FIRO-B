@@ -53,7 +53,7 @@ const LOCKED_FEATURES = [
 
 const product = PRODUCTS.individual_report
 const priceLabel = ACTIVE_PROVIDER === 'mock'
-  ? '지금은 무료 체험 모드입니다 · 결제 연동 후 가격 표시 예정'
+  ? `${product.amount.toLocaleString()}원 · 1회 결제 · 평생 열람 (개발 모드)`
   : `${product.amount.toLocaleString()}원 · 1회 결제 · 평생 열람`
 
 export default function PaywallCTA({ scores, inclusion, conflict, unlocking, onUnlock }: Props) {

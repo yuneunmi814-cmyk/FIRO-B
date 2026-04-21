@@ -196,10 +196,10 @@ export default function Welcome({ onStart }: Props) {
         <div className="wl-start-inner">
           <span className="wl-badge">지금 시작하세요</span>
           <h2 className="wl-start-title">
-            나의 대인관계 유형,<br />무료로 진단하세요.
+            나의 대인관계 유형,<br />지금 진단받으세요.
           </h2>
           <p className="wl-start-desc">
-            약 5~10분 · 54문항 · 무료 제공
+            약 5~10분 · 54문항 · 즉시 결과 확인
           </p>
 
           <div className="wl-start-form">

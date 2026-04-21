@@ -1,15 +1,13 @@
 import { useState } from 'react'
 import { Heart, ChevronRight, Loader2 } from 'lucide-react'
-import { startCheckout, generateOrderId, PRODUCTS, ACTIVE_PROVIDER } from '@/lib/payment'
+import { startCheckout, generateOrderId, PRODUCTS } from '@/lib/payment'
 
 interface Props {
   userName?: string
 }
 
 const product  = PRODUCTS.couple_addon
-const priceLabel = ACTIVE_PROVIDER === 'mock'
-  ? '체험 모드 · 무료'
-  : `${product.amount.toLocaleString()}원 추가`
+const priceLabel = `${product.amount.toLocaleString()}원 추가`
 
 export default function CoupleUpsell({ userName }: Props) {
   const [loading, setLoading] = useState(false)

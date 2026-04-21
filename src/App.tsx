@@ -183,18 +183,17 @@ function App() {
     setPage('welcome');
   };
 
-  // Dev banner so it is always clear which payment mode is active
-  const isDev = import.meta.env.DEV;
+  // Dev-only mock-mode indicator (does not render in production builds)
+  const showDevBanner = import.meta.env.DEV && ACTIVE_PROVIDER === 'mock';
 
   return (
     <>
-      {isDev && ACTIVE_PROVIDER === 'mock' && (
+      {showDevBanner && (
         <div style={{
           background: '#FEF9C3', borderBottom: '1px solid #FCD34D',
           textAlign: 'center', padding: '6px 12px', fontSize: '12px', color: '#92400E',
         }}>
-          결제 모드: <strong>mock</strong> — 실제 결제 없이 즉시 잠금 해제됩니다
-          (VITE_PAYMENT_PROVIDER로 변경 가능)
+          개발 모드 · mock 결제
         </div>
       )}
       <SiteHeader />
