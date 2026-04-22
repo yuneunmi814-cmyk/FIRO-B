@@ -10,6 +10,8 @@ import ShareImageButton from '../components/ShareImageButton';
 import ShareLinkButton from '../components/ShareLinkButton';
 import ShareReportSection from '../components/ShareReportSection';
 import ScoreDetailModal from '../components/ScoreDetailModal';
+import DimensionDetailModal, { type DimensionKey } from '../components/DimensionDetailModal';
+import BehaviorDetailModal, { type BehaviorKey } from '../components/BehaviorDetailModal';
 import {
   getScoreLevel,
   getDimLevel,
@@ -68,6 +70,8 @@ function ScoreCard({
 
 export default function Results({ scores, userName, testDate, onRetake }: Props) {
   const [activeScale, setActiveScale] = useState<keyof FIROBScores | null>(null);
+  const [activeDim, setActiveDim] = useState<DimensionKey | null>(null);
+  const [activeBehavior, setActiveBehavior] = useState<BehaviorKey | null>(null);
   const totals = getDimTotals(scores);
   const roles   = getOrgRoles(scores);
   const interps = getDetailedInterpretation(scores);
@@ -263,15 +267,23 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
         {/* ── 3개 욕구 총합 ── */}
         <section className="rpt-section">
           <h2 className="rpt-sec-title">3개 욕구 총합</h2>
+          <p className="rpt-sc-hint no-capture">👆 각 욕구 카드를 눌러 상세 설명을 볼 수 있어요.</p>
           <div className="rpt-dim-grid">
             {[
-              { label: '소속 욕구 (Inclusion)', value: totals.inclusion, max: 18, color: '#43D39E', icon: '🤝' },
-              { label: '통제 욕구 (Control)',   value: totals.control,   max: 18, color: '#FF9F43', icon: '⚡' },
-              { label: '정서 욕구 (Affection)', value: totals.affection, max: 18, color: '#FF6B9D', icon: '❤️' },
-            ].map(({ label, value, max, color, icon }) => {
+              { dimKey: 'inclusion' as DimensionKey, label: '소속 욕구 (Inclusion)', value: totals.inclusion, max: 18, color: '#43D39E', icon: '🤝' },
+              { dimKey: 'control' as DimensionKey,   label: '통제 욕구 (Control)',   value: totals.control,   max: 18, color: '#FF9F43', icon: '⚡' },
+              { dimKey: 'affection' as DimensionKey, label: '정서 욕구 (Affection)', value: totals.affection, max: 18, color: '#FF6B9D', icon: '❤️' },
+            ].map(({ dimKey, label, value, max, color, icon }) => {
               const lv = getDimLevel(value);
               return (
-                <div key={label} className="rpt-dim-card" style={{ borderTop: `3px solid ${color}` }}>
+                <button
+                  key={label}
+                  type="button"
+                  className="rpt-dim-card rpt-dim-card-clickable"
+                  style={{ borderTop: `3px solid ${color}` }}
+                  onClick={() => setActiveDim(dimKey)}
+                  aria-label={`${label} 상세 설명 보기`}
+                >
                   <span className="rpt-dim-icon">{icon}</span>
                   <div className="rpt-dim-label">{label}</div>
                   <div className="rpt-dim-score" style={{ color }}>{value.toFixed(1)}</div>
@@ -280,7 +292,8 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
                     <div className="rpt-dim-bar-fill" style={{ width: `${(value / max) * 100}%`, background: color }} />
                   </div>
                   <Badge level={lv.ko} color={color} />
-                </div>
+                  <span className="rpt-sc-more no-capture" style={{ color }}>자세히 보기 →</span>
+                </button>
               );
             })}
           </div>
@@ -289,23 +302,36 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
         {/* ── 표출 / 기대 행동 ── */}
         <section className="rpt-section">
           <h2 className="rpt-sec-title">표출행동 vs 기대행동</h2>
+          <p className="rpt-sc-hint no-capture">👆 각 카드를 눌러 상세 설명을 볼 수 있어요.</p>
           <div className="rpt-ew-grid">
-            <div className="rpt-ew-card expressed">
+            <button
+              type="button"
+              className="rpt-ew-card rpt-ew-card-clickable expressed"
+              onClick={() => setActiveBehavior('expressed')}
+              aria-label="표출행동 상세 설명 보기"
+            >
               <div className="rpt-ew-icon">📣</div>
               <div className="rpt-ew-lbl">표출행동 총합</div>
               <div className="rpt-ew-val">{totals.expressed.toFixed(1)}</div>
               <div className="rpt-ew-sub">eI + eC + eA</div>
-            </div>
+              <span className="rpt-sc-more no-capture" style={{ color: '#7C6FFF' }}>자세히 보기 →</span>
+            </button>
             <div className="rpt-ew-mid">
               <div className="rpt-ew-compare">{expVsWant}</div>
               <div className="rpt-ew-note">{expWantNote}</div>
             </div>
-            <div className="rpt-ew-card wanted">
+            <button
+              type="button"
+              className="rpt-ew-card rpt-ew-card-clickable wanted"
+              onClick={() => setActiveBehavior('wanted')}
+              aria-label="기대행동 상세 설명 보기"
+            >
               <div className="rpt-ew-icon">🙏</div>
               <div className="rpt-ew-lbl">기대행동 총합</div>
               <div className="rpt-ew-val">{totals.wanted.toFixed(1)}</div>
               <div className="rpt-ew-sub">wI + wC + wA</div>
-            </div>
+              <span className="rpt-sc-more no-capture" style={{ color: '#FF9F43' }}>자세히 보기 →</span>
+            </button>
           </div>
         </section>
 
@@ -486,6 +512,16 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
         scaleKey={activeScale}
         score={activeScale ? scores[activeScale] : 0}
         onClose={() => setActiveScale(null)}
+      />
+      <DimensionDetailModal
+        dimKey={activeDim}
+        scores={scores}
+        onClose={() => setActiveDim(null)}
+      />
+      <BehaviorDetailModal
+        behaviorKey={activeBehavior}
+        scores={scores}
+        onClose={() => setActiveBehavior(null)}
       />
     </div>
   );

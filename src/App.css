@@ -1906,44 +1906,46 @@
   margin: 0;
 }
 
-/* Strengths / Weaknesses */
-.score-sec-strength { color: #0F9960; }
-.score-sec-weakness { color: #C75B1C; }
-.score-sw-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
+.score-range-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 8px;
 }
-.score-sw-item {
-  display: flex;
-  gap: 10px;
-  padding: 11px 14px;
-  border-radius: 10px;
-  font-size: 13px;
-  line-height: 1.65;
-  color: var(--text);
-}
-.score-sw-strength {
-  background: #EAF8EF;
-  border-left: 3px solid #33B36F;
-}
-.score-sw-weakness {
-  background: #FFF3E8;
-  border-left: 3px solid #E88C3B;
-}
-.score-sw-mark {
-  flex-shrink: 0;
-  font-weight: 900;
-  font-size: 14px;
-  line-height: 1.65;
-  width: 18px;
+.score-range-card {
+  background: #F9F8FF;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 12px 8px;
   text-align: center;
+  opacity: 0.65;
+  transition: all 0.15s ease;
 }
-.score-sw-strength .score-sw-mark { color: #0F9960; }
-.score-sw-weakness .score-sw-mark { color: #C75B1C; }
+.score-range-card.active {
+  opacity: 1;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(124, 111, 255, 0.12);
+}
+.score-range-emoji { font-size: 22px; margin-bottom: 4px; }
+.score-range-num {
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--text);
+  margin: 2px 0;
+}
+.score-range-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.3px;
+  margin: 0 0 4px;
+}
+.score-range-head {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.35;
+  margin: 0;
+}
 
 .score-tip-list {
   list-style: none;
@@ -1973,6 +1975,31 @@
   margin-top: 6px;
 }
 
+.score-sec-bookend {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.score-bookend-card {
+  background: #F6F5FF;
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+.score-bookend-lbl {
+  font-size: 11px;
+  font-weight: 800;
+  color: #7C6FFF;
+  letter-spacing: 0.3px;
+  margin: 0 0 6px;
+  text-transform: uppercase;
+}
+.score-bookend-text {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.55;
+  margin: 0;
+}
+
 .score-modal-footnote {
   margin-top: 16px;
   padding: 12px 14px;
@@ -1993,4 +2020,202 @@
   .score-modal-icon { font-size: 30px; }
   .score-modal-code-letter { font-size: 22px; }
   .score-modal-score { font-size: 30px; }
+  .score-range-grid { grid-template-columns: 1fr; gap: 6px; }
+  .score-range-card { text-align: left; padding: 10px 14px; display: grid; grid-template-columns: auto 60px 1fr; gap: 8px; align-items: center; }
+  .score-range-emoji { margin: 0; }
+  .score-range-num, .score-range-label { margin: 0; }
+  .score-sec-bookend { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Clickable dim cards + ew cards + dimension/behavior modals
+═══════════════════════════════════════════════════════════════ */
+.rpt-dim-card-clickable {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  cursor: pointer;
+  font: inherit;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.rpt-dim-card-clickable:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(124, 111, 255, 0.16);
+}
+.rpt-dim-card-clickable:active { transform: translateY(0); }
+.rpt-dim-card-clickable:focus-visible {
+  outline: 2px solid #7C6FFF;
+  outline-offset: 2px;
+}
+
+.rpt-ew-card-clickable {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  cursor: pointer;
+  font: inherit;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.rpt-ew-card-clickable:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(124, 111, 255, 0.16);
+}
+.rpt-ew-card-clickable:active { transform: translateY(0); }
+.rpt-ew-card-clickable:focus-visible {
+  outline: 2px solid #7C6FFF;
+  outline-offset: 2px;
+}
+
+/* Dimension modal — e/w breakdown */
+.dim-ew-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  align-items: center;
+}
+.dim-ew-item {
+  background: #F9F8FF;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 14px 10px;
+  text-align: center;
+}
+.dim-ew-lbl {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin: 0 0 6px;
+  letter-spacing: -0.1px;
+}
+.dim-ew-val {
+  font-size: 30px;
+  font-weight: 900;
+  line-height: 1;
+  margin: 0;
+}
+.dim-ew-max {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin: 4px 0 0;
+}
+.dim-ew-plus {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* Dimension/Behavior band list */
+.dim-band-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.dim-band-item {
+  display: grid;
+  grid-template-columns: auto 64px 1fr;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 12px;
+  background: #F9F8FF;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  opacity: 0.65;
+  transition: all 0.15s ease;
+}
+.dim-band-item.active {
+  opacity: 1;
+  background: #fff;
+  box-shadow: 0 3px 10px rgba(124, 111, 255, 0.1);
+}
+.dim-band-emoji { font-size: 18px; }
+.dim-band-range {
+  font-size: 12px;
+  font-weight: 900;
+  color: var(--text);
+}
+.dim-band-head {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.35;
+}
+
+/* Behavior modal — breakdown */
+.beh-break-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.beh-break-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #F9F8FF;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.beh-break-lbl {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+.beh-break-val {
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+/* Behavior modal — gap card */
+.beh-gap-card {
+  background: linear-gradient(135deg, #F8F6FF 0%, #FFF3E8 100%);
+  border-radius: 12px;
+  padding: 16px;
+}
+.beh-gap-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.beh-gap-emoji { font-size: 28px; }
+.beh-gap-formula {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin: 0;
+}
+.beh-gap-formula strong {
+  color: var(--text);
+  font-size: 14px;
+  margin: 0 4px;
+}
+.beh-gap-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text);
+  margin: 2px 0 0;
+}
+.beh-gap-body {
+  font-size: 13.5px;
+  color: var(--text);
+  line-height: 1.7;
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .dim-ew-grid { grid-template-columns: 1fr auto 1fr; gap: 6px; }
+  .dim-ew-item { padding: 10px 6px; }
+  .dim-ew-val { font-size: 24px; }
+  .dim-band-item { grid-template-columns: auto 56px 1fr; padding: 9px 10px; }
 }
