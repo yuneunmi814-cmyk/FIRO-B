@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import type { FIROBScores } from '../types';
 import RadarChart from '../components/RadarChart';
 import EmailResultsForm from '../components/EmailResultsForm';
@@ -12,9 +12,6 @@ import ShareReportSection from '../components/ShareReportSection';
 import ScoreDetailModal from '../components/ScoreDetailModal';
 import DimensionDetailModal, { type DimensionKey } from '../components/DimensionDetailModal';
 import BehaviorDetailModal, { type BehaviorKey } from '../components/BehaviorDetailModal';
-import ReportPaywall from '../components/ReportPaywall';
-import LockedGate from '../components/LockedGate';
-import { hasAccess } from '../lib/payment';
 import {
   getScoreLevel,
   getDimLevel,
@@ -76,25 +73,6 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
   const [activeScale, setActiveScale] = useState<keyof FIROBScores | null>(null);
   const [activeDim, setActiveDim] = useState<DimensionKey | null>(null);
   const [activeBehavior, setActiveBehavior] = useState<BehaviorKey | null>(null);
-  const [unlocked, setUnlocked] = useState<boolean>(() => hasAccess('individual_report'));
-  const paywallRef = useRef<HTMLDivElement | null>(null);
-
-  // Access state can change after a Polar return redirect; poll briefly so
-  // the UI flips from locked → unlocked once App.tsx writes saveAccess().
-  useEffect(() => {
-    if (unlocked) return;
-    const timer = window.setInterval(() => {
-      if (hasAccess('individual_report')) {
-        setUnlocked(true);
-        window.clearInterval(timer);
-      }
-    }, 800);
-    return () => window.clearInterval(timer);
-  }, [unlocked]);
-
-  const scrollToPaywall = () => {
-    paywallRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  };
 
   const totals = getDimTotals(scores);
   const roles   = getOrgRoles(scores);
@@ -137,21 +115,9 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
             </div>
           </div>
           <div className="rpt-hero-actions no-capture">
-            {unlocked ? (
-              <>
-                <DownloadReport userName={userName} />
-                <ShareImageButton userName={userName} />
-                <ShareLinkButton />
-              </>
-            ) : (
-              <button
-                type="button"
-                className="rpt-hero-locked-cta"
-                onClick={scrollToPaywall}
-              >
-                🔒 전체 리포트 · PDF 잠금 해제
-              </button>
-            )}
+            <DownloadReport userName={userName} />
+            <ShareImageButton userName={userName} />
+            <ShareLinkButton />
           </div>
         </div>
       </div>
@@ -271,9 +237,7 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
           </div>
 
           <p className="rpt-sc-hint no-capture">
-            {unlocked
-              ? '👆 각 점수 카드를 눌러 상세 설명을 볼 수 있어요.'
-              : '🔒 각 점수 카드의 심층 해석은 전체 리포트에서 확인할 수 있어요.'}
+            👆 각 점수 카드를 눌러 상세 설명을 볼 수 있어요.
           </p>
           <div className="rpt-core-grid">
             <div className="rpt-radar-wrap">
@@ -285,7 +249,7 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
                   key={key}
                   label={key}
                   score={scores[key]}
-                  onClick={() => unlocked ? setActiveScale(key) : scrollToPaywall()}
+                  onClick={() => setActiveScale(key)}
                 />
               ))}
             </div>
@@ -315,9 +279,7 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
         <section className="rpt-section">
           <h2 className="rpt-sec-title">3개 욕구 총합</h2>
           <p className="rpt-sc-hint no-capture">
-            {unlocked
-              ? '👆 각 욕구 카드를 눌러 상세 설명을 볼 수 있어요.'
-              : '🔒 각 욕구 카드의 심층 해석은 전체 리포트에서 확인할 수 있어요.'}
+            👆 각 욕구 카드를 눌러 상세 설명을 볼 수 있어요.
           </p>
           <div className="rpt-dim-grid">
             {[
@@ -332,7 +294,7 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
                   type="button"
                   className="rpt-dim-card rpt-dim-card-clickable"
                   style={{ borderTop: `3px solid ${color}` }}
-                  onClick={() => unlocked ? setActiveDim(dimKey) : scrollToPaywall()}
+                  onClick={() => setActiveDim(dimKey)}
                   aria-label={`${label} 상세 설명 보기`}
                 >
                   <span className="rpt-dim-icon">{icon}</span>
@@ -349,15 +311,6 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
             })}
           </div>
         </section>
-
-        {/* ── Paywall: 아래는 전체 리포트 결제 후 열람 ── */}
-        {!unlocked && (
-          <div ref={paywallRef}>
-            <ReportPaywall scores={scores} userName={userName} testDate={testDate} />
-          </div>
-        )}
-
-        <LockedGate locked={!unlocked} onUnlock={scrollToPaywall}>
 
         {/* ── 표출 / 기대 행동 ── */}
         <section className="rpt-section">
@@ -612,8 +565,6 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
         {/* ── Disqus ── */}
         <DisqusSection />
 
-        </LockedGate>
-
         {/* ── Retake (always available) ── */}
         <div className="rpt-retake">
           <p className="rpt-retake-note">이 결과는 현재 시점의 대인관계 욕구를 반영합니다. 시간이 지나면 다시 검사해 보세요.</p>
@@ -622,26 +573,21 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
 
       </div>
 
-      {/* Detail modals — locked behind paywall, so we only render when unlocked */}
-      {unlocked && (
-        <>
-          <ScoreDetailModal
-            scaleKey={activeScale}
-            score={activeScale ? scores[activeScale] : 0}
-            onClose={() => setActiveScale(null)}
-          />
-          <DimensionDetailModal
-            dimKey={activeDim}
-            scores={scores}
-            onClose={() => setActiveDim(null)}
-          />
-          <BehaviorDetailModal
-            behaviorKey={activeBehavior}
-            scores={scores}
-            onClose={() => setActiveBehavior(null)}
-          />
-        </>
-      )}
+      <ScoreDetailModal
+        scaleKey={activeScale}
+        score={activeScale ? scores[activeScale] : 0}
+        onClose={() => setActiveScale(null)}
+      />
+      <DimensionDetailModal
+        dimKey={activeDim}
+        scores={scores}
+        onClose={() => setActiveDim(null)}
+      />
+      <BehaviorDetailModal
+        behaviorKey={activeBehavior}
+        scores={scores}
+        onClose={() => setActiveBehavior(null)}
+      />
     </div>
   );
 }
