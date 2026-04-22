@@ -23,11 +23,11 @@ export default function Welcome({ onStart }: Props) {
         <div className="welcome-badge">FIRO-B 관계 심리 진단</div>
 
         <h1 className="welcome-title">
-          왜 우리는<br />같은 문제로<br />계속 부딪힐까?
+          나는 왜<br />사회생활이<br />어려울까?
         </h1>
 
         <p className="welcome-subtitle">
-          당신의 관계 욕구와 반복되는 갈등의 <strong>‘이유’</strong>를 분석합니다
+          혼자가 편한 당신에게, <strong>관계가 어려운 진짜 이유</strong>를 알려드립니다.
         </p>
 
         <button className="hero-cta-btn" onClick={scrollToStart}>
