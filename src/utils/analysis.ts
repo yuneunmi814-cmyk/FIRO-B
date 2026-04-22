@@ -290,6 +290,119 @@ export function getOrgRoles(s: FIROBScores): OrgRole[] {
   return roles.filter(r => seen.has(r.role) ? false : (seen.add(r.role), true)).slice(0, 6);
 }
 
+// ── Pre-resignation self-reflection ──
+//
+// Designed as an educational self-check tool, NOT career/psychological advice.
+// Every item is framed as a question to sit with or a 1-week self-experiment,
+// never as a prescription. All copy stays in "self-reflection" voice to match
+// the site-wide non-advisory framing.
+
+export interface QuitReflectionAction {
+  icon: string;
+  title: string;
+  why: string;
+}
+
+export interface QuitReflection {
+  checklist: string[];
+  actions: QuitReflectionAction[];
+}
+
+export function getQuitReflection(s: FIROBScores): QuitReflection {
+  const { eI, wI, eC, wC, eA, wA } = s;
+  const affGap = wA - eA;
+  const ctrlGap = wC - eC;
+  const incGap  = wI - eI;
+
+  // ── Checklist: universal + personalized reflection questions ──
+  const checklist: string[] = [
+    '지금의 피로가 "업무 자체"에서 오는 건지, "관계"에서 오는 건지 구분해 본 적 있나요?',
+    '최근 2주간 팀에서 잠깐이라도 "오늘 괜찮았다"고 느낀 순간이 있었나요?',
+  ];
+
+  if (incGap >= 2)
+    checklist.push('팀이 나를 충분히 포함시켜 주고 있다고 느끼나요? (기대하는 만큼 먼저 다가가지는 않았지만, 마음속에서는 참여하고 싶었던 순간이 있지 않았나요?)');
+  else if (eI - wI >= 2)
+    checklist.push('내가 주도해서 팀에 합류시키고 있는 사람들이, 사실은 나를 다시 찾아주지 않고 있다는 느낌을 받고 있지 않나요?');
+
+  if (ctrlGap >= 2)
+    checklist.push('지금 팀에 내가 따를 만한 명확한 방향을 주는 리더/선배가 있나요? 없다면 그 공백이 지금의 피로감에 얼마나 기여하고 있을까요?');
+  else if (eC - wC >= 2)
+    checklist.push('주도권을 많이 쥐고 있는데, 사실 기대거나 위임할 수 있는 사람이 팀 안에 있나요? 혼자 다 짊어지고 있는 건 아닌가요?');
+
+  if (affGap >= 2)
+    checklist.push('동료에게 바라는 따뜻함의 기준이 지금 환경에서 충족될 수 있는 수준인가요? (현실적으로 이 회사에서 그걸 얻을 수 있는지, 아니면 기대 자체가 어긋나 있는지)');
+  else if (eA <= 3 && wA <= 3)
+    checklist.push('"사람"이 아니라 "역할"로만 동료를 대하고 있어서, 일의 의미도 함께 옅어진 건 아닌지 생각해 본 적 있나요?');
+
+  checklist.push('퇴사 후 가고 싶은 그 다음 환경에, 지금 내가 지쳐 있는 바로 그 관계 패턴이 똑같이 반복될 가능성은 없나요?');
+  checklist.push('이 결정을 "지금 이 순간의 피로" 밖에서도 같은 답으로 내릴 수 있는지, 하루만 미뤄두고 다시 봐도 괜찮은 결정인가요?');
+
+  // ── This week's self-experiments: 3 personalized small actions ──
+  const pool: QuitReflectionAction[] = [];
+
+  if (incGap >= 2) {
+    pool.push({
+      icon: '💬',
+      title: '이번 주 중 한 번, 편해 보이는 동료 한 명에게 먼저 "점심 같이 드실래요?" 메시지 보내기',
+      why: '기대(wI)는 높은데 먼저 다가가지 않으면 고립감만 쌓입니다. 먼저 한 걸음 내딛었을 때 환경이 실제로 차가운 건지, 내가 기다리고만 있었던 건지 확인할 수 있는 작은 실험입니다.',
+    });
+  } else if (eI - wI >= 2) {
+    pool.push({
+      icon: '🛋️',
+      title: '이번 주 하루는 "내가 먼저 연락하지 않기" 실험 — 주도적으로 모이게 하던 걸 하루만 멈춰보기',
+      why: '먼저 움직이는 쪽이 늘 나라면, 그 에너지 자체가 피로의 큰 원인일 수 있습니다. 한 번 멈춰봐야 팀이 어떻게 움직이는지, 관계가 실제로 쌍방향인지 보입니다.',
+    });
+  }
+
+  if (ctrlGap >= 2) {
+    pool.push({
+      icon: '🧭',
+      title: '이번 주, 내가 맡은 업무 중 "이건 내가 선택한다"고 정할 수 있는 작은 구간 1개 고르기',
+      why: '모든 방향이 위에서 내려오기를 기대하면 번아웃이 빠르게 옵니다. 아주 작은 선택권 하나라도 스스로 만들면 무력감의 일부가 풀립니다.',
+    });
+  } else if (eC - wC >= 2) {
+    pool.push({
+      icon: '🤝',
+      title: '이번 주, 평소 같으면 내가 처리했을 결정 하나를 일부러 동료에게 넘겨보기',
+      why: '주도권을 항상 쥐고 있으면 책임과 피로가 동시에 쌓입니다. 잠깐 내려놓았을 때 팀이 어떻게 반응하는지 새로 관찰해 볼 수 있는 실험입니다.',
+    });
+  }
+
+  if (affGap >= 2 || (wA >= 6 && eA <= 4)) {
+    pool.push({
+      icon: '📩',
+      title: '이번 주 하루, 업무 메시지 끝에 한 문장 — "덕분에 도움이 됐어요" 같은 짧은 감사 한 줄 붙이기',
+      why: '따뜻함을 기대(wA)하는 마음이 큰데 먼저 표현하지 않으면, 환경이 실제로 차가워지기 쉽습니다. 먼저 작은 온기를 보내면 돌아오는 반응으로 환경을 다시 판단할 수 있습니다.',
+    });
+  } else if (eA <= 3 && wA <= 3) {
+    pool.push({
+      icon: '🫖',
+      title: '이번 주, 동료 한 명과 업무 외 주제로 3분만 대화 나눠보기 (날씨·커피·주말 얘기도 OK)',
+      why: '역할로만 관계를 맺으면 일의 의미가 빠르게 마릅니다. 작은 인간적 접점 하나만 만들어도 같은 환경이 다르게 보일 수 있습니다.',
+    });
+  }
+
+  // Universal actions if pool is short
+  pool.push({
+    icon: '📔',
+    title: '퇴사 결심이 드는 날마다, 오늘 하루 "관계로 힘들었던 순간"과 "업무 자체로 힘들었던 순간"을 한 줄씩 따로 적어보기',
+    why: '두 가지를 구분해서 기록하면, 퇴사해도 따라올 패턴과 환경을 바꾸면 풀릴 문제가 선명하게 갈라집니다.',
+  });
+  pool.push({
+    icon: '🕰️',
+    title: '퇴사 결정을 내리기 전에, "일요일 밤"과 "목요일 낮" 두 시간대에 각각 같은 질문을 던져보기 — 답이 달라지는지 확인하기',
+    why: '피로가 가장 높은 순간의 결정과, 비교적 맑은 순간의 결정이 다르다면, 지금 필요한 건 퇴사보다 짧은 회복일 수도 있습니다.',
+  });
+  pool.push({
+    icon: '☕',
+    title: '이번 주 하루, 점심시간을 완전히 혼자 쓰고 아무에게도 연락하지 않는 "관계 디톡스" 한 번 만들기',
+    why: '관계 피로는 연결을 늘려서가 아니라 잠깐 끊었다가 다시 잇는 것에서 회복됩니다. 이게 효과가 있는지 여부 자체가 지금 나에게 필요한 게 뭔지 알려줍니다.',
+  });
+
+  return { checklist, actions: pool.slice(0, 3) };
+}
+
 // ── Detailed interpretation ──
 
 export function getDetailedInterpretation(s: FIROBScores): string[] {

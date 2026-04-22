@@ -46,8 +46,9 @@ function buildTeasers(
 const LOCKED_FEATURES = [
   { icon: '🔍', text: '갈등 패턴 상세 분석 & 반복되는 이유' },
   { icon: '💑', text: '이상적인 파트너 프로필 & 주의 유형' },
+  { icon: '📋', text: '퇴사 전 자기 점검 체크리스트 (내 패턴 맞춤)' },
+  { icon: '🎯', text: '이번 주 해볼 수 있는 3가지 작은 자기 실험' },
   { icon: '💬', text: '관계를 바꾸는 대화 스크립트' },
-  { icon: '🗺️', text: '4단계 행동 가이드 & 실천 플랜' },
   { icon: '📄', text: '전체 리포트 PDF 다운로드 (A4 멀티페이지)' },
 ]
 

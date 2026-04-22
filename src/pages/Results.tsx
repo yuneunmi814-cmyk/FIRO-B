@@ -27,6 +27,7 @@ import {
   getAffectionAnalysis,
   getConflictStyle,
   getIdealPartner,
+  getQuitReflection,
 } from '../utils/analysis';
 import { SCALE_LABELS, SCALE_COLORS } from '../data/questions';
 
@@ -103,6 +104,7 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
   const inclusion = getInclusionAnalysis(scores.eI, scores.wI);
   const control   = getControlAnalysis(scores.eC, scores.wC);
   const affection = getAffectionAnalysis(scores.eA, scores.wA);
+  const quitReflection = getQuitReflection(scores);
 
   const grandLabel = getGrandTotalLabel(totals.grand);
   const expVsWant  = totals.expressed < totals.wanted ? 'expressed < wanted' : totals.expressed > totals.wanted ? 'expressed > wanted' : 'expressed = wanted';
@@ -537,6 +539,58 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
               </li>
             ))}
           </ul>
+        </section>
+
+        {/* ── 퇴사 전 자기 점검 체크리스트 ── */}
+        <section className="rpt-section rpt-quit-section">
+          <h2 className="rpt-sec-title">📋 퇴사 전 자기 점검 체크리스트</h2>
+          <p className="rpt-text" style={{ marginBottom: 8 }}>
+            오늘도 퇴사가 머릿속을 떠나지 않는 날, 결정을 내리기 전에 한 번 더
+            스스로에게 물어볼 수 있는 질문들입니다. 당신의 FIRO 프로파일에 맞춰
+            개인화됐습니다.
+          </p>
+          <p className="rpt-quit-note">
+            정답은 없습니다. 모두 "네"라고 답해도, 모두 "아니오"라고 답해도
+            괜찮아요. 이 질문들은 답을 찾으라고 있는 게 아니라,
+            <strong> 지금 내 관계 욕구가 일터에서 어떻게 드러나고 있는지 돌아보는 거울</strong>입니다.
+          </p>
+          <ul className="rpt-quit-checklist">
+            {quitReflection.checklist.map((q, i) => (
+              <li key={i} className="rpt-quit-check-item">
+                <span className="rpt-quit-check-box" aria-hidden>☐</span>
+                <span className="rpt-quit-check-text">{q}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {/* ── 이번 주 할 수 있는 실천 액션 ── */}
+        <section className="rpt-section rpt-actions-section">
+          <h2 className="rpt-sec-title">🎯 이번 주 해볼 수 있는 3가지 작은 실험</h2>
+          <p className="rpt-text" style={{ marginBottom: 18 }}>
+            당장 퇴사를 결정하기 전에, <strong>1주일만</strong> 시도해 볼 수 있는
+            작은 자기 실험입니다. 결과가 아니라 내 패턴을 관찰하는 게 목적이에요.
+          </p>
+          <div className="rpt-action-list">
+            {quitReflection.actions.map((a, i) => (
+              <div key={i} className="rpt-action-card">
+                <div className="rpt-action-head">
+                  <span className="rpt-action-icon">{a.icon}</span>
+                  <span className="rpt-action-num">실험 {i + 1}</span>
+                </div>
+                <p className="rpt-action-title">{a.title}</p>
+                <p className="rpt-action-why">
+                  <span className="rpt-action-why-label">왜?</span>
+                  {a.why}
+                </p>
+              </div>
+            ))}
+          </div>
+          <p className="rpt-quit-note" style={{ marginTop: 18 }}>
+            ※ 이 섹션은 커리어·의학·심리 상담이 아닙니다. 자기 관찰을 돕는
+            <strong> 교육용 자가 점검 자료</strong>이며, 중요한 결정에는 신뢰하는
+            주변 사람이나 전문가와의 대화를 함께 해주세요.
+          </p>
         </section>
 
         {/* ── Formspree: 이메일 받기 ── */}

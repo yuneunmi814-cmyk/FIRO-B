@@ -60,12 +60,12 @@ export default function Welcome({ onStart }: Props) {
             <span>5분이면 결과 확인 가능</span>
           </div>
           <div className="info-item">
-            <span className="info-icon">📊</span>
-            <span>당신의 관계 패턴 바로 분석</span>
+            <span className="info-icon">📋</span>
+            <span>퇴사 전 자기 점검 체크리스트</span>
           </div>
           <div className="info-item">
-            <span className="info-icon">💡</span>
-            <span>갈등 원인 + 해결 방법 제공</span>
+            <span className="info-icon">🎯</span>
+            <span>이번 주 해볼 3가지 작은 자기 실험</span>
           </div>
         </div>
 

@@ -23,6 +23,8 @@ const REPORT_SECTIONS = [
   { icon: '💑', title: '이상적인 배우자 프로필', desc: '잘 맞는 파트너 프로파일 + 주의해야 할 유형' },
   { icon: '🛡️', title: '갈등 해결 방식', desc: '내 갈등 스타일의 강점·약점·실천 팁' },
   { icon: '🏢', title: '조직에서의 역할', desc: '팀 안에서 자연스럽게 맡게 되는 포지션' },
+  { icon: '📋', title: '퇴사 전 자기 점검 체크리스트', desc: '내 FIRO 패턴에 맞춰 개인화된 점검 질문' },
+  { icon: '🎯', title: '이번 주 해볼 3가지 작은 자기 실험', desc: '당장 퇴사 전, 1주일만 시도해 볼 작은 액션' },
 ];
 
 // Mini radar chart with sample data
