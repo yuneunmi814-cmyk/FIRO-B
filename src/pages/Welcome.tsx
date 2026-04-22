@@ -23,7 +23,7 @@ export default function Welcome({ onStart }: Props) {
         <div className="welcome-badge">FIRO-B 관계 심리 진단</div>
 
         <h1 className="welcome-title">
-          나는 왜<br />사회생활이<br />어려울까?
+          나는 왜<br />혼자 있는 게<br />더 편할까?
         </h1>
 
         <p className="welcome-subtitle">
