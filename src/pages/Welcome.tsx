@@ -13,11 +13,11 @@ export default function Welcome({ onStart }: Props) {
         <div className="welcome-badge">FIRO 이론 기반 · 관계 욕구 자가진단</div>
 
         <h1 className="welcome-title">
-          나는 왜<br />혼자 있는 게<br />더 편할까?
+          나는 왜<br />사회생활이<br />어려울까?
         </h1>
 
         <p className="welcome-subtitle">
-          혼자가 편한 당신에게, <strong>관계가 어려운 진짜 이유</strong>를 알려드립니다.
+          오늘도 퇴사하고 싶은 당신에게, <strong>관계가 어려운 진짜 이유</strong>를 알려드립니다.
         </p>
 
         <button className="hero-cta-btn" onClick={() => onStart('')}>
