@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { FIROBScores } from '../types';
 import RadarChart from '../components/RadarChart';
 import EmailResultsForm from '../components/EmailResultsForm';
@@ -8,6 +9,7 @@ import DownloadReport from '../components/DownloadReport';
 import ShareImageButton from '../components/ShareImageButton';
 import ShareLinkButton from '../components/ShareLinkButton';
 import ShareReportSection from '../components/ShareReportSection';
+import ScoreDetailModal from '../components/ScoreDetailModal';
 import {
   getScoreLevel,
   getDimLevel,
@@ -38,19 +40,34 @@ function Badge({ level, color }: { level: string; color: string }) {
   );
 }
 
-function ScoreCard({ label, score }: { label: string; score: number }) {
+function ScoreCard({
+  label,
+  score,
+  onClick,
+}: {
+  label: string;
+  score: number;
+  onClick: () => void;
+}) {
   const lv = getScoreLevel(score);
   const color = SCALE_COLORS[label] ?? '#7C6FFF';
   return (
-    <div className="rpt-score-card">
+    <button
+      type="button"
+      className="rpt-score-card rpt-score-card-clickable"
+      onClick={onClick}
+      aria-label={`${label} 상세 설명 보기`}
+    >
       <div className="rpt-sc-label">{label}</div>
       <div className="rpt-sc-score" style={{ color }}>{score.toFixed(1)}</div>
       <Badge level={lv.ko} color={lv.color} />
-    </div>
+      <span className="rpt-sc-more no-capture" style={{ color }}>자세히 보기 →</span>
+    </button>
   );
 }
 
 export default function Results({ scores, userName, testDate, onRetake }: Props) {
+  const [activeScale, setActiveScale] = useState<keyof FIROBScores | null>(null);
   const totals = getDimTotals(scores);
   const roles   = getOrgRoles(scores);
   const interps = getDetailedInterpretation(scores);
@@ -206,13 +223,19 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
             </p>
           </div>
 
+          <p className="rpt-sc-hint no-capture">👆 각 점수 카드를 눌러 상세 설명을 볼 수 있어요.</p>
           <div className="rpt-core-grid">
             <div className="rpt-radar-wrap">
               <RadarChart scores={scores} size={260} />
             </div>
             <div className="rpt-six-scores">
               {(Object.keys(SCALE_LABELS) as (keyof FIROBScores)[]).map(key => (
-                <ScoreCard key={key} label={key} score={scores[key]} />
+                <ScoreCard
+                  key={key}
+                  label={key}
+                  score={scores[key]}
+                  onClick={() => setActiveScale(key)}
+                />
               ))}
             </div>
           </div>
@@ -458,6 +481,12 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
         </div>
 
       </div>
+
+      <ScoreDetailModal
+        scaleKey={activeScale}
+        score={activeScale ? scores[activeScale] : 0}
+        onClose={() => setActiveScale(null)}
+      />
     </div>
   );
 }
