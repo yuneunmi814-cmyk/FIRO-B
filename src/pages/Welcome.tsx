@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import AdBanner from '../components/AdBanner';
+import ReportPreview from '../components/ReportPreview';
 
 interface Props {
   onStart: (name: string) => void;
@@ -59,6 +60,9 @@ export default function Welcome({ onStart }: Props) {
             <p>얼마나 사랑을 주고받고 싶은지</p>
           </div>
         </div>
+
+        {/* ── 결과 리포트 미리보기 ── */}
+        <ReportPreview />
 
         {/* ── 가치 뱃지 ── */}
         <div className="welcome-info">
