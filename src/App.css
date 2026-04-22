@@ -1906,46 +1906,44 @@
   margin: 0;
 }
 
-.score-range-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+/* Strengths / Weaknesses */
+.score-sec-strength { color: #0F9960; }
+.score-sec-weakness { color: #C75B1C; }
+.score-sw-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
   gap: 8px;
 }
-.score-range-card {
-  background: #F9F8FF;
-  border: 2px solid transparent;
-  border-radius: 12px;
-  padding: 12px 8px;
-  text-align: center;
-  opacity: 0.65;
-  transition: all 0.15s ease;
-}
-.score-range-card.active {
-  opacity: 1;
-  background: #fff;
-  box-shadow: 0 4px 14px rgba(124, 111, 255, 0.12);
-}
-.score-range-emoji { font-size: 22px; margin-bottom: 4px; }
-.score-range-num {
+.score-sw-item {
+  display: flex;
+  gap: 10px;
+  padding: 11px 14px;
+  border-radius: 10px;
   font-size: 13px;
+  line-height: 1.65;
+  color: var(--text);
+}
+.score-sw-strength {
+  background: #EAF8EF;
+  border-left: 3px solid #33B36F;
+}
+.score-sw-weakness {
+  background: #FFF3E8;
+  border-left: 3px solid #E88C3B;
+}
+.score-sw-mark {
+  flex-shrink: 0;
   font-weight: 900;
-  color: var(--text);
-  margin: 2px 0;
+  font-size: 14px;
+  line-height: 1.65;
+  width: 18px;
+  text-align: center;
 }
-.score-range-label {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--text-muted);
-  letter-spacing: 0.3px;
-  margin: 0 0 4px;
-}
-.score-range-head {
-  font-size: 11.5px;
-  font-weight: 700;
-  color: var(--text);
-  line-height: 1.35;
-  margin: 0;
-}
+.score-sw-strength .score-sw-mark { color: #0F9960; }
+.score-sw-weakness .score-sw-mark { color: #C75B1C; }
 
 .score-tip-list {
   list-style: none;
@@ -1975,31 +1973,6 @@
   margin-top: 6px;
 }
 
-.score-sec-bookend {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-.score-bookend-card {
-  background: #F6F5FF;
-  border-radius: 12px;
-  padding: 12px 14px;
-}
-.score-bookend-lbl {
-  font-size: 11px;
-  font-weight: 800;
-  color: #7C6FFF;
-  letter-spacing: 0.3px;
-  margin: 0 0 6px;
-  text-transform: uppercase;
-}
-.score-bookend-text {
-  font-size: 13px;
-  color: var(--text);
-  line-height: 1.55;
-  margin: 0;
-}
-
 .score-modal-footnote {
   margin-top: 16px;
   padding: 12px 14px;
@@ -2020,9 +1993,4 @@
   .score-modal-icon { font-size: 30px; }
   .score-modal-code-letter { font-size: 22px; }
   .score-modal-score { font-size: 30px; }
-  .score-range-grid { grid-template-columns: 1fr; gap: 6px; }
-  .score-range-card { text-align: left; padding: 10px 14px; display: grid; grid-template-columns: auto 60px 1fr; gap: 8px; align-items: center; }
-  .score-range-emoji { margin: 0; }
-  .score-range-num, .score-range-label { margin: 0; }
-  .score-sec-bookend { grid-template-columns: 1fr; }
 }
