@@ -15,7 +15,7 @@ export const ACTIVE_PROVIDER: PaymentProvider =
 export const PRODUCTS: Record<ProductKey, PaymentProduct> = {
   individual_report: {
     key: 'individual_report',
-    name: 'FIRO-B 전체 리포트',
+    name: '관계 욕구 자가진단 전체 리포트',
     amount: 9900,
     currency: 'KRW',
   },
