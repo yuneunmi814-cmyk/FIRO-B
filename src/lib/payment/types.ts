@@ -1,9 +1,6 @@
 export type PaymentProvider = 'mock' | 'toss' | 'polar'
 
-export type ProductKey =
-  | 'individual_report'
-  | 'couple_addon'
-  | 'consultation_deposit'
+export type ProductKey = 'individual_report'
 
 export interface PaymentProduct {
   key: ProductKey

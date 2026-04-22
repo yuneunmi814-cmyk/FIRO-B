@@ -3,19 +3,17 @@ import type { PaymentAdapter, CheckoutRequest, CheckoutResult } from '../types'
 // ─────────────────────────────────────────────────────────────────────────────
 // SETUP CHECKLIST (do before switching VITE_PAYMENT_PROVIDER=polar)
 //
-// 1. Dashboard: https://polar.sh/dashboard → create products for each
-//    ProductKey in config.ts. Copy the public checkout URL for each.
+// 1. Dashboard: https://polar.sh/dashboard → create the "individual_report"
+//    product. Copy the public checkout URL.
 //    (e.g. https://buy.polar.sh/polar_cl_xxx)
 //
-// 2. In each product's checkout settings set the Success URL to:
+// 2. In the product's checkout settings set the Success URL to:
 //      https://projectyoon.com/?polar_checkout_id={CHECKOUT_ID}
 //    Polar substitutes {CHECKOUT_ID} at redirect time.
 //
-// 3. .env (local) and Vercel → Settings → Environment Variables:
+// 3. .env (local) and Cloudflare Pages → Settings → Environment Variables:
 //      VITE_PAYMENT_PROVIDER=polar
 //      VITE_POLAR_INDIVIDUAL_REPORT_URL=https://buy.polar.sh/...
-//      VITE_POLAR_COUPLE_ADDON_URL=https://buy.polar.sh/...
-//      VITE_POLAR_CONSULTATION_URL=https://buy.polar.sh/...
 //      POLAR_ACCESS_TOKEN=polar_oat_...   ← server-only, no VITE_ prefix
 //
 //    Generate POLAR_ACCESS_TOKEN at Dashboard → Settings → Developers → PATs.
@@ -31,9 +29,7 @@ import type { PaymentAdapter, CheckoutRequest, CheckoutResult } from '../types'
 // ─────────────────────────────────────────────────────────────────────────────
 
 const CHECKOUT_URLS: Partial<Record<string, string | undefined>> = {
-  individual_report:    import.meta.env.VITE_POLAR_INDIVIDUAL_REPORT_URL,
-  couple_addon:         import.meta.env.VITE_POLAR_COUPLE_ADDON_URL,
-  consultation_deposit: import.meta.env.VITE_POLAR_CONSULTATION_URL,
+  individual_report: import.meta.env.VITE_POLAR_INDIVIDUAL_REPORT_URL,
 }
 
 export const polarAdapter: PaymentAdapter = {

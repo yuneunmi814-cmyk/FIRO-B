@@ -5,11 +5,26 @@ export default function SiteFooter() {
         <p className="site-footer-copy">
           © {new Date().getFullYear()} 관계 욕구 자가진단. 본 서비스는 교육·자기이해 목적으로 제공됩니다.
         </p>
+
         <p className="site-footer-disclaimer">
           본 서비스는 William Schutz 박사의 FIRO 이론(1958)을 참고하여 자체 개발한 자가진단 도구이며,
           The Myers-Briggs Company의 FIRO-B<sup>®</sup> 공식 검사와는 무관합니다.
           의학적·임상적 진단이 아니며, 전문 상담·치료를 대체하지 않습니다.
         </p>
+
+        <div className="site-footer-disclaimer-en">
+          <p className="site-footer-disclaimer-en-title">Educational Self-Assessment · Not Medical or Psychological Advice</p>
+          <p>
+            This website offers an educational personality self-reflection tool inspired by the
+            public FIRO theoretical framework (Schutz, 1958). It is <strong>not</strong> a medical
+            device, clinical assessment, diagnostic instrument, or psychological advice service.
+            Results are for self-understanding only and must not be used to diagnose, treat, cure,
+            or prevent any mental or physical condition. This service is not affiliated with,
+            endorsed by, or derived from the official FIRO-B<sup>®</sup> instrument published by
+            The Myers-Briggs Company.
+          </p>
+        </div>
+
         <nav className="site-footer-nav">
           <a href="/about.html">서비스 소개</a>
           <a href="/privacy.html">개인정보처리방침</a>

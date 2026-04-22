@@ -459,7 +459,7 @@ export default function FiroBReport({ scores, userName, testDate, onRetake }: Pr
                 />
                 <InsightBox
                   title="다음 단계"
-                  content="심화 해석, 커플 세션 예약, 2주 실천 플랜, 상담사 코멘트 등으로 연결하면 실질적인 관계 변화를 만들 수 있습니다."
+                  content="심화 해석, 2주 실천 플랜, 자기 점검 체크리스트로 연결하면 실제 관계 습관을 돌아보고 다듬어 볼 수 있습니다."
                   icon={<MessageCircle className="h-4 w-4" />}
                 />
               </CardContent>

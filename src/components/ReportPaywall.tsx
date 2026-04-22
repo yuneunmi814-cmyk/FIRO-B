@@ -104,6 +104,25 @@ export default function ReportPaywall({ scores, userName, testDate }: Props) {
           ✓ 가입 불필요 &nbsp; ✓ PDF 영구 재열람 &nbsp; ✓ 이메일 전송 포함
         </p>
       </div>
+
+      <div className="rpt-paywall-disclaimer">
+        <p className="rpt-paywall-disclaimer-title">
+          📘 교육용 자가진단 · 의학적·심리학적 자문 아님
+        </p>
+        <p>
+          본 리포트는 <strong>자기이해를 위한 교육용 자가진단 콘텐츠</strong>이며,
+          의학적 진단·치료·심리 상담을 제공하지 않습니다. 결과는 관계 패턴을
+          스스로 돌아보는 참고 자료로만 활용해 주세요.
+        </p>
+        <p className="rpt-paywall-disclaimer-en">
+          This report is an <strong>educational self-reflection product</strong>.
+          It is not a medical device, clinical assessment, or psychological
+          advice service, and is not intended to diagnose, treat, cure, or
+          prevent any condition. Results are for personal self-understanding
+          only. Not affiliated with the FIRO-B<sup>®</sup> instrument by The
+          Myers-Briggs Company.
+        </p>
+      </div>
     </section>
   );
 }

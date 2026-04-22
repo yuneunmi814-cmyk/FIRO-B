@@ -19,16 +19,4 @@ export const PRODUCTS: Record<ProductKey, PaymentProduct> = {
     amount: 19,
     currency: 'USD',
   },
-  couple_addon: {
-    key: 'couple_addon',
-    name: '커플 분석 추가',
-    amount: 9,
-    currency: 'USD',
-  },
-  consultation_deposit: {
-    key: 'consultation_deposit',
-    name: '전문가 상담 예약금',
-    amount: 39,
-    currency: 'USD',
-  },
 }

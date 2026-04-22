@@ -75,6 +75,20 @@ export default function Welcome({ onStart }: Props) {
           각 문항은 1~6점으로 답변합니다.<br />
           솔직하게 답할수록 정확한 결과를 얻을 수 있어요.
         </p>
+
+        <div className="welcome-edu-note">
+          <p className="welcome-edu-note-label">📘 교육용 자가진단 · Educational self-assessment</p>
+          <p>
+            FIRO 이론(Schutz, 1958)을 참고한 자기이해용 도구입니다.
+            의학적·임상적 진단이 아니며, 전문 상담·치료를 대체하지 않습니다.
+          </p>
+          <p>
+            This is an educational self-reflection tool. Not a medical device,
+            clinical assessment, diagnostic instrument, or psychological advice
+            service. Not affiliated with the FIRO-B<sup>®</sup> instrument
+            published by The Myers-Briggs Company.
+          </p>
+        </div>
       </div>
     </div>
   );
