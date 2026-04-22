@@ -33,8 +33,8 @@ export default function ShareImageButton({ userName }: Props) {
 
       const stamp    = new Date().toISOString().slice(0, 10);
       const filename = userName
-        ? `FIRO-B_${userName}_${stamp}.png`
-        : `FIRO-B_결과리포트_${stamp}.png`;
+        ? `관계욕구진단_${userName}_${stamp}.png`
+        : `관계욕구진단_결과리포트_${stamp}.png`;
 
       canvas.toBlob(async (blob) => {
         if (!blob) {
@@ -52,8 +52,8 @@ export default function ShareImageButton({ userName }: Props) {
           try {
             await nav!.share({
               files: [file],
-              title: 'FIRO-B 관계 진단 결과',
-              text: '나의 관계 패턴 분석 결과를 확인해 보세요!',
+              title: '관계 욕구 자가진단 결과',
+              text: '나의 관계 패턴 자가진단 결과를 확인해 보세요!',
             });
             setStatus('idle');
             return;

@@ -33,10 +33,10 @@ export default function ShareReportSection({ userName, headline }: Props) {
     setKakaoReady(true);
   }, []);
 
-  const title = headline ?? 'FIRO-B 관계 심리 진단';
+  const title = headline ?? '관계 욕구 자가진단';
   const desc  = userName
-    ? `${userName}님의 관계 욕구와 갈등 패턴 — 5분 진단으로 확인하세요!`
-    : '나의 관계 욕구와 갈등 패턴을 분석해 드립니다. 5분이면 결과 확인 가능!';
+    ? `${userName}님의 관계 욕구와 갈등 스타일 — 5분 자가진단으로 돌아보세요!`
+    : '나의 관계 욕구와 갈등 스타일을 돌아보는 자가진단. 5분이면 결과 확인 가능!';
 
   const shareText = `${title}\n${desc}\n${SITE_URL}`;
 

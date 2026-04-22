@@ -20,7 +20,7 @@ const REPORT_SECTIONS = [
   { icon: '📊', title: '3개 욕구 총합', desc: '소속·통제·정서 각 총점과 수준 해석' },
   { icon: '📣', title: '표출행동 vs 기대행동', desc: '내가 먼저 하는 행동과 상대에게 바라는 행동의 차이' },
   { icon: '🔍', title: '해석 요약', desc: '욕구 영역별 유형 + 종합 대인관계 프로파일' },
-  { icon: '💑', title: '이상적인 배우자 프로필', desc: '잘 맞는 파트너 FIRO-B + 주의해야 할 유형' },
+  { icon: '💑', title: '이상적인 배우자 프로필', desc: '잘 맞는 파트너 프로파일 + 주의해야 할 유형' },
   { icon: '🛡️', title: '갈등 해결 방식', desc: '내 갈등 스타일의 강점·약점·실천 팁' },
   { icon: '🏢', title: '조직에서의 역할', desc: '팀 안에서 자연스럽게 맡게 되는 포지션' },
 ];
@@ -86,7 +86,7 @@ function MockReport({ expanded = false }: MockReportProps) {
     <div className={`rp-mock ${expanded ? 'rp-mock-expanded' : ''}`}>
       {/* Hero */}
       <div className="rp-mock-hero">
-        <p className="rp-mock-hero-sub">FIRO-B 전문해석 프로파일</p>
+        <p className="rp-mock-hero-sub">관계 욕구 프로파일 · FIRO 이론 기반</p>
         <h3 className="rp-mock-hero-title">대인관계 욕구 및 행동 프로파일</h3>
         <div className="rp-mock-meta">
           <div className="rp-mock-meta-item">

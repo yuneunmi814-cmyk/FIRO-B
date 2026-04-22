@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 const SITE_URL = 'https://projectyoon.com/';
-const SHARE_TEXT = 'FIRO-B 관계 심리 진단 — 나의 관계 욕구와 갈등 패턴을 분석해줍니다';
+const SHARE_TEXT = '관계 욕구 자가진단 — 나의 대인관계 욕구와 갈등 스타일을 돌아보세요';
 
 /**
  * Hero-level link share button.
@@ -18,7 +18,7 @@ export default function ShareLinkButton() {
     if (nav?.share) {
       try {
         await nav.share({
-          title: 'FIRO-B 관계 심리 진단',
+          title: '관계 욕구 자가진단',
           text: SHARE_TEXT,
           url: SITE_URL,
         });

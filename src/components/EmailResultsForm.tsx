@@ -52,7 +52,7 @@ export default function EmailResultsForm({ scores, userName, inclusionType, cont
         <span className="fs-icon">📧</span>
         <div>
           <h3 className="fs-title">결과를 이메일로 받으세요</h3>
-          <p className="fs-sub">FIRO-B 결과 요약을 이메일로 보내드립니다</p>
+          <p className="fs-sub">관계 욕구 자가진단 결과 요약을 이메일로 보내드립니다</p>
         </div>
       </div>
 

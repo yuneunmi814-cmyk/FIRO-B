@@ -15,7 +15,7 @@ export default function DisqusSection() {
         config={{
           url: window.location.href,
           identifier: 'firob-results-main',
-          title: 'FIRO-B 심리검사 결과 토론',
+          title: '관계 욕구 자가진단 결과 토론',
           language: 'ko_KR',
         }}
       />

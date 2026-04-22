@@ -91,7 +91,7 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
       {/* ── Hero ── */}
       <div className="rpt-hero">
         <div className="rpt-hero-inner">
-          <p className="rpt-hero-sub">FIRO-B 전문해석 프로파일</p>
+          <p className="rpt-hero-sub">관계 욕구 프로파일 · FIRO 이론 기반</p>
           <h1 className="rpt-hero-title">대인관계 욕구 및 행동 프로파일</h1>
           <div className="rpt-meta">
             <div className="rpt-meta-item">
@@ -121,18 +121,24 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
 
       <div className="rpt-body">
 
-        {/* ── FIRO-B 소개 ── */}
+        {/* ── 이론 소개 ── */}
         <section className="rpt-section">
-          <h2 className="rpt-sec-title">FIRO-B 소개</h2>
+          <h2 className="rpt-sec-title">이 진단의 이론적 배경</h2>
           <p className="rpt-text">
-            FIRO-B는 대인관계 욕구와 행동을 측정하는 검사로,
-            <strong> 소속(Inclusion)</strong>, <strong>통제(Control)</strong>, <strong>정서(Affection)</strong>의
-            3개 영역을 다룹니다. 각 영역에서 내가 표출하는 행동(e)과 타인에게 기대하는 행동(w)을 0–9점으로 측정합니다.
+            본 자가진단은 1958년 심리학자 William Schutz 박사가 제안한 <strong>FIRO(Fundamental
+            Interpersonal Relations Orientation)</strong> 이론을 참고하여 개발되었습니다. FIRO 이론은
+            사람이 관계에서 갖는 세 가지 기본 욕구 — <strong>소속(Inclusion)</strong>,
+            <strong> 통제(Control)</strong>, <strong>정서(Affection)</strong> — 를 다룹니다.
+            각 영역에서 내가 먼저 표출하는 행동(e)과 상대에게 기대하는 행동(w)을 0–9점으로 측정합니다.
           </p>
           <div className="rpt-highlight-box">
             개인이 사람들과의 관계에서 어떻게 행동하는지, 또 타인이 어떻게 행동해주길 기대하는지를
-            이해하는 데 도움을 줍니다.
+            돌아보는 데 도움을 줍니다.
           </div>
+          <p className="rpt-disclaimer-inline">
+            ⚠️ 본 서비스는 The Myers-Briggs Company의 FIRO-B<sup>®</sup> 공식 검사와 무관한 자체 개발 자가진단이며,
+            의학적·임상적 진단이 아닌 자기이해를 위한 교육용 도구입니다.
+          </p>
         </section>
 
         {/* ── 핵심 결과 ── */}
@@ -373,7 +379,7 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
 
           <div className="rpt-partner-grid">
             <div className="rpt-partner-radar">
-              <p className="rpt-partner-radar-lbl">이상적인 파트너 FIRO-B</p>
+              <p className="rpt-partner-radar-lbl">이상적인 파트너 프로파일</p>
               <RadarChart scores={partner.profile} size={220} />
             </div>
             <div className="rpt-partner-detail">
@@ -401,7 +407,7 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
           </div>
 
           <div className="rpt-partner-scores">
-            <p className="rpt-partner-scores-title">이상적인 파트너 예상 FIRO-B 점수</p>
+            <p className="rpt-partner-scores-title">이상적인 파트너 예상 프로파일 점수</p>
             <div className="rpt-partner-chips">
               {(Object.keys(SCALE_LABELS) as (keyof FIROBScores)[]).map(key => (
                 <div key={key} className="rpt-partner-chip"
@@ -469,7 +475,7 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
         <section className="rpt-section">
           <h2 className="rpt-sec-title">🏢 조직에서의 역할</h2>
           <p className="rpt-text" style={{ marginBottom: 20 }}>
-            FIRO-B 프로파일을 바탕으로 팀 내에서 자연스럽게 수행하게 되는 역할입니다.
+            이 프로파일을 바탕으로 팀 내에서 자연스럽게 수행하게 되는 역할입니다.
           </p>
           <ul className="rpt-role-list">
             {roles.map(({ role, description }) => (

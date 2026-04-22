@@ -10,7 +10,7 @@ export default function Welcome({ onStart }: Props) {
     <div className="welcome-page">
       {/* ── HERO : 문제 공감 + 강력한 CTA ── */}
       <div className="welcome-hero">
-        <div className="welcome-badge">FIRO-B 관계 심리 진단</div>
+        <div className="welcome-badge">FIRO 이론 기반 · 관계 욕구 자가진단</div>
 
         <h1 className="welcome-title">
           나는 왜<br />혼자 있는 게<br />더 편할까?

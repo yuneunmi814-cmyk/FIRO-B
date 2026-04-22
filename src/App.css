@@ -51,7 +51,15 @@
   margin: 0 auto;
   text-align: center;
 }
-.site-footer-copy { font-size: 13px; margin-bottom: 14px; }
+.site-footer-copy { font-size: 13px; margin-bottom: 10px; }
+.site-footer-disclaimer {
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0 0 14px;
+  max-width: 640px;
+}
+.site-footer-disclaimer sup { font-size: 9px; vertical-align: super; }
 .site-footer-nav {
   display: flex;
   justify-content: center;
@@ -842,6 +850,17 @@
   line-height: 1.65;
   margin-top: 12px;
 }
+.rpt-disclaimer-inline {
+  margin-top: 14px;
+  padding: 12px 16px;
+  background: #FFF8EC;
+  border: 1px solid #F4E0B5;
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #6E4A1A;
+}
+.rpt-disclaimer-inline sup { font-size: 9px; vertical-align: super; }
 
 /* Badge */
 .rpt-badge {

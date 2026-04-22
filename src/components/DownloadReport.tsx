@@ -49,8 +49,8 @@ export default function DownloadReport({ userName }: Props) {
 
       const stamp    = new Date().toISOString().slice(0, 10);
       const filename = userName
-        ? `FIRO-B_${userName}_${stamp}.pdf`
-        : `FIRO-B_결과리포트_${stamp}.pdf`;
+        ? `관계욕구진단_${userName}_${stamp}.pdf`
+        : `관계욕구진단_결과리포트_${stamp}.pdf`;
       pdf.save(filename);
     } catch (e) {
       console.error('[PDF] 생성 실패', e);
