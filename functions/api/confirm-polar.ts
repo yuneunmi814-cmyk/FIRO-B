@@ -14,11 +14,18 @@
 
 interface Env {
   POLAR_ACCESS_TOKEN?: string
+  /**
+   * Base URL for Polar API. Defaults to production.
+   * Set to "https://sandbox-api.polar.sh" in Cloudflare Pages Preview
+   * environment variables to run sandbox tests without touching prod.
+   */
+  POLAR_API_BASE?: string
 }
 
-const POLAR_API = 'https://api.polar.sh'
+const DEFAULT_POLAR_API = 'https://api.polar.sh'
 
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
+  const POLAR_API = env.POLAR_API_BASE?.trim() || DEFAULT_POLAR_API
   let body: { checkoutId?: string } = {}
   try {
     body = await request.json()
