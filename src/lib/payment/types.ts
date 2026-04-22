@@ -8,8 +8,8 @@ export type ProductKey =
 export interface PaymentProduct {
   key: ProductKey
   name: string      // shown in checkout UI and order name
-  amount: number    // KRW, integer (Toss requires integer)
-  currency: 'KRW'
+  amount: number    // major units (KRW integer, USD whole dollars)
+  currency: 'KRW' | 'USD'
 }
 
 export interface CheckoutRequest {

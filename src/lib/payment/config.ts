@@ -16,19 +16,19 @@ export const PRODUCTS: Record<ProductKey, PaymentProduct> = {
   individual_report: {
     key: 'individual_report',
     name: '관계 욕구 자가진단 전체 리포트',
-    amount: 9900,
-    currency: 'KRW',
+    amount: 19,
+    currency: 'USD',
   },
   couple_addon: {
     key: 'couple_addon',
     name: '커플 분석 추가',
-    amount: 4900,
-    currency: 'KRW',
+    amount: 9,
+    currency: 'USD',
   },
   consultation_deposit: {
     key: 'consultation_deposit',
     name: '전문가 상담 예약금',
-    amount: 20000,
-    currency: 'KRW',
+    amount: 39,
+    currency: 'USD',
   },
 }

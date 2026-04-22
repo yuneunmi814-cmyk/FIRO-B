@@ -41,6 +41,16 @@ export function generateOrderId(prefix = 'firob'): string {
   return `${prefix}_${ts}_${rnd}`
 }
 
+/**
+ * Format a PaymentProduct's price for display.
+ * KRW → "9,900원"
+ * USD → "$19"
+ */
+export function formatPrice(p: { amount: number; currency: 'KRW' | 'USD' }): string {
+  if (p.currency === 'USD') return `$${p.amount}`
+  return `${p.amount.toLocaleString()}원`
+}
+
 // Re-exports for convenience
 export { ACTIVE_PROVIDER, PRODUCTS }
 export type { ProductKey, CheckoutRequest, CheckoutResult }
