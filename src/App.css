@@ -1062,7 +1062,7 @@
   margin-bottom: 2px;
 }
 .rpt-type-chip-name { font-size: 15px; font-weight: 800; }
-.rpt-interp-list { display: flex; flex-direction: column; gap: 12px; }
+.rpt-interp-list { display: flex; flex-direction: column; gap: 16px; }
 .rpt-interp-para {
   font-size: 14px;
   color: var(--text-muted);
@@ -1071,6 +1071,41 @@
   background: #F9F8FF;
   border-radius: 10px;
   border-left: 3px solid var(--border);
+}
+
+/* Structured interpretation blocks (titled deep-dive paragraphs) */
+.rpt-interp-block {
+  background: #FFFFFF;
+  border: 1px solid #E8E3FB;
+  border-left: 4px solid #7C6FFF;
+  border-radius: 14px;
+  padding: 18px 22px;
+  box-shadow: 0 2px 8px rgba(124, 111, 255, 0.05);
+}
+.rpt-interp-block-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: #5A4FCC;
+  margin: 0 0 10px;
+  letter-spacing: -0.01em;
+  line-height: 1.45;
+}
+.rpt-interp-block-body {
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--text);
+  margin: 0;
+}
+.rpt-interp-block-body strong {
+  color: #5A4FCC;
+  font-weight: 800;
+  background: linear-gradient(180deg, transparent 62%, #EAE4FF 62%);
+  padding: 0 1px;
+}
+@media (max-width: 600px) {
+  .rpt-interp-block { padding: 14px 16px; }
+  .rpt-interp-block-title { font-size: 14px; }
+  .rpt-interp-block-body { font-size: 13.5px; line-height: 1.8; }
 }
 
 /* Partner */

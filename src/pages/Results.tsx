@@ -367,8 +367,19 @@ export default function Results({ scores, userName, testDate, onRetake }: Props)
             ))}
           </div>
           <div className="rpt-interp-list">
-            {interps.map((para, i) => (
-              <p key={i} className="rpt-interp-para">{para}</p>
+            {interps.map((block, i) => (
+              <div key={i} className="rpt-interp-block">
+                <h3 className="rpt-interp-block-title">{block.title}</h3>
+                <p
+                  className="rpt-interp-block-body"
+                  dangerouslySetInnerHTML={{
+                    __html: block.body.replace(
+                      /\*\*(.+?)\*\*/g,
+                      '<strong>$1</strong>',
+                    ),
+                  }}
+                />
+              </div>
             ))}
           </div>
         </section>
