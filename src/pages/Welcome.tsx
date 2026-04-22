@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import AdBanner from '../components/AdBanner';
 import ReportPreview from '../components/ReportPreview';
 
@@ -7,16 +6,6 @@ interface Props {
 }
 
 export default function Welcome({ onStart }: Props) {
-  const [name, setName] = useState('');
-
-  const scrollToStart = () => {
-    const target = document.getElementById('welcome-start-section');
-    if (!target) return;
-    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    // Let the scroll settle, then focus the input so users can just type their name
-    setTimeout(() => document.getElementById('name-input')?.focus(), 500);
-  };
-
   return (
     <div className="welcome-page">
       {/* ── HERO : 문제 공감 + 강력한 CTA ── */}
@@ -31,7 +20,7 @@ export default function Welcome({ onStart }: Props) {
           혼자가 편한 당신에게, <strong>관계가 어려운 진짜 이유</strong>를 알려드립니다.
         </p>
 
-        <button className="hero-cta-btn" onClick={scrollToStart}>
+        <button className="hero-cta-btn" onClick={() => onStart('')}>
           내 관계 분석 시작하기
           <span className="hero-cta-arrow" aria-hidden>→</span>
         </button>
@@ -79,24 +68,6 @@ export default function Welcome({ onStart }: Props) {
             <span>갈등 원인 + 해결 방법 제공</span>
           </div>
         </div>
-
-        {/* ── 이름 입력 + 본 CTA ── */}
-        <div className="name-input-section" id="welcome-start-section">
-          <label htmlFor="name-input" className="name-label">이름 (선택)</label>
-          <input
-            id="name-input"
-            type="text"
-            className="name-input"
-            placeholder="이름을 입력하세요"
-            value={name}
-            onChange={e => setName(e.target.value)}
-            maxLength={20}
-          />
-        </div>
-
-        <button className="start-btn" onClick={() => onStart(name)}>
-          검사 시작하기
-        </button>
 
         <AdBanner slot="4444444444" format="horizontal" />
 
