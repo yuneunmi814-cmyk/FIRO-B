@@ -7,6 +7,7 @@ import {
   PRODUCTS,
   formatPrice,
 } from '../lib/payment';
+import { postToFormspree } from '../utils/formspree';
 
 interface Props {
   scores: FIROBScores;
@@ -24,13 +25,28 @@ const LOCKED_FEATURES = [
   { icon: '📄', text: 'PDF 다운로드 · 이메일 전송 · 영구 재열람' },
 ];
 
+// When the payment provider is undergoing approval review, we keep the paywall
+// UI intact (so reviewers can verify the product structure) but re-route the
+// click into a waitlist email capture instead of redirecting to the provider's
+// error page. Flip VITE_PAYMENT_UNDER_REVIEW=false once approval lands.
+const UNDER_REVIEW = import.meta.env.VITE_PAYMENT_UNDER_REVIEW === 'true';
+
 export default function ReportPaywall({ scores, userName, testDate }: Props) {
   const [unlocking, setUnlocking] = useState(false);
+  const [waitlistOpen, setWaitlistOpen] = useState(false);
+  const [waitlistEmail, setWaitlistEmail] = useState('');
+  const [waitlistStatus, setWaitlistStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const product = PRODUCTS.individual_report;
   const priceLabel = formatPrice(product);
 
   const handleUnlock = async () => {
     if (unlocking) return;
+
+    if (UNDER_REVIEW) {
+      setWaitlistOpen(true);
+      return;
+    }
+
     setUnlocking(true);
 
     const orderId = generateOrderId();
@@ -64,6 +80,28 @@ export default function ReportPaywall({ scores, userName, testDate }: Props) {
       alert('결제 시작 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
       setUnlocking(false);
     }
+  };
+
+  const handleWaitlistSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (waitlistStatus === 'loading') return;
+
+    const email = waitlistEmail.trim();
+    if (!email || !email.includes('@')) {
+      setWaitlistStatus('error');
+      return;
+    }
+
+    setWaitlistStatus('loading');
+    const ok = await postToFormspree({
+      _subject: '[FIRO-B] 결제 오픈 알림 대기자 등록',
+      form_type: 'payment_waitlist',
+      email,
+      user_name: userName || '익명',
+      test_date: testDate,
+      note: 'User signed up to be notified when payment opens (Polar under review).',
+    });
+    setWaitlistStatus(ok ? 'success' : 'error');
   };
 
   return (
@@ -106,6 +144,58 @@ export default function ReportPaywall({ scores, userName, testDate }: Props) {
           ✓ 가입 불필요 &nbsp; ✓ PDF 영구 재열람 &nbsp; ✓ 이메일 전송 포함
         </p>
       </div>
+
+      {UNDER_REVIEW && waitlistOpen && (
+        <div className="rpt-paywall-waitlist">
+          {waitlistStatus === 'success' ? (
+            <div className="rpt-waitlist-success">
+              <p className="rpt-waitlist-title">✅ 등록 완료!</p>
+              <p className="rpt-waitlist-body">
+                결제 오픈 시 <strong>{waitlistEmail}</strong>로 가장 먼저 알려드릴게요.
+                보통 1~3일 내 승인 예정입니다. 감사합니다.
+              </p>
+            </div>
+          ) : (
+            <>
+              <p className="rpt-waitlist-title">⏳ 결제 시스템 최종 승인 대기 중</p>
+              <p className="rpt-waitlist-body">
+                현재 결제 파트너사의 최종 승인 절차 중입니다. 이메일을 남겨 주시면
+                <strong> 결제 오픈 직후 가장 먼저 알림</strong>을 보내드릴게요.
+                (보통 1~3일 내 오픈 예정)
+              </p>
+              <form className="rpt-waitlist-form" onSubmit={handleWaitlistSubmit}>
+                <input
+                  type="email"
+                  className="rpt-waitlist-input"
+                  placeholder="이메일 주소"
+                  value={waitlistEmail}
+                  onChange={(e) => {
+                    setWaitlistEmail(e.target.value);
+                    if (waitlistStatus === 'error') setWaitlistStatus('idle');
+                  }}
+                  required
+                  aria-label="알림 받을 이메일"
+                />
+                <button
+                  type="submit"
+                  className="rpt-waitlist-submit"
+                  disabled={waitlistStatus === 'loading'}
+                >
+                  {waitlistStatus === 'loading' ? '전송 중…' : '알림 받기'}
+                </button>
+              </form>
+              {waitlistStatus === 'error' && (
+                <p className="rpt-waitlist-error">
+                  이메일을 확인해 주세요. 문제가 계속되면 yuneunmi814@gmail.com으로 연락 주세요.
+                </p>
+              )}
+              <p className="rpt-waitlist-note">
+                ※ 지금은 결제를 받지 않습니다. 요금은 오픈 시점에 안내드립니다.
+              </p>
+            </>
+          )}
+        </div>
+      )}
 
       <div className="rpt-paywall-disclaimer">
         <p className="rpt-paywall-disclaimer-title">
