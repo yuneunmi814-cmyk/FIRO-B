@@ -40,11 +40,23 @@ export default function ReportPaywall({ scores, userName, testDate }: Props) {
         orderId,
         customerName: userName,
       });
-      // redirect-based providers never return success here
-      if (!result.success && result.error && result.error !== 'redirecting') {
-        alert(`결제 진입 실패: ${result.error}`);
-        setUnlocking(false);
+
+      // Polar/Toss redirect paths return {success:false, error:'redirecting'}
+      // and never actually reach here before page navigation. If we DO get
+      // here, either the redirect was blocked or we're running the mock
+      // adapter — unlock the UI and surface the reason.
+      if (result.error === 'redirecting') {
+        // page is navigating; leave unlocking=true
+        return;
       }
+      if (!result.success) {
+        alert(`결제 진입 실패: ${result.error ?? '알 수 없는 오류'}`);
+      } else {
+        // success path only fires for mockAdapter in dev mode
+        console.warn('[Paywall] Checkout resolved without redirect. Payment provider may be set to "mock".');
+        alert('결제 모듈이 개발(mock) 모드입니다. Cloudflare Pages의 VITE_PAYMENT_PROVIDER 환경변수가 polar로 설정되어 있는지 확인해 주세요.');
+      }
+      setUnlocking(false);
     } catch (err) {
       console.error('[Paywall] checkout error:', err);
       alert('결제 시작 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
