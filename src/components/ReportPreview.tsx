@@ -236,6 +236,65 @@ function MockReport({ expanded = false }: MockReportProps) {
               <li><span className="rp-blur">Harmonizer</span> — 갈등을 완화하고 팀 화합 도모</li>
             </ul>
           </div>
+
+          {/* 퇴사 전 자기 점검 체크리스트 */}
+          <div className="rp-mock-section">
+            <h4 className="rp-mock-sec-title">📋 퇴사 전 자기 점검 체크리스트</h4>
+            <p className="rp-mock-sec-note">
+              당신의 FIRO 패턴에 맞춰 개인화된 점검 질문이 노출됩니다.
+            </p>
+            <ul className="rp-mock-checklist">
+              <li>
+                <span className="rp-mock-check-box">☐</span>
+                <span className="rp-blur">지금의 피로가 "업무 자체"에서 오는 건지, "관계"에서 오는 건지 구분해 본 적 있나요?</span>
+              </li>
+              <li>
+                <span className="rp-mock-check-box">☐</span>
+                <span className="rp-blur">지금 팀에 내가 따를 만한 명확한 방향을 주는 리더가 있나요?</span>
+              </li>
+              <li>
+                <span className="rp-mock-check-box">☐</span>
+                <span className="rp-blur">퇴사 후 환경에서도 지금의 관계 패턴이 똑같이 반복될 가능성은 없나요?</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* 이번 주 3가지 자기 실험 */}
+          <div className="rp-mock-section">
+            <h4 className="rp-mock-sec-title">🎯 이번 주 해볼 수 있는 3가지 작은 실험</h4>
+            <p className="rp-mock-sec-note">
+              당장 퇴사를 결정하기 전에, 1주일만 시도해 볼 작은 자기 실험이 제공됩니다.
+            </p>
+            <div className="rp-mock-action-list">
+              <div className="rp-mock-action-card">
+                <div className="rp-mock-action-head">
+                  <span className="rp-mock-action-icon">💬</span>
+                  <span className="rp-mock-action-num">실험 1</span>
+                </div>
+                <p className="rp-mock-action-title rp-blur">
+                  편해 보이는 동료에게 "점심 같이 드실래요?" 먼저 메시지 보내기
+                </p>
+              </div>
+              <div className="rp-mock-action-card">
+                <div className="rp-mock-action-head">
+                  <span className="rp-mock-action-icon">🧭</span>
+                  <span className="rp-mock-action-num">실험 2</span>
+                </div>
+                <p className="rp-mock-action-title rp-blur">
+                  내 업무 중 "이건 내가 선택한다"고 정할 수 있는 작은 구간 1개 고르기
+                </p>
+              </div>
+              <div className="rp-mock-action-card">
+                <div className="rp-mock-action-head">
+                  <span className="rp-mock-action-icon">📔</span>
+                  <span className="rp-mock-action-num">실험 3</span>
+                </div>
+                <p className="rp-mock-action-title rp-blur">
+                  관계로 힘든 순간 · 업무로 힘든 순간을 한 줄씩 따로 기록하기
+                </p>
+              </div>
+            </div>
+          </div>
         </>
       )}
     </div>
